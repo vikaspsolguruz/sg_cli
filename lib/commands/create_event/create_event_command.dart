@@ -4,19 +4,26 @@ import '../../templates/event_template.dart';
 import '../../utils/name_helper.dart';
 
 void createEvent(final String eventName, final String pageName) {
-  String mainFolderPath = 'lib/pages/$pageName';
-  if(!Directory(mainFolderPath).existsSync()) {
+  String mainFolderPath = '';
+  if (Directory('lib/pages/$pageName').existsSync()) {
+    mainFolderPath = 'lib/pages/$pageName';
+  } else if (Directory('lib/pages/common/$pageName').existsSync()) {
+    mainFolderPath = 'lib/pages/common/$pageName';
+  } else if (Directory('lib/pages/customer/$pageName').existsSync()) {
+    mainFolderPath = 'lib/pages/customer/$pageName';
+  } else if (Directory('lib/pages/pub/$pageName').existsSync()) {
+    mainFolderPath = 'lib/pages/pub/$pageName';
+  } else if (Directory('lib/bottom_sheets/$pageName').existsSync()) {
     mainFolderPath = 'lib/bottom_sheets/$pageName';
-    if(!Directory(mainFolderPath).existsSync()) {
-      print('❌  Error: Page folder not found: $mainFolderPath');
-      return;
-    }
+  } else {
+    print('❌  Error: Page folder not found: for $pageName');
+    return;
   }
-  String eventFilePath = '$mainFolderPath/bloc/${pageName}_event.dart';
+  final String eventFilePath = '$mainFolderPath/bloc/${pageName}_event.dart';
 
   File eventFile = File(eventFilePath);
   if (!eventFile.existsSync()) {
-    eventFile = File('$mainFolderPath/bloc/${pageName}_event.dart');
+    eventFile = File(eventFilePath);
     if (!eventFile.existsSync()) {
       print('❌  Error: Event file not found: $eventFilePath');
       return;

@@ -2,6 +2,7 @@ import 'dart:io';
 late List<String> arguments; // command line arguments
 
 late String moduleName;
+late String role;
 late String pageName; // name of the page/bottom sheet
 
 late String toBeCreated;

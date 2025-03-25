@@ -10,7 +10,7 @@ void runCLI(List<String> args) {
   final sgConfig = getConfig();
   if (sgConfig == null) return;
 
-  bool isCreatePageCommand() => arguments.length == 3 && arguments[0] == 'create' && arguments[1] == 'page';
+  bool isCreatePageCommand() => (arguments.length == 3 || (arguments.length == 5 && arguments[3] == 'in')) && arguments[0] == 'create' && arguments[1] == 'page';
   bool isCreateBottomSheetCommand() => arguments.length == 3 && arguments[0] == 'create' && arguments[1] == 'bs';
   bool isCreateEventCommand() => arguments.length == 5 && arguments[0] == 'create' && arguments[1] == 'event' && arguments[3] == 'in';
 
@@ -26,6 +26,14 @@ void runCLI(List<String> args) {
 
   if (isCreatePageCommand()) {
     // Create Page
+    String basePage = arguments[4];
+    if (basePage == 'customer') {
+      role = 'customer';
+    } else if (basePage == 'pub') {
+      role = 'pub';
+    } else {
+      role = 'common';
+    }
     pageName = arguments[2];
     createPageStructure();
   } else if (isCreateBottomSheetCommand()) {

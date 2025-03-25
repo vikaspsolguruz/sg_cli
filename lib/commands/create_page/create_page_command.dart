@@ -13,7 +13,7 @@ void createPageStructure() {
   toBeCreated = 'page';
   pagePathType = 'pages';
 
-  contentPath = 'lib/$pagePathType/$pageName';
+  contentPath = 'lib/$pagePathType/$role/$pageName';
   blocPath = '$contentPath/bloc';
   viewPath = '$contentPath/view';
   componentsPath = '$viewPath/components';
