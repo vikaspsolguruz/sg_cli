@@ -11,7 +11,7 @@ class $className extends ${pageClassName}Event {
   const $className();
 
   @override
-  Map<String, String>? getAnalyticParameters() => {};
+  Map<String, dynamic>? getAnalyticParameters() => {};
   
   @override
   String get eventName => '\$runtimeType';

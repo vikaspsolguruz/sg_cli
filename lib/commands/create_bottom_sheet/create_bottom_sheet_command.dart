@@ -9,6 +9,7 @@ import 'package:sg_cli/utils/pubspec_helper.dart';
 
 void createBottomSheetStructure() {
   moduleName = getModuleName();
+  role = '';
 
   toBeCreated = 'bs';
   pagePathType = 'bottom_sheets';

@@ -3,6 +3,10 @@
 import 'package:sg_cli/data/global_vars.dart';
 
 void preparePageImports() {
-  viewImport = "import 'package:$moduleName/$pagePathType/$role/$pageName/view/${pageName}_$toBeCreated.dart';";
-  blocImport = "import 'package:$moduleName/$pagePathType/$role/$pageName/bloc/${pageName}_bloc.dart';";
+  String roleType = '';
+  if(role.isNotEmpty) {
+    roleType = '$role/';
+  }
+  viewImport = "import 'package:$moduleName/$pagePathType/$roleType$pageName/view/${pageName}_$toBeCreated.dart';";
+  blocImport = "import 'package:$moduleName/$pagePathType/$roleType$pageName/bloc/${pageName}_bloc.dart';";
 }
