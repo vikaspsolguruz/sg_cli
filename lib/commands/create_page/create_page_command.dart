@@ -24,16 +24,6 @@ void createPageStructure() {
   createDirectory(viewPath);
   createDirectory(componentsPath);
 
-  // Create BLoC, Event and State files
-  createFile('$blocPath/${pageName}_bloc.dart', generateBlocContent(pageName));
-  createFile('$blocPath/${pageName}_event.dart', generateEventContent(pageName));
-  createFile('$blocPath/${pageName}_state.dart', generateStateContent(pageName));
-
-  // Create View file
-  createFile('$viewPath/${pageName}_$toBeCreated.dart', generateViewContent(pageName));
-
-  print('✅  $pagePathType structure for "$pageName" created successfully!');
-
   // Prepare route data
   final prepared = prepareRouteData();
 
@@ -45,4 +35,14 @@ void createPageStructure() {
   addRouteData();
   // adding contents in route names
   addRouteName();
+
+  // Create BLoC, Event and State files
+  createFile('$blocPath/${pageName}_bloc.dart', generateBlocContent(pageName));
+  createFile('$blocPath/${pageName}_event.dart', generateEventContent(pageName));
+  createFile('$blocPath/${pageName}_state.dart', generateStateContent(pageName));
+
+  // Create View file
+  createFile('$viewPath/${pageName}_$toBeCreated.dart', generateViewContent(pageName));
+
+  print('✅  $pagePathType structure for "$pageName" created successfully!');
 }
