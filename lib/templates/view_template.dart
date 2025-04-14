@@ -6,7 +6,7 @@ String generateViewContent(String pageName) {
   String className = toPascalCase(pageName);
   return '''
 import 'package:flutter/material.dart';
-$viewImport
+$blocImport
 import 'package:$moduleName/widgets/common_appbar.dart';
 
 class ${className}Page extends StatefulWidget {
