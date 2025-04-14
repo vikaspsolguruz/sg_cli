@@ -1,9 +1,10 @@
+import 'package:sg_cli/data/global_vars.dart';
 import 'package:sg_cli/utils/name_helper.dart';
 import 'package:sg_cli/utils/pubspec_helper.dart';
 
 String generateBlocContent(String pageName) {
   String className = toPascalCase(pageName);
-  String variableName = toCamelCase(pageName);
+  variableName = toCamelCase(pageName);
   String moduleName = getModuleName();
 
   return '''

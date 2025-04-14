@@ -17,7 +17,7 @@ class ${className}Page extends StatefulWidget {
 }
 
 class _${className}State extends State<${className}Page> {
-  late final bloc = context.changeMobileNumberBloc;
+  late final bloc = context.${variableName}Bloc;
 
   @override
   Widget build(BuildContext context) {
