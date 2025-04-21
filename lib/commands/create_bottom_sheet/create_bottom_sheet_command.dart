@@ -25,6 +25,11 @@ void createBottomSheetStructure() {
   createDirectory(viewPath);
   createDirectory(componentsPath);
 
+  // Prepare route data
+  final prepared = prepareRouteData();
+
+  if (!prepared) return;
+
   // import lines of view and bloc for appRoutes and route names
   preparePageImports();
   // adding contents in appRoutes
@@ -41,9 +46,4 @@ void createBottomSheetStructure() {
   createFile('$viewPath/${pageName}_$toBeCreated.dart', generateViewContent(pageName));
 
   print('✅  $pagePathType structure for "$pageName" created successfully!');
-
-  // Prepare route data
-  final prepared = prepareRouteData();
-
-  if (!prepared) return;
 }

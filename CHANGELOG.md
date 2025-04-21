@@ -1,6 +1,7 @@
 ## 1.0.3
 
 * Fixed Field 'blocImport' has not been initialized
+* Field 'routesFile' has not been initialized
 
 ## 1.0.2
 
