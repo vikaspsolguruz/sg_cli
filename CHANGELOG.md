@@ -1,3 +1,7 @@
+## 1.0.3
+
+* Fixed Field 'blocImport' has not been initialized
+
 ## 1.0.2
 
 * Improved View file.

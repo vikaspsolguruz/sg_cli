@@ -25,6 +25,13 @@ void createBottomSheetStructure() {
   createDirectory(viewPath);
   createDirectory(componentsPath);
 
+  // import lines of view and bloc for appRoutes and route names
+  preparePageImports();
+  // adding contents in appRoutes
+  addRouteData();
+  // adding contents in route names
+  addRouteName();
+
   // Create BLoC, Event and State files
   createFile('$blocPath/${pageName}_bloc.dart', generateBlocContent(pageName));
   createFile('$blocPath/${pageName}_event.dart', generateEventContent(pageName));
@@ -39,11 +46,4 @@ void createBottomSheetStructure() {
   final prepared = prepareRouteData();
 
   if (!prepared) return;
-
-  // import lines of view and bloc for appRoutes and route names
-  preparePageImports();
-  // adding contents in appRoutes
-  addRouteData();
-  // adding contents in route names
-  addRouteName();
 }
