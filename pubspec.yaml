@@ -8,14 +8,14 @@ environment:
 
 dependencies:
   args: ^2.7.0
-  js: ^0.7.1
+  js: ^0.7.2
   package_config: ^2.2.0
   pub_semver: ^2.2.0
   web: ^1.1.1
 
 dev_dependencies:
-  lints: ^5.1.1
-  test: ^1.25.15
+  lints: ^6.0.0
+  test: ^1.26.2
 
 executables:
   sg:
