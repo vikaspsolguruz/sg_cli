@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:sg_cli/models/sg_config.dart';
@@ -9,21 +8,23 @@ SgConfig? getConfig() {
   try {
     if (pubspec.existsSync()) {
       final lines = pubspec.readAsLinesSync();
-      final version = getValueFromLines(lines: lines, key: 'version');
-      final stateManagement = getValueFromLines(lines: lines, key: 'state_management');
-      final type = getValueFromLines(lines: lines, key: 'type');
-      if (version != null && stateManagement != null && type != null) {
+      final version = getSingleLineValueFromLines(lines: lines, key: 'version');
+      final routePaths = getMultilineValueFromLines(lines: lines, key: 'route_paths') ?? <String>[];
+
+      if (version != null && routePaths.isNotEmpty) {
         final sgConfig = SgConfig(
-          version: double.parse(version),
-          type: type,
-          stateManagement: stateManagement,
+          version: version,
+          routePaths: routePaths,
         );
         return sgConfig;
+      } else {
+        print("❌  Error: Missing data config file sg_cli.yaml");
       }
     } else {
       print("❌  Error: This project doesn't have config file sg_cli.yaml");
     }
   } catch (e) {
+    print(e);
     print("❌  Error: Invalid config file sg_cli.yaml");
     return null;
   }

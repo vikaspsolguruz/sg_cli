@@ -1,13 +1,11 @@
-import 'package:sg_cli/data/global_vars.dart';
+part of '../amber.dart';
 
-import '../utils/name_helper.dart';
-
-String generateViewContent(String pageName) {
+String _generateViewContent(String pageName) {
   String className = toPascalCase(pageName);
   return '''
 import 'package:flutter/material.dart';
-$blocImport
-import 'package:$moduleName/widgets/common_appbar.dart';
+$_blocImport
+import 'package:$_moduleName/widgets/common_appbar.dart';
 
 class ${className}Page extends StatefulWidget {
   const ${className}Page({super.key});
@@ -17,7 +15,7 @@ class ${className}Page extends StatefulWidget {
 }
 
 class _${className}State extends State<${className}Page> {
-  late final bloc = context.${variableName}Bloc;
+  late final bloc = context.${_variableName}Bloc;
 
   @override
   Widget build(BuildContext context) {

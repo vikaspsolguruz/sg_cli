@@ -1,21 +1,18 @@
-import 'package:sg_cli/data/global_vars.dart';
-import 'package:sg_cli/utils/name_helper.dart';
-import 'package:sg_cli/utils/pubspec_helper.dart';
+part of '../amber.dart';
 
-String generateBlocContent(String pageName) {
+String _generateBlocContent(String pageName) {
   String className = toPascalCase(pageName);
-  variableName = toCamelCase(pageName);
+  _variableName = toCamelCase(pageName);
   String moduleName = getModuleName();
 
   return '''
+import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
-import 'package:$moduleName/logger/app_logging.dart';
+import 'package:$moduleName/utils/analytics/main_event.dart';
 import 'package:$moduleName/utils/analytics_helper.dart';
-import 'package:$moduleName/analytics/main_event.dart';
+import 'package:$moduleName/utils/logger/app_logging.dart';
 
 part '${pageName}_event.dart';
 part '${pageName}_state.dart';
@@ -42,12 +39,12 @@ class ${className}Bloc extends Bloc<${className}Event, ${className}State> with L
 }
 
 extension ${className}Extension on BuildContext {
-  ${className}Bloc get ${variableName}Bloc => BlocProvider.of<${className}Bloc>(this);
+  ${className}Bloc get ${_variableName}Bloc => BlocProvider.of<${className}Bloc>(this);
 }
 ''';
 }
 
-String generateEventContent(String pageName) {
+String _generateEventContent(String pageName) {
   String className = toPascalCase(pageName);
   return '''
 part of '${pageName}_bloc.dart';
@@ -61,7 +58,7 @@ abstract class ${className}Event with EquatableMixin implements AnalyticsEvent {
 ''';
 }
 
-String generateStateContent(String pageName) {
+String _generateStateContent(String pageName) {
   String className = toPascalCase(pageName);
   return '''
 part of '${pageName}_bloc.dart';

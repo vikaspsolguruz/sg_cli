@@ -1,4 +1,4 @@
-import 'package:sg_cli/utils/name_helper.dart';
+part of '../amber.dart';
 
 String generateEventContent(String eventName, String pageName) {
   final String className = toPascalCase(eventName);

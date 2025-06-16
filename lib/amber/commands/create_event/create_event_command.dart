@@ -1,21 +1,15 @@
-import 'dart:io';
+part of '../../amber.dart';
 
-import '../../templates/event_template.dart';
-import '../../utils/name_helper.dart';
-
-void createEvent(final String eventName, final String pageName) {
+void _createEvent(final String eventName, final String pageName) {
   String mainFolderPath = '';
-  if (Directory('lib/pages/$pageName').existsSync()) {
-    mainFolderPath = 'lib/pages/$pageName';
-  } else if (Directory('lib/pages/common/$pageName').existsSync()) {
-    mainFolderPath = 'lib/pages/common/$pageName';
-  } else if (Directory('lib/pages/customer/$pageName').existsSync()) {
-    mainFolderPath = 'lib/pages/customer/$pageName';
-  } else if (Directory('lib/pages/pub/$pageName').existsSync()) {
-    mainFolderPath = 'lib/pages/pub/$pageName';
-  } else if (Directory('lib/bottom_sheets/$pageName').existsSync()) {
-    mainFolderPath = 'lib/bottom_sheets/$pageName';
-  } else {
+
+  for (final path in sgConfig.routePaths) {
+    if (Directory("$path/$pageName").existsSync()) {
+      mainFolderPath = "$path/$pageName";
+      break;
+    }
+  }
+  if (mainFolderPath.isEmpty) {
     print('❌  Error: Page folder not found: for $pageName');
     return;
   }
@@ -35,7 +29,7 @@ void createEvent(final String eventName, final String pageName) {
   final String eventClassName = toPascalCase(eventName);
   final String newEventClass = generateEventContent(eventName, pageName);
 
-  if (content.contains('class $eventClassName')) {
+  if (content.contains('class $eventClassName {')) {
     print('⚠️ Event "$eventClassName" already exists in $eventFilePath.');
     return;
   }

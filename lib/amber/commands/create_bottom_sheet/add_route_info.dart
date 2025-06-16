@@ -1,13 +1,11 @@
-import 'package:sg_cli/data/global_vars.dart';
-import 'package:sg_cli/templates/route_name_template.dart';
-import 'package:sg_cli/templates/route_template.dart';
+part of '../../amber.dart';
 
 void addRouteData() {
   // Create line about builder and route with bloc provider
-  final String newRouteEntry = generateRouteEntry(pageName);
+  final String newRouteEntry = _generateRouteEntry(_pageName);
 
   // getting content of app_routes file
-  final String routesContent = routesFile.readAsStringSync();
+  final String routesContent = _routesFile.readAsStringSync();
   // getting lines of app_routes
   final List<String> routesLines = routesContent.split('\n');
 
@@ -15,13 +13,13 @@ void addRouteData() {
   final int lastImportIndex = routesLines.lastIndexWhere((line) => line.startsWith('import '));
 
   // check if view import already exists
-  if (!routesLines.contains(viewImport)) {
-    routesLines.insert(lastImportIndex + 1, viewImport);
+  if (!routesLines.contains(_viewImport)) {
+    routesLines.insert(lastImportIndex + 1, _viewImport);
   }
 
   // check if bloc import already exists
-  if (!routesLines.contains(blocImport)) {
-    routesLines.insert(lastImportIndex + 1, blocImport);
+  if (!routesLines.contains(_blocImport)) {
+    routesLines.insert(lastImportIndex + 1, _blocImport);
   }
 
   // getting index of closing bracket for appRoutes
@@ -36,12 +34,12 @@ void addRouteData() {
   // adding route data in lines
   routesLines.insert(closingBracketIndex, newRouteEntry);
   // inserting lines into appRoutes file
-  routesFile.writeAsStringSync(routesLines.join('\n'));
+  _routesFile.writeAsStringSync(routesLines.join('\n'));
 }
 
 void addRouteName() {
   // Getting content from route_names.dart file
-  final String routeNamesContent = routeNamesFile.readAsStringSync();
+  final String routeNamesContent = _routeNamesFile.readAsStringSync();
   // splitting into lines from code/content
   final List<String> routeNamesLines = routeNamesContent.split('\n');
   // getting index of closing bracket
@@ -52,11 +50,11 @@ void addRouteName() {
     return;
   }
   // Create line about route name
-  final String newRouteNameEntry = generateRouteNameEntry(pageName);
+  final String newRouteNameEntry = _generateRouteNameEntry(_pageName);
   // adding route name in lines
   routeNamesLines.insert(classClosingBracketIndex, newRouteNameEntry);
   // inserting lines into file
-  routeNamesFile.writeAsStringSync(routeNamesLines.join('\n'));
+  _routeNamesFile.writeAsStringSync(routeNamesLines.join('\n'));
 
   print('✅  Route and route name added successfully.');
 }

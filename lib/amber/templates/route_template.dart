@@ -1,6 +1,6 @@
-import 'package:sg_cli/utils/name_helper.dart';
+part of '../amber.dart';
 
-String generateRouteEntry(String pageName) {
+String _generateRouteEntry(String pageName) {
   final String className = toPascalCase(pageName);
   final String constantName = toCamelCase(pageName);
 
