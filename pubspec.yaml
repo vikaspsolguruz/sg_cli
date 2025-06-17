@@ -1,6 +1,6 @@
 name: sg_cli
 description: CLI tool for rapidly generating code for Flutter projects with BLoC.
-version: 1.0.0
+version: 1.0.4
 homepage: "https://github.com/solguruz/sg_cli"
 
 environment:

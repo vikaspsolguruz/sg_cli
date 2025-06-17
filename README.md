@@ -25,10 +25,11 @@ sg create event submit_form in sign_in
 lib
 │
 ├── app_routes
-│       ├── routes.dart
-│       └── route_names.dart
+│       ├── screen_routes.dart
+│       ├── bottom_sheet_routes.dart
+│       └── _route_names.dart
 │
-├── pages
+├── screens
 │   └── sign_in
 │          ├── bloc
 │          │     ├── sign_in_bloc.dart
@@ -38,12 +39,8 @@ lib
 │                ├── sign_in_page.dart
 │                └── components
 │
-├── logger
-│       └── app_logging.dart
 ├── utils
-│       └── analytics_helper.dart
-├── analytics
-│       └── main_event.dart
+│       └── analytics
 │
 └── pubspec.yaml
 ```
