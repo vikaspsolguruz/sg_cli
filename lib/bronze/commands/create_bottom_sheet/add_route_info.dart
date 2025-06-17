@@ -1,4 +1,4 @@
-part of '../../amber.dart';
+part of '../../bronze.dart';
 
 void _addRouteData() {
   // Create line about builder and route with bloc provider
@@ -23,11 +23,11 @@ void _addRouteData() {
   }
 
   // getting index of closing bracket for appRoutes
-  final int closingBracketIndex = routesLines.lastIndexWhere((line) => line.trim() == '};');
+  final int closingBracketIndex = routesLines.lastIndexWhere((line) => line.trim() == '];');
 
   // checking if index of closing bracket is not wrong
   if (closingBracketIndex == -1) {
-    print('❌  Error: Could not find closing bracket for appRoutes.');
+    print('❌  Error: Could not find closing bracket for screen routes.');
     return;
   }
 

@@ -1,4 +1,4 @@
-part of '../amber.dart';
+part of '../bronze.dart';
 
 void _preparePageImports() {
   String roleType = '';

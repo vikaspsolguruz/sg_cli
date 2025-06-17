@@ -1,3 +1,8 @@
+## 1.0.4
+
+* Named first version 'Amber'
+* Added new version 'Bronze' with Advanced Routing and Bloc
+
 ## 1.0.3
 
 * Fixed Field 'blocImport' has not been initialized

@@ -23,11 +23,11 @@ void _createPageStructure() {
   if (!prepared) return;
 
   // import lines of view and bloc for appRoutes and route names
-  preparePageImports();
+  _preparePageImports();
   // adding contents in appRoutes
-  addRouteData();
+  _addRouteData();
   // adding contents in route names
-  addRouteName();
+  _addRouteName();
 
   // Create BLoC, Event and State files
   createFile('$_blocPath/${_pageName}_bloc.dart', _generateBlocContent(_pageName));

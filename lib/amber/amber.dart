@@ -22,10 +22,10 @@ part 'utils/prepare_route_data.dart';
 class Amber {
   Amber._();
 
-  static runCommand() {
-    bool isCreatePageCommand() => arguments.length == 5 && arguments[3] == 'in' && arguments[0] == 'create' && arguments[1] == 'page';
-    bool isCreateBottomSheetCommand() => arguments.length == 3 && arguments[0] == 'create' && arguments[1] == 'bs';
-    bool isCreateEventCommand() => arguments.length == 5 && arguments[0] == 'create' && arguments[1] == 'event' && arguments[3] == 'in';
+  static void runCommand() {
+    bool isCreatePageCommand = arguments.length == 5 && arguments[3] == 'in' && arguments[0] == 'create' && arguments[1] == 'page';
+    bool isCreateBottomSheetCommand = arguments.length == 3 && arguments[0] == 'create' && arguments[1] == 'bs';
+    bool isCreateEventCommand = arguments.length == 5 && arguments[0] == 'create' && arguments[1] == 'event' && arguments[3] == 'in';
 
     if (arguments.isEmpty) {
       print('❌  Error: No command provided.');
@@ -37,7 +37,7 @@ class Amber {
       return;
     }
 
-    if (isCreatePageCommand()) {
+    if (isCreatePageCommand) {
       // Check if page is available in these paths and then Create Page
       String basePage = arguments[4];
       if (basePage == 'customer') {
@@ -52,11 +52,11 @@ class Amber {
       }
       _pageName = arguments[2];
       _createPageStructure();
-    } else if (isCreateBottomSheetCommand()) {
+    } else if (isCreateBottomSheetCommand) {
       // Create Bottom Sheet
       _pageName = arguments[2];
       _createBottomSheetStructure();
-    } else if (isCreateEventCommand()) {
+    } else if (isCreateEventCommand) {
       // Create Event
       final String eventName = arguments[2];
       final String pageName = arguments[4];

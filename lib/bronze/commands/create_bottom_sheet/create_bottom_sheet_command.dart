@@ -1,6 +1,15 @@
-part of '../../amber.dart';
+part of '../../bronze.dart';
 
 void _createBottomSheetStructure() {
+  // Prepare route data
+  final prepared = _prepareRouteData();
+  if (!prepared) return;
+
+  final isAlreadyExists = _checkExistingRoute();
+  if (isAlreadyExists) {
+    print('❌ Error: Route already exists');
+    return;
+  }
   _moduleName = getModuleName();
   _role = '';
 
@@ -18,11 +27,6 @@ void _createBottomSheetStructure() {
   createDirectory(_viewPath);
   createDirectory(_componentsPath);
 
-  // Prepare route data
-  final prepared = _prepareRouteData();
-
-  if (!prepared) return;
-
   // import lines of view and bloc for appRoutes and route names
   _preparePageImports();
   // adding contents in appRoutes
@@ -36,7 +40,7 @@ void _createBottomSheetStructure() {
   createFile('$_blocPath/${_pageName}_state.dart', _generateStateContent(_pageName));
 
   // Create View file
-  createFile('$_viewPath/${_pageName}_$_toBeCreated.dart', _generateViewContent(_pageName));
+  createFile('$_viewPath/${_pageName}_$_toBeCreated.dart', _generateBottomSheetContent(_pageName));
 
   print('✅  $_pagePathType structure for "$_pageName" created successfully!');
 }
