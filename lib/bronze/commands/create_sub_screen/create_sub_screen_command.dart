@@ -30,7 +30,7 @@ void _createSubScreenStructure() {
   // import lines of view and bloc for appRoutes and route names
   _preparePageImports();
   // adding contents in appRoutes
-  _addRouteData(parentPageName: _parentPageName);
+  _addSubRouteData(subPageName: _pageName, parentPageName: _parentPageName);
   // adding contents in route names
   _addRouteName(parentPageName: _parentPageName);
 

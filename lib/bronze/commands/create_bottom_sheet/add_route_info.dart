@@ -1,41 +1,5 @@
 part of '../../bronze.dart';
 
-void _addRouteData({String? parentPageName}) {
-  // Create line about builder and route with bloc provider
-  final String newRouteEntry = _generateRouteEntry(_pageName);
-
-  // getting content of app_routes file
-  final String routesContent = _routesFile.readAsStringSync();
-  // getting lines of app_routes
-  final List<String> routesLines = routesContent.split('\n');
-
-  // getting index of last import
-  final int lastImportIndex = routesLines.lastIndexWhere((line) => line.startsWith('import '));
-
-  // check if view import already exists
-  if (!routesLines.contains(_viewImport)) {
-    routesLines.insert(lastImportIndex + 1, _viewImport);
-  }
-
-  // check if bloc import already exists
-  if (!routesLines.contains(_blocImport)) {
-    routesLines.insert(lastImportIndex + 1, _blocImport);
-  }
-
-  // getting index of closing bracket for appRoutes
-  final int closingBracketIndex = routesLines.lastIndexWhere((line) => line.trim() == '];');
-
-  // checking if index of closing bracket is not wrong
-  if (closingBracketIndex == -1) {
-    print('❌  Error: Could not find closing bracket for screen routes.');
-    return;
-  }
-
-  // adding route data in lines
-  routesLines.insert(closingBracketIndex, newRouteEntry);
-  // inserting lines into appRoutes file
-  _routesFile.writeAsStringSync(routesLines.join('\n'));
-}
 
 void _addRouteName({String? parentPageName}) {
   // Getting content from route_names.dart file

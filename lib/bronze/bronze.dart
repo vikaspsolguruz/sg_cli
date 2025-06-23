@@ -17,6 +17,7 @@ part 'templates/event_template.dart';
 part 'templates/route_name_template.dart';
 part 'templates/route_template.dart';
 part 'templates/view_template.dart';
+part 'utils/add_route_data.dart';
 part 'utils/check_existing_route.dart';
 part 'utils/prepare_page_imports.dart';
 part 'utils/prepare_route_data.dart';
