@@ -1,6 +1,6 @@
 part of '../../bronze.dart';
 
-void _createPageStructure() {
+void _createScreenStructure() {
   // Prepare route data
   final prepared = _prepareRouteData();
   if (!prepared) return;

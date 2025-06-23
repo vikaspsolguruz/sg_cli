@@ -1,6 +1,13 @@
 part of '../bronze.dart';
 
-String _generateRouteNameEntry(String pageName) {
+String _generateRouteNameEntry(String pageName, {String? parentPageName}) {
   final String constantName = toCamelCase(pageName);
-  return "  static const String $constantName = '/$pageName';";
+  String path;
+  if (parentPageName != null) {
+    path = "$parentPageName/$pageName";
+  } else {
+    path = "/$pageName";
+  }
+
+  return "  static const String $constantName = '$path';";
 }

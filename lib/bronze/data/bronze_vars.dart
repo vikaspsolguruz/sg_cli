@@ -4,6 +4,7 @@ part of '../bronze.dart';
 late String _moduleName;
 late String _role;
 late String _pageName; // name of the page/bottom sheet
+late String _parentPageName;
 late String _variableName;
 
 late String _toBeCreated;

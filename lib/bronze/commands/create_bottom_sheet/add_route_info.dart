@@ -1,6 +1,6 @@
 part of '../../bronze.dart';
 
-void _addRouteData() {
+void _addRouteData({String? parentPageName}) {
   // Create line about builder and route with bloc provider
   final String newRouteEntry = _generateRouteEntry(_pageName);
 
@@ -37,7 +37,7 @@ void _addRouteData() {
   _routesFile.writeAsStringSync(routesLines.join('\n'));
 }
 
-void _addRouteName() {
+void _addRouteName({String? parentPageName}) {
   // Getting content from route_names.dart file
   final String routeNamesContent = _routeNamesFile.readAsStringSync();
   // splitting into lines from code/content
@@ -50,7 +50,7 @@ void _addRouteName() {
     return;
   }
   // Create line about route name
-  final String newRouteNameEntry = _generateRouteNameEntry(_pageName);
+  final String newRouteNameEntry = _generateRouteNameEntry(_pageName, parentPageName: parentPageName);
   // adding route name in lines
   routeNamesLines.insert(classClosingBracketIndex, newRouteNameEntry);
   // inserting lines into file

@@ -8,8 +8,9 @@ import 'package:sg_cli/utils/validate_command.dart';
 
 part 'commands/create_bottom_sheet/add_route_info.dart';
 part 'commands/create_bottom_sheet/create_bottom_sheet_command.dart';
-part 'commands/create_page/create_page_command.dart';
 part 'commands/create_event/create_event_command.dart';
+part 'commands/create_screen/create_screen_command.dart';
+part 'commands/create_sub_screen/create_sub_screen_command.dart';
 part 'data/bronze_vars.dart';
 part 'templates/bloc_template.dart';
 part 'templates/event_template.dart';
@@ -24,7 +25,8 @@ class Bronze {
   Bronze._();
 
   static void runCommand() {
-    bool isCreatePageCommand = arguments.length == 3 && arguments[0] == 'create' && arguments[1] == 'screen';
+    bool isCreateScreenCommand = arguments.length == 3 && arguments[0] == 'create' && arguments[1] == 'screen';
+    bool isCreateSubScreenCommand = arguments.length == 5 && arguments[0] == 'create' && arguments[1] == 'sub_screen' && arguments[3] == 'in';
     bool isCreateBottomSheetCommand = arguments.length == 3 && arguments[0] == 'create' && arguments[1] == 'bs';
     bool isCreateEventCommand = arguments.length == 5 && arguments[0] == 'create' && arguments[1] == 'event' && arguments[3] == 'in';
 
@@ -38,9 +40,13 @@ class Bronze {
       return;
     }
 
-    if (isCreatePageCommand) {
+    if (isCreateScreenCommand) {
       _pageName = arguments[2];
-      _createPageStructure();
+      _createScreenStructure();
+    } else if (isCreateSubScreenCommand) {
+      _pageName = arguments[2];
+      _parentPageName = arguments[4];
+      _createSubScreenStructure();
     } else if (isCreateBottomSheetCommand) {
       _pageName = arguments[2];
       _createBottomSheetStructure();
