@@ -1,7 +1,11 @@
 part of '../bronze.dart';
 
-bool _prepareRouteData() {
-  _routesFilePath = 'lib/app_routes/screen_routes.dart';
+bool _prepareRouteData({bool isBottomSheet = false}) {
+  if (isBottomSheet) {
+    _routesFilePath = 'lib/app_routes/bottom_sheet_routes.dart';
+  } else {
+    _routesFilePath = 'lib/app_routes/screen_routes.dart';
+  }
   _routeNamesFilePath = 'lib/app_routes/_route_names.dart';
 
   _routesFile = File(_routesFilePath);

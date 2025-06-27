@@ -2,7 +2,7 @@ part of '../../bronze.dart';
 
 void _createBottomSheetStructure() {
   // Prepare route data
-  final prepared = _prepareRouteData();
+  final prepared = _prepareRouteData(isBottomSheet: true);
   if (!prepared) return;
 
   final isAlreadyExists = _checkExistingRoute();
@@ -30,7 +30,7 @@ void _createBottomSheetStructure() {
   // import lines of view and bloc for appRoutes and route names
   _preparePageImports();
   // adding contents in appRoutes
-  _addRouteData();
+  _addRouteData(isBottomSheet: true);
   // adding contents in route names
   _addRouteName();
 

@@ -1,6 +1,6 @@
 part of '../bronze.dart';
 
-String _generateRouteEntry(String pageName, {bool isIndented = false}) {
+String _generateRouteEntry(String pageName, {bool isIndented = false, bool isBottomSheet = false}) {
   final String className = toPascalCase(pageName);
   final String constantName = toCamelCase(pageName);
   final indent = isIndented ? '        ' : '    ';
@@ -9,7 +9,7 @@ String _generateRouteEntry(String pageName, {bool isIndented = false}) {
 $indent    name: Routes.$constantName,
 $indent    blocProvider: BlocPageProvider<${className}Bloc>(
 $indent      bloc: (context) => ${className}Bloc(),
-$indent      page: const ${className}Screen(),
+$indent      page: const $className${isBottomSheet ? 'BottomSheet' : 'Screen'}(),
 $indent    ),
 $indent  ),''';
 }
