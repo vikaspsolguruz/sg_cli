@@ -1,4 +1,4 @@
-part of '../../bronze.dart';
+part of '../bronze.dart';
 
 
 void _addRouteName({String? parentPageName}) {

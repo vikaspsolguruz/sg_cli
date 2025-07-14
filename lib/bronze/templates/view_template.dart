@@ -54,3 +54,30 @@ class _${className}State extends State<${className}BottomSheet> {
 }
 ''';
 }
+
+String _generateDialogContent(String pageName) {
+  String className = toPascalCase(pageName);
+  return '''
+import 'package:flutter/material.dart';
+$_blocImport
+
+class ${className}Dialog extends StatefulWidget {
+  const ${className}Dialog({super.key});
+
+  @override
+  State<${className}Dialog> createState() => _${className}State();
+}
+
+class _${className}State extends State<${className}Dialog> {
+  late final bloc = context.${_variableName}Bloc;
+
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.all(20),
+      child: Text("$className Dialog"),
+    );
+  }
+}
+''';
+}

@@ -1,8 +1,8 @@
 part of '../bronze.dart';
 
-void _addRouteData({bool isBottomSheet = false}) {
+void _addRouteData({bool isBottomSheet = false, bool isDialog = false}) {
   // Create line about builder and route with bloc provider
-  final String newRouteEntry = _generateRouteEntry(_pageName,isBottomSheet: isBottomSheet);
+  final String newRouteEntry = _generateRouteEntry(_pageName,isBottomSheet: isBottomSheet, isDialog: isDialog);
 
   // getting content of app_routes file
   final String routesContent = _routesFile.readAsStringSync();

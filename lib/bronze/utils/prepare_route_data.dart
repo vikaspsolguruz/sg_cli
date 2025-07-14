@@ -1,8 +1,10 @@
 part of '../bronze.dart';
 
-bool _prepareRouteData({bool isBottomSheet = false}) {
+bool _prepareRouteData({bool isBottomSheet = false, bool isDialog = false}) {
   if (isBottomSheet) {
     _routesFilePath = 'lib/app_routes/bottom_sheet_routes.dart';
+  } else if (isDialog) {
+    _routesFilePath = 'lib/app_routes/dialog_routes.dart';
   } else {
     _routesFilePath = 'lib/app_routes/screen_routes.dart';
   }
