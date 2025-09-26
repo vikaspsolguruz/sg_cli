@@ -3,15 +3,8 @@ include: package:lints/recommended.yaml
 linter:
   rules:
     - camel_case_types
-    - always_use_package_imports
 
 analyzer:
   exclude:
     - path/to/excluded/files/**
-  errors:
-    always_use_package_imports: error
-
-formatter:
-  page_width: 180
-  trailing_commas: preserve
 
