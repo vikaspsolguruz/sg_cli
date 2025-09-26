@@ -189,40 +189,80 @@ void _runPubGet() {
 // Helper functions
 
 String getBoilerplatePath() {
-  // Find the boilerplate folder relative to where this script is actually located
-  // Platform.script gives us the URI of the currently running script
-
+  // Smart path resolution that works for both local and git activation
   final scriptUri = Platform.script;
-  final scriptPath = scriptUri.toFilePath();
-  final scriptDir = Directory(scriptPath).parent;
+  print('🔍  Script URI: $scriptUri');
+  
+  // Different strategies based on how the CLI was activated
+  if (scriptUri.toString().contains('.pub-cache/global_packages/sg_cli')) {
+    // Git activation - try to find the actual source repository
+    print('📦  Detected git activation');
+    return _findBoilerplateForGitActivation();
+  } else if (scriptUri.toString().contains('.dart_tool/pub/bin')) {
+    // Local activation - navigate from .dart_tool back to project root
+    print('🏠  Detected local activation');
+    return _findBoilerplateForLocalActivation(scriptUri);
+  } else {
+    // Direct execution from bin/ directory
+    print('⚡  Detected direct execution');
+    return _findBoilerplateForDirectExecution(scriptUri);
+  }
+}
 
+String _findBoilerplateForGitActivation() {
+  // For git activation, the templates should be in the downloaded git source
+  // Since lib/ isn't cached, we need to find where git downloaded the source
+  
+  // Try to find git source in common locations
   final possibilities = [
-    // For pub global activated: navigate from .dart_tool/pub/bin/sg_cli back to package root
-    '${scriptDir.parent.parent.parent.parent.path}/lib/versions/cyan/commands/init/boilerplate',
-    // Try relative to the script location (for development/local setup)
-    '${scriptDir.path}/lib/versions/cyan/commands/init/boilerplate',
-    // Try from the package root if script is in bin/
-    '${scriptDir.parent.path}/lib/versions/cyan/commands/init/boilerplate',
-    // Try if we're running from a pub global activated package (alternative path)
-    '${scriptDir.parent.parent.path}/lib/versions/cyan/commands/init/boilerplate',
-    // Final fallback - try relative to current working directory
-    '${Directory.current.path}/lib/versions/cyan/commands/init/boilerplate',
+    // In user's home .pub-cache/git/ directory
+    '${Platform.environment['HOME']}/.pub-cache/git/sg_cli*/lib/versions/cyan/commands/init/boilerplate',
+    // Alternative git cache locations
+    '${Platform.environment['HOME']}/.pub-cache/git/cache/sg_cli*/lib/versions/cyan/commands/init/boilerplate',
   ];
-
-  for (final path in possibilities) {
-    final boilerplateDir = Directory(path);
-    if (boilerplateDir.existsSync()) {
-      return path;
+  
+  for (final pathPattern in possibilities) {
+    final dirs = Directory(pathPattern.split('*')[0]).parent;
+    if (dirs.existsSync()) {
+      for (final dir in dirs.listSync()) {
+        if (dir is Directory && dir.path.contains('sg_cli')) {
+          final fullPath = '${dir.path}/lib/versions/cyan/commands/init/boilerplate';
+          if (Directory(fullPath).existsSync()) {
+            print('✅  Found git source templates: $fullPath');
+            return fullPath;
+          }
+        }
+      }
     }
   }
+  
+  throw Exception('Git activation: Cannot find sg_cli source templates. This is a known limitation - please use local activation for init command.');
+}
 
-  // Debug: Show what paths we tried
-  print('🔍  Searched paths:');
-  for (final path in possibilities) {
-    print('    - $path');
+String _findBoilerplateForLocalActivation(Uri scriptUri) {
+  final scriptPath = scriptUri.toFilePath();
+  final projectRoot = scriptPath.split('.dart_tool')[0];
+  final templatePath = '${projectRoot}lib/versions/cyan/commands/init/boilerplate';
+  
+  if (Directory(templatePath).existsSync()) {
+    print('✅  Found local templates: $templatePath');
+    return templatePath;
   }
+  
+  throw Exception('Local activation: Templates not found at $templatePath');
+}
 
-  throw Exception('Architecture templates not found. Make sure sg_cli is properly installed.');
+String _findBoilerplateForDirectExecution(Uri scriptUri) {
+  final scriptPath = scriptUri.toFilePath();
+  final scriptDir = Directory(scriptPath).parent;
+  final templatePath = '${scriptDir.parent.path}/lib/versions/cyan/commands/init/boilerplate';
+  
+  if (Directory(templatePath).existsSync()) {
+    print('✅  Found direct execution templates: $templatePath');
+    return templatePath;
+  }
+  
+  throw Exception('Direct execution: Templates not found at $templatePath');
 }
 
 void _copyDirectory(Directory source, Directory target) {
