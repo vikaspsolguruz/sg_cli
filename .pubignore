@@ -1,14 +1,15 @@
-# Explicitly include lib directory and templates
+# Explicitly include important directories
 !lib/
-!lib/templates/
-!lib/templates/**
 !lib/versions/
 !lib/versions/**
+!templates/
+!templates/**
+!bin/
 
 # Exclude only specific things we don't want
 .DS_Store
 .idea/
 .dart_tool/
-/lib/versions/cyan/commands/init/boilerplate/.dart_tool/
-/lib/versions/cyan/commands/init/boilerplate/pubspec.lock
-/lib/versions/cyan/commands/init/boilerplate/.flutter-plugins-dependencies
+/templates/cyan/boilerplate/.dart_tool/
+/templates/cyan/boilerplate/pubspec.lock
+/templates/cyan/boilerplate/.flutter-plugins-dependencies
