@@ -19,8 +19,3 @@ dev_dependencies:
 
 executables:
   sg:
-
-# Include template files in the package
-flutter:
-  assets:
-    - templates/
