@@ -19,3 +19,6 @@ dev_dependencies:
 
 executables:
   sg:
+
+# Flutter section may be required for proper dart pub global activate packaging
+flutter:
