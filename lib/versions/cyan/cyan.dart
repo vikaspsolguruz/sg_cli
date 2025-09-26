@@ -11,6 +11,7 @@ part 'commands/create_dialog/create_dialog_command.dart';
 part 'commands/create_event/create_event_command.dart';
 part 'commands/create_screen/create_screen_command.dart';
 part 'commands/create_sub_screen/create_sub_screen_command.dart';
+part 'commands/init/init_command.dart';
 part 'data/cyan_vars.dart';
 part 'templates/bloc_template.dart';
 part 'templates/event_template.dart';
@@ -27,6 +28,7 @@ class Cyan {
   Cyan._();
 
   static void runCommand() {
+    bool isInitCommand = arguments.length == 1 && arguments[0] == 'init';
     bool isCreateScreenCommand = arguments.length == 3 && arguments[0] == 'create' && arguments[1] == 'screen';
     bool isCreateSubScreenCommand = arguments.length == 5 && arguments[0] == 'create' && arguments[1] == 'sub_screen' && arguments[3] == 'in';
     bool isCreateBottomSheetCommand = arguments.length == 3 && arguments[0] == 'create' && arguments[1] == 'bs';
@@ -43,6 +45,11 @@ class Cyan {
       return;
     }
 
+    if (isInitCommand) {
+      // Initialize Project
+      _initProject();
+      return;
+    }
     if (isCreateScreenCommand) {
       // Create Screen
       _pageName = arguments[2];

@@ -1,0 +1,21 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+  errors:
+    #    must_be_immutable: ignore
+    invalid_use_of_visible_for_testing_member: ignore
+    always_use_package_imports: warning
+
+formatter:
+  page_width: 180
+  trailing_commas: preserve
+
+
+linter:
+  rules:
+    prefer_const_literals_to_create_immutables: true
+    prefer_const_constructors: true
+    prefer_const_declarations: true
+    avoid_redundant_argument_values: true
+    always_use_package_imports: true

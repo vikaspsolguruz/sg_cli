@@ -2,3 +2,6 @@
 /.idea/
 /.dart_tool/
 /.idea
+/lib/versions/cyan/commands/init/boilerplate/.dart_tool/
+/lib/versions/cyan/commands/init/boilerplate/pubspec.lock
+/lib/versions/cyan/commands/init/boilerplate/.flutter-plugins-dependencies
