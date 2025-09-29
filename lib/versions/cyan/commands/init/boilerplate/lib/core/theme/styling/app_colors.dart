@@ -1,173 +1,5 @@
 import 'package:flutter/material.dart';
 
-const MaterialColor brand = MaterialColor(0xFFE36B14, <int, Color>{
-  50: Color(0xFFFEF8EE),
-  100: Color(0xFFFEF0D6),
-  200: Color(0xFFFBDDAD),
-  300: Color(0xFFF8C479),
-  400: Color(0xFFF4A143),
-  500: Color(0xFFF1841E),
-  600: Color(0xFFE36B14), // This is typically your primary color
-  700: Color(0xFFBC5112),
-  800: Color(0xFF954017),
-  900: Color(0xFF783716),
-  950: Color(0xFF411E0C),
-});
-
-const MaterialColor greenSecondary = MaterialColor(0xFF3DB688, <int, Color>{
-  50: Color(0xFFF1FAF7),
-  100: Color(0xFFDEF4EC),
-  200: Color(0xFFBFEAD9),
-  300: Color(0xFF8ED9BC),
-  400: Color(0xFF58C79D),
-  500: Color(0xFF3DB688), // This is typically your primary color
-  600: Color(0xFF339871),
-  700: Color(0xFF287758),
-  800: Color(0xFF1F5C45),
-  900: Color(0xFF194A37),
-  950: Color(0xFF0F2C20),
-});
-
-const MaterialColor indigo = MaterialColor(0xFF6366F1, <int, Color>{
-  50: Color(0xFFEEF2FF),
-  100: Color(0xFFE0E7FF),
-  200: Color(0xFFC7D2FE),
-  300: Color(0xFFA5B4FC),
-  400: Color(0xFF818CF8),
-  500: Color(0xFF6366F1), // This is typically your primary color
-  600: Color(0xFF4F46E5),
-  700: Color(0xFF4338CA),
-  800: Color(0xFF3730A3),
-  900: Color(0xFF312E81),
-  950: Color(0xFF122368),
-});
-
-const MaterialColor yellow = MaterialColor(0xFFF59E0B, <int, Color>{
-  50: Color(0xFFFFFBEB),
-  100: Color(0xFFFEF3C7),
-  200: Color(0xFFFDE68A),
-  300: Color(0xFFFDE047),
-  400: Color(0xFFFBBF24),
-  500: Color(0xFFF59E0B), // This is typically your primary color
-  600: Color(0xFFD97706),
-  700: Color(0xFFB45309),
-  800: Color(0xFF92400E),
-  900: Color(0xFF78350F),
-  950: Color(0xFF451A03),
-});
-
-const MaterialColor red = MaterialColor(0xFFDC2626, <int, Color>{
-  50: Color(0xFFFEF2F2),
-  100: Color(0xFFFEE2E2),
-  200: Color(0xFFFECACA),
-  300: Color(0xFFFCA5A5),
-  400: Color(0xFFF87171),
-  500: Color(0xFFDC2626), // This is typically your primary color
-  600: Color(0xFFDC2626),
-  700: Color(0xFFB91C1C),
-  800: Color(0xFF991B1B),
-  900: Color(0xFF7F1D1D),
-  950: Color(0xFF451A03),
-});
-
-const MaterialColor green = MaterialColor(0xFF22C55E, <int, Color>{
-  50: Color(0xFFF0FDF4),
-  100: Color(0xFFDCFCE7),
-  200: Color(0xFFBBF7D0),
-  300: Color(0xFF86EFAC),
-  400: Color(0xFF4ADE80),
-  500: Color(0xFF22C55E), // This is typically your primary color
-  600: Color(0xFF16A34A),
-  700: Color(0xFF15803D),
-  800: Color(0xFF166534),
-  900: Color(0xFF14532D),
-  950: Color(0xFF052E16),
-});
-
-const MaterialColor lime = MaterialColor(0xFF84CC16, <int, Color>{
-  50: Color(0xFFF7FEE7),
-  100: Color(0xFFECFCCB),
-  200: Color(0xFFD9F99D),
-  300: Color(0xFFBEF264),
-  400: Color(0xFFA3E635),
-  500: Color(0xFF84CC16), // This is typically your primary color
-  600: Color(0xFF65A30D),
-  700: Color(0xFF4D7C0F),
-  800: Color(0xFF3F6212),
-  900: Color(0xFF365314),
-  950: Color(0xFF1B290A),
-});
-
-const MaterialColor purple = MaterialColor(0xFFA855F7, <int, Color>{
-  50: Color(0xFFFAF5FF),
-  100: Color(0xFFF3E8FF),
-  200: Color(0xFFE9D5FF),
-  300: Color(0xFFD8B4FE),
-  400: Color(0xFFC084FC),
-  500: Color(0xFFA855F7), // This is typically your primary color
-  600: Color(0xFF9333EA),
-  700: Color(0xFF7E22CE),
-  800: Color(0xFF6B21A8),
-  900: Color(0xFF581C87),
-  950: Color(0xFF32104C),
-});
-
-const MaterialColor fuchsia = MaterialColor(0xFFD946EF, <int, Color>{
-  50: Color(0xFFFDF4FF),
-  100: Color(0xFFFAE8FF),
-  200: Color(0xFFF5D0FE),
-  300: Color(0xFFF0ABFC),
-  400: Color(0xFFE879F9),
-  500: Color(0xFFD946EF), // This is typically your primary color
-  600: Color(0xFFC026D3),
-  700: Color(0xFFA21CAF),
-  800: Color(0xFF86198F),
-  900: Color(0xFF701A75),
-  950: Color(0xFF4A044E),
-});
-
-const MaterialColor pink = MaterialColor(0xFFEC4899, <int, Color>{
-  50: Color(0xFFFDF2F8),
-  100: Color(0xFFFCE7F3),
-  200: Color(0xFFFBCFE8),
-  300: Color(0xFFF9A8D4),
-  400: Color(0xFFF472B6),
-  500: Color(0xFFEC4899), // This is typically your primary color
-  600: Color(0xFFDB2777),
-  700: Color(0xFFBE185D),
-  800: Color(0xFF9D174D),
-  900: Color(0xFF831843),
-  950: Color(0xFF500724),
-});
-
-const MaterialColor neutral = MaterialColor(0xFF7C7C7C, <int, Color>{
-  50: Color(0xFFF8F8F8),
-  100: Color(0xFFF2F2F2),
-  200: Color(0xFFDCDCDC),
-  300: Color(0xFFBDBDBD),
-  400: Color(0xFF989898),
-  500: Color(0xFF7C7C7C), // This is typically your primary color
-  600: Color(0xFF656565),
-  700: Color(0xFF525252),
-  800: Color(0xFF464646),
-  900: Color(0xFF262626),
-  950: Color(0xFF1F1F1F),
-});
-
-const MaterialColor dark = MaterialColor(0xFF2C2D31, <int, Color>{
-  50: Color(0xFF3D3D41),
-  100: Color(0xFF38393C),
-  200: Color(0xFF36363A),
-  300: Color(0xFF333437),
-  400: Color(0xFF2E2F33),
-  500: Color(0xFF2C2D31), // This is typically your primary color
-  600: Color(0xFF272820),
-  700: Color(0xFF25262A),
-  800: Color(0xFF232427),
-  900: Color(0xFF1E1F23),
-  950: Color(0xFF121317),
-});
-
 class AppColors {
   static final AppColors _darkInstance = AppColors._internal(true);
   static final AppColors _lightInstance = AppColors._internal(false);
@@ -459,3 +291,171 @@ class AppColors {
   // Shadows
   Color get dropShadowSmall => const Color(0xFF555555);
 }
+
+const MaterialColor brand = MaterialColor(0xFFE36B14, <int, Color>{
+  50: Color(0xFFFEF8EE),
+  100: Color(0xFFFEF0D6),
+  200: Color(0xFFFBDDAD),
+  300: Color(0xFFF8C479),
+  400: Color(0xFFF4A143),
+  500: Color(0xFFF1841E),
+  600: Color(0xFFE36B14), // This is typically your primary color
+  700: Color(0xFFBC5112),
+  800: Color(0xFF954017),
+  900: Color(0xFF783716),
+  950: Color(0xFF411E0C),
+});
+
+const MaterialColor greenSecondary = MaterialColor(0xFF3DB688, <int, Color>{
+  50: Color(0xFFF1FAF7),
+  100: Color(0xFFDEF4EC),
+  200: Color(0xFFBFEAD9),
+  300: Color(0xFF8ED9BC),
+  400: Color(0xFF58C79D),
+  500: Color(0xFF3DB688), // This is typically your primary color
+  600: Color(0xFF339871),
+  700: Color(0xFF287758),
+  800: Color(0xFF1F5C45),
+  900: Color(0xFF194A37),
+  950: Color(0xFF0F2C20),
+});
+
+const MaterialColor indigo = MaterialColor(0xFF6366F1, <int, Color>{
+  50: Color(0xFFEEF2FF),
+  100: Color(0xFFE0E7FF),
+  200: Color(0xFFC7D2FE),
+  300: Color(0xFFA5B4FC),
+  400: Color(0xFF818CF8),
+  500: Color(0xFF6366F1), // This is typically your primary color
+  600: Color(0xFF4F46E5),
+  700: Color(0xFF4338CA),
+  800: Color(0xFF3730A3),
+  900: Color(0xFF312E81),
+  950: Color(0xFF122368),
+});
+
+const MaterialColor yellow = MaterialColor(0xFFF59E0B, <int, Color>{
+  50: Color(0xFFFFFBEB),
+  100: Color(0xFFFEF3C7),
+  200: Color(0xFFFDE68A),
+  300: Color(0xFFFDE047),
+  400: Color(0xFFFBBF24),
+  500: Color(0xFFF59E0B), // This is typically your primary color
+  600: Color(0xFFD97706),
+  700: Color(0xFFB45309),
+  800: Color(0xFF92400E),
+  900: Color(0xFF78350F),
+  950: Color(0xFF451A03),
+});
+
+const MaterialColor red = MaterialColor(0xFFDC2626, <int, Color>{
+  50: Color(0xFFFEF2F2),
+  100: Color(0xFFFEE2E2),
+  200: Color(0xFFFECACA),
+  300: Color(0xFFFCA5A5),
+  400: Color(0xFFF87171),
+  500: Color(0xFFDC2626), // This is typically your primary color
+  600: Color(0xFFDC2626),
+  700: Color(0xFFB91C1C),
+  800: Color(0xFF991B1B),
+  900: Color(0xFF7F1D1D),
+  950: Color(0xFF451A03),
+});
+
+const MaterialColor green = MaterialColor(0xFF22C55E, <int, Color>{
+  50: Color(0xFFF0FDF4),
+  100: Color(0xFFDCFCE7),
+  200: Color(0xFFBBF7D0),
+  300: Color(0xFF86EFAC),
+  400: Color(0xFF4ADE80),
+  500: Color(0xFF22C55E), // This is typically your primary color
+  600: Color(0xFF16A34A),
+  700: Color(0xFF15803D),
+  800: Color(0xFF166534),
+  900: Color(0xFF14532D),
+  950: Color(0xFF052E16),
+});
+
+const MaterialColor lime = MaterialColor(0xFF84CC16, <int, Color>{
+  50: Color(0xFFF7FEE7),
+  100: Color(0xFFECFCCB),
+  200: Color(0xFFD9F99D),
+  300: Color(0xFFBEF264),
+  400: Color(0xFFA3E635),
+  500: Color(0xFF84CC16), // This is typically your primary color
+  600: Color(0xFF65A30D),
+  700: Color(0xFF4D7C0F),
+  800: Color(0xFF3F6212),
+  900: Color(0xFF365314),
+  950: Color(0xFF1B290A),
+});
+
+const MaterialColor purple = MaterialColor(0xFFA855F7, <int, Color>{
+  50: Color(0xFFFAF5FF),
+  100: Color(0xFFF3E8FF),
+  200: Color(0xFFE9D5FF),
+  300: Color(0xFFD8B4FE),
+  400: Color(0xFFC084FC),
+  500: Color(0xFFA855F7), // This is typically your primary color
+  600: Color(0xFF9333EA),
+  700: Color(0xFF7E22CE),
+  800: Color(0xFF6B21A8),
+  900: Color(0xFF581C87),
+  950: Color(0xFF32104C),
+});
+
+const MaterialColor fuchsia = MaterialColor(0xFFD946EF, <int, Color>{
+  50: Color(0xFFFDF4FF),
+  100: Color(0xFFFAE8FF),
+  200: Color(0xFFF5D0FE),
+  300: Color(0xFFF0ABFC),
+  400: Color(0xFFE879F9),
+  500: Color(0xFFD946EF), // This is typically your primary color
+  600: Color(0xFFC026D3),
+  700: Color(0xFFA21CAF),
+  800: Color(0xFF86198F),
+  900: Color(0xFF701A75),
+  950: Color(0xFF4A044E),
+});
+
+const MaterialColor pink = MaterialColor(0xFFEC4899, <int, Color>{
+  50: Color(0xFFFDF2F8),
+  100: Color(0xFFFCE7F3),
+  200: Color(0xFFFBCFE8),
+  300: Color(0xFFF9A8D4),
+  400: Color(0xFFF472B6),
+  500: Color(0xFFEC4899), // This is typically your primary color
+  600: Color(0xFFDB2777),
+  700: Color(0xFFBE185D),
+  800: Color(0xFF9D174D),
+  900: Color(0xFF831843),
+  950: Color(0xFF500724),
+});
+
+const MaterialColor neutral = MaterialColor(0xFF7C7C7C, <int, Color>{
+  50: Color(0xFFF8F8F8),
+  100: Color(0xFFF2F2F2),
+  200: Color(0xFFDCDCDC),
+  300: Color(0xFFBDBDBD),
+  400: Color(0xFF989898),
+  500: Color(0xFF7C7C7C), // This is typically your primary color
+  600: Color(0xFF656565),
+  700: Color(0xFF525252),
+  800: Color(0xFF464646),
+  900: Color(0xFF262626),
+  950: Color(0xFF1F1F1F),
+});
+
+const MaterialColor dark = MaterialColor(0xFF2C2D31, <int, Color>{
+  50: Color(0xFF3D3D41),
+  100: Color(0xFF38393C),
+  200: Color(0xFF36363A),
+  300: Color(0xFF333437),
+  400: Color(0xFF2E2F33),
+  500: Color(0xFF2C2D31), // This is typically your primary color
+  600: Color(0xFF272820),
+  700: Color(0xFF25262A),
+  800: Color(0xFF232427),
+  900: Color(0xFF1E1F23),
+  950: Color(0xFF121317),
+});
