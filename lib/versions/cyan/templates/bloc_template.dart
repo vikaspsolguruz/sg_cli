@@ -53,9 +53,6 @@ class ${className}State extends Equatable {
 
   @override
   List<Object?> get props => [];
-
-  @override
-  String toString() => '\$runtimeType';
   
   @visibleForTesting
   const ${className}State.test();
