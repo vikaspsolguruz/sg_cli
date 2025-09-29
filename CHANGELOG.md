@@ -1,3 +1,7 @@
+## 1.0.5
+
+* Added new version 'Cyan' huge packs and structure
+
 ## 1.0.4
 
 * Named first version 'Amber'
