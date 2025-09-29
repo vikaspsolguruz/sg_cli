@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:newarch/app/app_routes/_route_names.dart';
 import 'package:newarch/app/app_state.dart';
+import 'package:newarch/core/theme/styling/app_theme_data.dart';
+import 'package:newarch/core/utils/localization/translations.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -34,25 +36,19 @@ class _MyAppState extends State<MyApp> {
       initialRoute: Routes.initialRoute,
       routes: routes,
       navigatorObservers: [AppState.navigationObserver],
-      theme: ThemeData(
-        colorScheme: const ColorScheme.light(primary: Colors.orangeAccent),
-        pageTransitionsTheme: const PageTransitionsTheme(
-          builders: {
-            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-          },
-        ),
-      ),
-      darkTheme: ThemeData(
-        colorScheme: const ColorScheme.dark(primary: Colors.orangeAccent),
-        pageTransitionsTheme: const PageTransitionsTheme(
-          builders: {
-            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-          },
-        ),
-      ),
-
+      theme: AppThemes.light(),
+      darkTheme: AppThemes.dark(),
+      supportedLocales: const [
+        Locale('en'),
+      ],
+      localeResolutionCallback: (deviceLocale, supportedLocales) {
+        final matched = supportedLocales.firstWhere(
+          (locale) => locale.languageCode == deviceLocale?.languageCode,
+          orElse: () => supportedLocales.first,
+        );
+        Translations.instance.changeLocale(matched);
+        return matched;
+      },
       builder: (context, child) {
         if (child == null) return const SizedBox();
         AppState.appContext = context;
