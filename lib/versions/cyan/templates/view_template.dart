@@ -5,7 +5,7 @@ String _generateScreenContent(String pageName) {
   return '''
 import 'package:flutter/material.dart';
 $_blocImport
-import 'package:$_moduleName/presentation/widgets/common_appbar.dart';
+import 'package:$_moduleName/presentation/widgets/appbar.dart';
 
 class ${className}Screen extends StatefulWidget {
   const ${className}Screen({super.key});
