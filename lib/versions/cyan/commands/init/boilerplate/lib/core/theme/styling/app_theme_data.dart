@@ -5,44 +5,49 @@ import 'package:newarch/core/theme/styling/input_decorations.dart';
 class AppThemes {
   AppThemes._();
 
-  static ThemeData dark() {
+  static ThemeData light() {
+    final appColors = AppColors.light();
     return ThemeData(
       primaryColor: brand.shade600,
       primaryColorLight: brand.shade600,
       primaryColorDark: brand.shade600,
-      scaffoldBackgroundColor: AppColors.light().bgNeutralLight50,
+      scaffoldBackgroundColor: neutral.shade50,
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.light().bgNeutralLight50,
-        foregroundColor: Colors.black,
+        backgroundColor: appColors.bgNeutralLight50,
+        foregroundColor: appColors.shadesBlack,
         elevation: 0,
-        titleTextStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.black),
+        surfaceTintColor: Colors.transparent,
+        titleTextStyle: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: appColors.shadesBlack),
       ),
       // fontFamily: FontFamily.inter,
-      bottomSheetTheme: BottomSheetThemeData(dragHandleColor: AppColors.light().iconNeutralPressed, dragHandleSize: const Size(38, 4)),
+      bottomSheetTheme: BottomSheetThemeData(dragHandleColor: appColors.iconNeutralPressed, dragHandleSize: const Size(38, 4)),
       inputDecorationTheme: InputDecorationTheme(labelStyle: InputDecorations.labelStyleBright, hintStyle: InputDecorations.hintStyleBright, isDense: true),
-      tabBarTheme: TabBarThemeData(indicatorColor: brand.shade600, labelColor: AppColors.light().shadesBlack, unselectedLabelColor: AppColors.light().textNeutralDisable),
-      colorScheme: ColorScheme.fromSwatch(backgroundColor: AppColors.light().shadesWhite, primarySwatch: brand, accentColor: brand.shade700),
+      tabBarTheme: TabBarThemeData(indicatorColor: brand.shade600, labelColor: appColors.shadesBlack, unselectedLabelColor: appColors.textNeutralDisable),
+      colorScheme: ColorScheme.fromSwatch(backgroundColor: appColors.shadesWhite, primarySwatch: brand, accentColor: brand.shade700),
       pageTransitionsTheme: _transitionTheme,
     );
   }
 
-  static ThemeData light() {
+  static ThemeData dark() {
+    final appColors = AppColors.dark();
+
     return ThemeData(
       primaryColor: brand.shade600,
       primaryColorLight: brand.shade600,
       primaryColorDark: brand.shade600,
-      scaffoldBackgroundColor: AppColors.light().bgNeutralLight50,
+      scaffoldBackgroundColor: appColors.bgNeutralLight50,
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.light().bgNeutralLight50,
-        foregroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
+        foregroundColor: appColors.shadesBlack,
         elevation: 0,
-        titleTextStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.white),
+        surfaceTintColor: Colors.transparent,
+        titleTextStyle: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: appColors.shadesBlack),
       ),
-      bottomSheetTheme: BottomSheetThemeData(dragHandleColor: AppColors.light().iconNeutralPressed, dragHandleSize: const Size(38, 4)),
       // fontFamily: FontFamily.inter,
+      bottomSheetTheme: BottomSheetThemeData(dragHandleColor: appColors.iconNeutralPressed, dragHandleSize: const Size(38, 4)),
       inputDecorationTheme: InputDecorationTheme(labelStyle: InputDecorations.labelStyleBright, hintStyle: InputDecorations.hintStyleBright, isDense: true),
-      tabBarTheme: TabBarThemeData(labelColor: AppColors.light().shadesBlack, indicatorColor: brand.shade600, unselectedLabelColor: AppColors.light().textNeutralDisable),
-      colorScheme: ColorScheme.fromSwatch(backgroundColor: Colors.black, primarySwatch: brand, accentColor: brand.shade700, brightness: Brightness.dark),
+      tabBarTheme: TabBarThemeData(indicatorColor: brand.shade600, labelColor: appColors.shadesBlack, unselectedLabelColor: appColors.textNeutralDisable),
+      colorScheme: ColorScheme.fromSwatch(backgroundColor: appColors.shadesWhite, primarySwatch: brand, accentColor: brand.shade700),
       pageTransitionsTheme: _transitionTheme,
     );
   }
