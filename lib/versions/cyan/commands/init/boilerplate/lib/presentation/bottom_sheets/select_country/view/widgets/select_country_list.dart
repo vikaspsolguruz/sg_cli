@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newarch/core/theme/styling/app_colors.dart';
 import 'package:newarch/core/theme/text_style/app_text_styles.dart';
+import 'package:newarch/core/utils/extensions.dart';
 import 'package:newarch/presentation/bottom_sheets/select_country/logic/select_country_bloc.dart';
 
 class SelectCountryList extends StatefulWidget {
@@ -27,7 +28,7 @@ class _SelectCountryListState extends State<SelectCountryList> {
               final country = state.countries[index];
               final isSelected = country.code == state.selectedCountry?.code;
               return ListTile(
-                selectedColor: AppColors.bgBrandHover,
+                selectedColor: context.colors.bgBrandHover,
                 onTap: () => bloc.add(SelectCountry(country)),
                 selected: isSelected,
                 leading: ClipRRect(
@@ -37,7 +38,7 @@ class _SelectCountryListState extends State<SelectCountryList> {
                 title: Text(
                   "${country.name} (${country.dialCode})",
                   style: AppTextStyles.p2Regular.copyWith(
-                    color: isSelected ? AppColors.textBrandSecondary : AppColors.textNeutralPrimary,
+                    color: isSelected ? context.colors.textBrandSecondary : context.colors.textNeutralPrimary,
                     fontWeight: FontWeight.w400,
                   ),
                 ),

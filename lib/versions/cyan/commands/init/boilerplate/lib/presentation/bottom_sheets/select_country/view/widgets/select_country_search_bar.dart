@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newarch/core/constants/app_strings.dart';
 import 'package:newarch/core/constants/constants.dart';
 import 'package:newarch/core/theme/styling/app_colors.dart';
+import 'package:newarch/core/utils/extensions.dart';
 import 'package:newarch/presentation/bottom_sheets/select_country/logic/select_country_bloc.dart';
 import 'package:newarch/presentation/widgets/common_text_form_field/common_text_form_field.dart';
 
@@ -12,7 +13,7 @@ class SelectCountrySearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return PinnedHeaderSliver(
       child: Container(
-        color: AppColors.shadesWhite,
+        color: context.colors.shadesWhite,
         padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding, vertical: kVerticalPadding),
         child: CommonTextFormField.search(
           hintText: AppStrings.searchCountry,

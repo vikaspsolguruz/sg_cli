@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newarch/core/theme/styling/app_colors.dart';
+import 'package:newarch/core/utils/extensions.dart';
 
 class CommonCheckboxTile extends StatelessWidget {
   const CommonCheckboxTile({
@@ -38,7 +39,7 @@ class CommonCheckboxTile extends StatelessWidget {
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           onChanged: onChanged,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-          side: BorderSide(color: AppColors.strokeNeutralLight200, width: 1.5),
+          side: BorderSide(color: context.colors.strokeNeutralLight200, width: 1.5),
           fillColor: checkBoxFillColor,
         ),
       ),

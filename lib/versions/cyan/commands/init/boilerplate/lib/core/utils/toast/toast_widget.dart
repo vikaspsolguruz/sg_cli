@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:newarch/app/app_state.dart';
 import 'package:newarch/core/constants/constants.dart';
-import 'package:newarch/core/theme/styling/app_colors.dart';
 import 'package:newarch/core/theme/text_style/app_text_styles.dart';
 
 class ToastWidget extends StatefulWidget {
@@ -123,7 +123,7 @@ class _ToastWidgetState extends State<ToastWidget> with SingleTickerProviderStat
                     if (widget.iconData != null) ...[
                       Icon(
                         widget.iconData,
-                        color: AppColors.shadesWhite,
+                        color: AppState.colors.shadesWhite,
                         size: 20,
                       ),
                       const SizedBox(width: 8),
@@ -134,7 +134,7 @@ class _ToastWidgetState extends State<ToastWidget> with SingleTickerProviderStat
                           child: CircularProgressIndicator(
                             strokeWidth: 4,
                             strokeCap: StrokeCap.round,
-                            color: AppColors.shadesWhite,
+                            color: AppState.colors.shadesWhite,
                           ),
                         ),
                       ),
@@ -144,7 +144,7 @@ class _ToastWidgetState extends State<ToastWidget> with SingleTickerProviderStat
                       child: Text(
                         widget.message,
                         textAlign: TextAlign.center,
-                        style: AppTextStyles.p3Medium.withColor(AppColors.shadesWhite),
+                        style: AppTextStyles.p3Medium.withColor(AppState.colors.shadesWhite),
                       ),
                     ),
                   ],

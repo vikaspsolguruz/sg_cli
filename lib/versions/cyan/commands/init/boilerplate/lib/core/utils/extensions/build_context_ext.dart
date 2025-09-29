@@ -47,6 +47,10 @@ extension OnNullableContext on BuildContext? {
   BuildContext get secured => this ?? AppState.appContext;
 }
 
+extension ContextToColors on BuildContext {
+  AppColors get colors => isDark ? AppColors.dark() : AppColors.light();
+}
+
 extension ShowBottomSheet on BuildContext {
   Future<void> showBottomSheet(Widget child) async {
     return showModalBottomSheet(

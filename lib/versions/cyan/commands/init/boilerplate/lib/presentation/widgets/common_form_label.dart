@@ -17,12 +17,12 @@ class CommonFormLabel extends StatelessWidget {
         children: [
           TextSpan(
             text: labelText,
-            style: AppTextStyles.p3Medium.copyWith(color: AppColors.textNeutralPrimary),
+            style: AppTextStyles.p3Medium.copyWith(color: context.colors.textNeutralPrimary),
           ),
           if (isRequired)
             TextSpan(
               text: AppStrings.asterisk.tr,
-              style: AppTextStyles.p3Medium.copyWith(color: AppColors.textErrorSecondary),
+              style: AppTextStyles.p3Medium.copyWith(color: context.colors.textErrorSecondary),
             ),
         ],
       ),

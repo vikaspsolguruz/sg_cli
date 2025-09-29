@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newarch/core/theme/styling/app_colors.dart';
+import 'package:newarch/core/utils/extensions.dart';
 import 'package:newarch/presentation/widgets/app_button/app_button.dart';
 import 'package:newarch/presentation/widgets/common_form_label.dart';
 
@@ -60,6 +61,7 @@ class CommonChoiceChips<T> extends StatelessWidget {
     this.selectedBgColor,
     this.labelPadding,
   });
+
   const CommonChoiceChips.extraSmall({
     super.key,
     required this.selectedItem,
@@ -98,8 +100,8 @@ class CommonChoiceChips<T> extends StatelessWidget {
               isSelected: item == selectedItem,
               text: getLabel(item),
               onPressed: () => onChanged(item),
-              selectedBorderColor: selectedBorderColor ?? AppColors.greenSecondary.shade700,
-              selectedBgColor: selectedBgColor ?? AppColors.greenSecondary.shade50,
+              selectedBorderColor: selectedBorderColor ?? greenSecondary.shade700,
+              selectedBgColor: selectedBgColor ?? greenSecondary.shade50,
               readOnly: readOnly,
             ),
           );
@@ -158,13 +160,13 @@ class _SwitchButton extends StatelessWidget {
     final borderColor = isSelected
         ? selectedBorderColor
         : readOnly
-        ? AppColors.neutral.shade200
-        : AppColors.neutral.shade200;
+        ? neutral.shade200
+        : neutral.shade200;
     final bgColor = isSelected
         ? selectedBgColor
         : readOnly
-        ? AppColors.bgNeutralLight100
-        : AppColors.shadesWhite;
+        ? context.colors.bgNeutralLight100
+        : context.colors.shadesWhite;
     return AppButton(
       onPressed: onPressed,
       heightOverride: heightOverride,
@@ -173,7 +175,7 @@ class _SwitchButton extends StatelessWidget {
       radiusOverride: switchRadius,
       size: appButtonSize,
       label: text,
-      iconOrTextColorOverride: isSelected || (!readOnly) ? AppColors.textNeutralPrimary : AppColors.textNeutralSecondary,
+      iconOrTextColorOverride: isSelected || (!readOnly) ? context.colors.textNeutralPrimary : context.colors.textNeutralSecondary,
       borderColorOverride: borderColor,
       padding: padding,
     );

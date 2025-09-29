@@ -9,6 +9,7 @@ import 'package:newarch/core/models/filter_model.dart';
 import 'package:newarch/core/models/pagination_model.dart';
 import 'package:newarch/core/models/view_states/list_state.dart';
 import 'package:newarch/core/models/view_states/list_state_with_filter.dart';
+import 'package:newarch/core/theme/styling/app_colors.dart';
 import 'package:newarch/core/utils/localization/translations.dart';
 
 part 'extensions/build_context_ext.dart';

@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:newarch/app/app_state.dart';
 import 'package:newarch/core/constants/constants.dart';
 import 'package:newarch/core/theme/styling/app_colors.dart';
 import 'package:newarch/core/theme/text_style/app_text_styles.dart';
 import 'package:newarch/core/utils/console_print.dart';
+import 'package:newarch/core/utils/extensions.dart';
 import 'package:newarch/presentation/widgets/app_button/icon_size.dart';
 import 'package:newarch/presentation/widgets/app_icons/app_icon.dart';
 
@@ -148,7 +150,7 @@ class AppButton extends StatefulWidget {
       appIcon: appIcon,
       onPressed: onPressed,
       shouldUseOnPanDown: shouldUseOnPanDown,
-      iconOrTextColorOverride: iconOrTextColorOverride ?? AppColors.shadesWhite,
+      iconOrTextColorOverride: iconOrTextColorOverride ?? AppState.colors.shadesWhite,
       isAppBarAction: isAppBarAction,
       appBarActionRightPadding: appBarActionRightPadding,
     );
@@ -335,7 +337,11 @@ class _AppButtonState extends State<AppButton> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _icon(svgIconPath: widget.leftSvgIcon, iconData: widget.leftIconData, color: widget.state == AppButtonState.disabled ? AppColors.textNeutralDisable : widget.leftIconColor),
+        _icon(
+          svgIconPath: widget.leftSvgIcon,
+          iconData: widget.leftIconData,
+          color: widget.state == AppButtonState.disabled ? context.colors.textNeutralDisable : widget.leftIconColor,
+        ),
         widget.isExpandLabel ? const Spacer() : const SizedBox(width: 13),
         _getText(),
         widget.isExpandLabel ? const Spacer() : const SizedBox(),

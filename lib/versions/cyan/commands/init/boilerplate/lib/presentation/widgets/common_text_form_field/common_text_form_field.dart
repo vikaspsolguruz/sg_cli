@@ -337,14 +337,14 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
               onTap: widget.onTap,
               decoration: InputDecoration(
                 filled: widget.isGreyedOut || widget.fillColor != null,
-                fillColor: widget.isGreyedOut || widget.fillColor != null ? widget.fillColor ?? AppColors.bgNeutralLight50 : null,
+                fillColor: widget.isGreyedOut || widget.fillColor != null ? widget.fillColor ?? context.colors.bgNeutralLight50 : null,
                 errorMaxLines: 2,
                 counterText: widget.showCounterText ? null : '',
-                counterStyle: AppTextStyles.c1Medium.copyWith(fontSize: 10, color: AppColors.textNeutralDisable),
+                counterStyle: AppTextStyles.c1Medium.copyWith(fontSize: 10, color: context.colors.textNeutralDisable),
                 hintText: widget.hintText ?? widget.labelText,
                 suffixIcon: _suffixIconBuilder(),
-                errorStyle: AppTextStyles.p3Regular.copyWith(color: AppColors.textErrorSecondary, fontSize: widget.isCustomError ? 0 : 12),
-                hintStyle: AppTextStyles.p3Medium.copyWith(color: AppColors.textNeutralDisable, height: 1.7, fontWeight: widget.type == FieldType.search ? FontWeight.w400 : null),
+                errorStyle: AppTextStyles.p3Regular.copyWith(color: context.colors.textErrorSecondary, fontSize: widget.isCustomError ? 0 : 12),
+                hintStyle: AppTextStyles.p3Medium.copyWith(color: context.colors.textNeutralDisable, height: 1.7, fontWeight: widget.type == FieldType.search ? FontWeight.w400 : null),
                 prefixIconConstraints: (widget.prefixIcon ?? widget.prefixIconPath ?? widget.prefixIconData) != null ? null : const BoxConstraints(minWidth: 12),
                 suffixIconConstraints: widget.suffixIcon != null ? null : const BoxConstraints(minWidth: 12),
                 prefixIcon: _prefixIconBuilder(),
@@ -354,19 +354,19 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(widget.borderRadius ?? kBorderRadius),
-                  borderSide: BorderSide(color: AppColors.strokeNeutralLight200),
+                  borderSide: BorderSide(color: context.colors.strokeNeutralLight200),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(widget.borderRadius ?? kBorderRadius),
-                  borderSide: BorderSide(color: widget.onTap == null ? AppColors.bgBrandHover : AppColors.strokeNeutralLight200),
+                  borderSide: BorderSide(color: widget.onTap == null ? context.colors.bgBrandHover : context.colors.strokeNeutralLight200),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(widget.borderRadius ?? kBorderRadius),
-                  borderSide: BorderSide(color: AppColors.strokeErrorDefault),
+                  borderSide: BorderSide(color: context.colors.strokeErrorDefault),
                 ),
                 focusedErrorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(widget.borderRadius ?? kBorderRadius),
-                  borderSide: BorderSide(color: AppColors.strokeErrorDefault),
+                  borderSide: BorderSide(color: context.colors.strokeErrorDefault),
                 ),
               ),
               onTapOutside: (event) {
@@ -425,7 +425,7 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
     } else if (widget.prefixIconData != null) {
       return Icon(
         widget.prefixIconData,
-        color: hasFocus || widget.textFieldController.text.isNotEmpty ? AppColors.strokeNeutralDefault : AppColors.strokeNeutralDisabled,
+        color: hasFocus || widget.textFieldController.text.isNotEmpty ? context.colors.strokeNeutralDefault : context.colors.strokeNeutralDisabled,
         size: 24,
       );
     }
@@ -438,7 +438,7 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
         return IconButton(
           icon: Icon(
             TablerIcons.x,
-            color: hasFocus || widget.textFieldController.text.isNotEmpty ? AppColors.strokeNeutralDefault : AppColors.textNeutralDisable,
+            color: hasFocus || widget.textFieldController.text.isNotEmpty ? context.colors.strokeNeutralDefault : context.colors.textNeutralDisable,
             size: 24,
           ),
           onPressed: () {
@@ -457,7 +457,7 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
       return IconButton(
         icon: Icon(
           obscureText ? TablerIcons.eye : TablerIcons.eye_off,
-          color: hasFocus || widget.textFieldController.text.isNotEmpty ? AppColors.strokeNeutralDefault : AppColors.textNeutralDisable,
+          color: hasFocus || widget.textFieldController.text.isNotEmpty ? context.colors.strokeNeutralDefault : context.colors.textNeutralDisable,
           size: 24,
         ),
         onPressed: () {
@@ -471,7 +471,7 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
       return IconButton(
         icon: Icon(
           widget.suffixIconData,
-          color: hasFocus || widget.textFieldController.text.isNotEmpty ? AppColors.strokeNeutralDefault : AppColors.textNeutralDisable,
+          color: hasFocus || widget.textFieldController.text.isNotEmpty ? context.colors.strokeNeutralDefault : context.colors.textNeutralDisable,
           size: 24,
         ),
         onPressed: () {

@@ -43,9 +43,19 @@ class _MyAppState extends State<MyApp> {
           },
         ),
       ),
+      darkTheme: ThemeData(
+        colorScheme: const ColorScheme.dark(primary: Colors.orangeAccent),
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+          },
+        ),
+      ),
 
       builder: (context, child) {
         if (child == null) return const SizedBox();
+        AppState.appContext = context;
 
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: const SystemUiOverlayStyle(

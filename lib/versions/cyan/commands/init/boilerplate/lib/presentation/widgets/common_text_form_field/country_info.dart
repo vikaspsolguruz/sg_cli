@@ -8,6 +8,7 @@ import 'package:newarch/app/navigation/navigator.dart';
 import 'package:newarch/core/constants/constants.dart';
 import 'package:newarch/core/theme/styling/app_colors.dart';
 import 'package:newarch/core/theme/text_style/app_text_styles.dart';
+import 'package:newarch/core/utils/extensions.dart';
 
 class CountryInfo extends StatelessWidget {
   const CountryInfo({
@@ -35,8 +36,8 @@ class CountryInfo extends StatelessWidget {
         margin: const EdgeInsets.fromLTRB(1, 1, 12, 1),
         height: 54,
         decoration: BoxDecoration(
-          color: AppColors.strokeNeutralLight50,
-          border: Border(right: BorderSide(color: AppColors.strokeNeutralLight200)),
+          color: context.colors.strokeNeutralLight50,
+          border: Border(right: BorderSide(color: context.colors.strokeNeutralLight200)),
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(kBorderRadius),
             bottomLeft: Radius.circular(kBorderRadius),
@@ -48,7 +49,7 @@ class CountryInfo extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(2),
               child: Container(
-                color: AppColors.bgShadesWhite,
+                color: context.colors.bgShadesWhite,
                 child: selectedCountry.flagImage(width: 20, fit: BoxFit.cover),
               ),
             ),
@@ -56,10 +57,10 @@ class CountryInfo extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 3),
               child: Text(
                 selectedCountry.dialCode,
-                style: AppTextStyles.p3Medium.copyWith(color: AppColors.textNeutralPrimary),
+                style: AppTextStyles.p3Medium.copyWith(color: context.colors.textNeutralPrimary),
               ),
             ),
-            Icon(TablerIcons.chevron_down, color: AppColors.textNeutralDisable, size: 16),
+            Icon(TablerIcons.chevron_down, color: context.colors.textNeutralDisable, size: 16),
           ],
         ),
       ),
