@@ -20,30 +20,49 @@ void _initProject() {
   print('🔄  Initializing cyan architecture...');
 
   try {
-    // Step 1: Delete existing lib folder
+    // Step 1: Delete existing folders
     _deleteExistingFiles();
 
     // Step 2: Generate core architecture
     _generateCoreArchitecture();
 
-    // Step 3: Replace package names in all .dart files
+    // Step 3: Copy assets directory
+    _copyAssets();
+
+    // Step 4: Copy test directory
+    _copyTests();
+
+    // Step 5: Replace package names in all .dart files
     _updatePackageReferences();
 
-    // Step 4: Replace pubspec.yaml dependencies
+    // Step 6: Replace pubspec.yaml with complete configuration
     _updatePubspecDependencies();
 
-    // Step 5: Copy other configuration files
+    // Step 7: Copy other configuration files
     _generateConfigFiles();
 
-    // Step 6: Run flutter pub get automatically
+    // Step 8: Run flutter pub get automatically
     _runPubGet();
 
     print('');
-    print('✅  Cyan architecture initialized successfully!');
+    print('************************************************************');
+    print('*                                                          *');
+    print('*                    Cyan architecture                     *');
+    print('*                  initialized with a BANG!                *');
+    print('*                                                          *');
+    print('************************************************************');
     print('');
-    print('📝  Ready to use:');
-    print('• Start creating screens with: sg create screen <name>');
+    print('************************************************************');
+    print('*                                                          *');
+    print('*                      Ready to use:                       *');
+    print('*   Start creating screens with: sg create screen <name>.  *');
+    print('*                                                          *');
+    print('************************************************************');
     print('');
+    print('************************************************************');
+    print('*                                                          *');
+    print('*                  🔥 🔥 🔥 🔥 🔥 🔥 🔥                   *');
+    print('************************************************************');
   } catch (e) {
     print('❌  Error during initialization: $e');
   }
@@ -56,6 +75,18 @@ void _deleteExistingFiles() {
   final libDir = Directory('lib');
   if (libDir.existsSync()) {
     libDir.deleteSync(recursive: true);
+  }
+
+  // Delete assets folder
+  final assetsDir = Directory('assets');
+  if (assetsDir.existsSync()) {
+    assetsDir.deleteSync(recursive: true);
+  }
+
+  // Delete test folder
+  final testDir = Directory('test');
+  if (testDir.existsSync()) {
+    testDir.deleteSync(recursive: true);
   }
 
   // Delete analysis_options.yaml
@@ -84,8 +115,6 @@ void _generateCoreArchitecture() {
 }
 
 void _updatePackageReferences() {
-  print('🔗  Updating package references...');
-
   final libDir = Directory('lib');
   final dartFiles = _findDartFiles(libDir);
 
@@ -143,12 +172,36 @@ void _updatePubspecDependencies() {
   }
 
   currentPubspec.writeAsStringSync(updatedLines.join('\n'));
-  print('✅  Updated pubspec.yaml with fresh dependencies');
+  print('✅  Updated pubspec.yaml with dependencies, assets, and flutter config');
+}
+
+void _copyAssets() {
+  final String boilerplatePath = getBoilerplatePath();
+  final sourceAssetsDir = Directory('$boilerplatePath/assets');
+  final targetAssetsDir = Directory('assets');
+
+  if (sourceAssetsDir.existsSync()) {
+    _copyDirectory(sourceAssetsDir, targetAssetsDir);
+    print('✅  Generated assets');
+  } else {
+    print('⚠️  No assets found in boilerplate');
+  }
+}
+
+void _copyTests() {
+  final String boilerplatePath = getBoilerplatePath();
+  final sourceTestDir = Directory('$boilerplatePath/test');
+  final targetTestDir = Directory('test');
+
+  if (sourceTestDir.existsSync()) {
+    _copyDirectory(sourceTestDir, targetTestDir);
+    print('✅  Generated test');
+  } else {
+    print('⚠️  No tests found in boilerplate');
+  }
 }
 
 void _generateConfigFiles() {
-  print('⚙️  Generating configuration files...');
-
   final String boilerplatePath = getBoilerplatePath();
 
   // Generate analysis_options.yaml
@@ -165,6 +218,14 @@ void _generateConfigFiles() {
   if (sourceEditor.existsSync()) {
     sourceEditor.copySync(targetEditor.path);
     print('✅  Generated editor configuration');
+  }
+
+  // Generate sg_cli.yaml
+  final sourceSgCli = File('$boilerplatePath/sg_cli.yaml');
+  final targetSgCli = File('sg_cli.yaml');
+  if (sourceSgCli.existsSync()) {
+    sourceSgCli.copySync(targetSgCli.path);
+    print('✅  Generated sg_cli configuration');
   }
 }
 
