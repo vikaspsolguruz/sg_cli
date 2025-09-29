@@ -330,30 +330,16 @@ void _copyDirectory(Directory source, Directory target) {
     target.createSync(recursive: true);
   }
 
-  try {
-    for (final entity in source.listSync()) {
-      final entityName = entity.uri.pathSegments.where((s) => s.isNotEmpty).last;
+  for (final entity in source.listSync()) {
+    final entityName = entity.uri.pathSegments.where((s) => s.isNotEmpty).last;
 
-      if (entity is File) {
-        final targetFile = File('${target.path}/$entityName');
-        // Ensure target directory exists before copying file
-        targetFile.parent.createSync(recursive: true);
-        
-        try {
-          entity.copySync(targetFile.path);
-        } catch (e) {
-          // Handle 0-byte files or other file copy issues
-          print('⚠️  Warning: Could not copy ${entity.path}: $e');
-          // Create the file anyway to preserve directory structure
-          targetFile.createSync();
-        }
-      } else if (entity is Directory) {
-        final targetDir = Directory('${target.path}/$entityName');
-        _copyDirectory(entity, targetDir);
-      }
+    if (entity is File) {
+      final targetFile = File('${target.path}/$entityName');
+      entity.copySync(targetFile.path);
+    } else if (entity is Directory) {
+      final targetDir = Directory('${target.path}/$entityName');
+      _copyDirectory(entity, targetDir);
     }
-  } catch (e) {
-    print('⚠️  Warning: Error copying from ${source.path}: $e');
   }
 }
 
