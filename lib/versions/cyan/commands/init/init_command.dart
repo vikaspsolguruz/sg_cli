@@ -116,11 +116,16 @@ void _generateCoreArchitecture() {
 
 void _updatePackageReferences() {
   final libDir = Directory('lib');
-  final dartFiles = _findDartFiles(libDir);
+  final testDir = Directory('test');
+  
+  // Collect all Dart files from both lib and test directories
+  final libFiles = _findDartFiles(libDir);
+  final testFiles = testDir.existsSync() ? _findDartFiles(testDir) : <File>[];
+  final allDartFiles = [...libFiles, ...testFiles];
 
   int filesUpdated = 0;
 
-  for (final file in dartFiles) {
+  for (final file in allDartFiles) {
     final content = file.readAsStringSync();
     final updatedContent = content.replaceAll('package:newarch/', 'package:$_moduleName/');
 
