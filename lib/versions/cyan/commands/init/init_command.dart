@@ -220,12 +220,14 @@ void _generateConfigFiles() {
     print('✅  Generated editor configuration');
   }
 
-  // Generate sg_cli.yaml
-  final sourceSgCli = File('$boilerplatePath/sg_cli.yaml');
+  // Generate sg_cli.yaml only if it doesn't exist
   final targetSgCli = File('sg_cli.yaml');
-  if (sourceSgCli.existsSync()) {
-    sourceSgCli.copySync(targetSgCli.path);
-    print('✅  Generated sg_cli configuration');
+  if (!targetSgCli.existsSync()) {
+    final sourceSgCli = File('$boilerplatePath/sg_cli.yaml');
+    if (sourceSgCli.existsSync()) {
+      sourceSgCli.copySync(targetSgCli.path);
+      print('✅  Generated sg_cli configuration');
+    }
   }
 }
 
