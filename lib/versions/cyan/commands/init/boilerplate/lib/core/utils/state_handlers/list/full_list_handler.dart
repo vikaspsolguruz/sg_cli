@@ -1,9 +1,9 @@
+import 'package:newarch/core/enums/process_state.dart';
 import 'package:newarch/core/models/filter_model.dart';
 import 'package:newarch/core/models/pagination_model.dart';
 import 'package:newarch/core/models/response_data_model.dart';
 import 'package:newarch/core/models/view_states/list_state_with_filter.dart';
 import 'package:newarch/core/utils/bloc/base_bloc.dart';
-import 'package:newarch/core/utils/extensions.dart';
 
 /// 🔥 FULL LIST HANDLER - List with all features (pagination, search, filter)
 class FullListHandler<T, F extends FilterModel> {
@@ -21,16 +21,20 @@ class FullListHandler<T, F extends FilterModel> {
   final Future<ResponseData<PaginationData<List<T>>>> Function() repositoryCall;
   final void Function()? onLoadMoreRetry;
 
-  Future<void> load({bool isRefresh = false}) async {
+  Future<void> load({bool isRefresh = false, bool isSilent = false}) async {
     if (bloc.isClosed) return;
-    final currentState = getViewState();
+
+    // backup used if using silentRefresh
+    final backedUpState = getViewState();
+
+    if (isRefresh) backedUpState.searchController?.clear();
 
     updateViewState(
-      ListStateWithFilter<T, F>.loading(
-        currentItems: isRefresh ? null : currentState.items,
-        filter: currentState.filter,
-        existingController: currentState.searchController,
-        paginationData: currentState.paginationData,
+      backedUpState.copyWith(
+        status: ProcessState.loading,
+        paginationData: isRefresh ? PaginationData.initial(limit: isSilent ? backedUpState.items.length : backedUpState.paginationData?.limit) : null,
+        isLoadingMore: false,
+        items: const [],
       ),
     );
 
@@ -40,14 +44,13 @@ class FullListHandler<T, F extends FilterModel> {
 
     if (response.hasError) {
       updateViewState(
-        ListStateWithFilter<T, F>.error(
-          error: response.message!,
-          currentItems: currentState.items,
-          filter: currentState.filter,
-          currentPagination: currentState.paginationData,
-          searchController: currentState.searchController,
+        getViewState().copyWith(
+          status: ProcessState.error,
+          items: const [],
+          errorMessage: response.message,
         ),
       );
+
       return;
     }
 
@@ -55,63 +58,61 @@ class FullListHandler<T, F extends FilterModel> {
     final newItems = paginationData.list!;
     paginationData.clearData();
 
-    updateViewState(currentState.withNewItems(newItems: newItems, newPagination: paginationData, isLoadMore: false));
+    updateViewState(
+      getViewState().copyWith(
+        status: ProcessState.success,
+        items: newItems,
+        isLoadingMore: false,
+        paginationData: paginationData.copyWith(limit: isSilent ? backedUpState.paginationData?.limit : null),
+      ),
+    );
   }
 
   Future<void> loadMore() async {
-    final currentState = getViewState();
-    if (bloc.isClosed || !currentState.canLoadMore) return;
+    if (bloc.isClosed || !getViewState().canLoadMore) return;
 
-    updateViewState(currentState.startLoadingMore());
+    updateViewState(getViewState().copyWith(isLoadingMore: true));
 
     final response = await repositoryCall();
 
     if (bloc.isClosed) return;
 
     if (response.hasError) {
-      if (onLoadMoreRetry != null) {
-        Future.delayed(const Duration(seconds: 1), onLoadMoreRetry!);
-        return;
-      }
-
-      updateViewState(
-        ListStateWithFilter<T, F>.error(
-          error: response.message!,
-          currentItems: currentState.items,
-          filter: currentState.filter,
-          currentPagination: currentState.paginationData,
-          searchController: currentState.searchController,
-        ),
-      );
+      Future.delayed(const Duration(seconds: 1), () => onLoadMoreRetry?.call());
       return;
     }
 
     final paginationData = response.data!;
-    final newItems = paginationData.list!;
+    final newItems = [...getViewState().items, ...?response.data?.list];
     paginationData.clearData();
 
-    updateViewState(currentState.withNewItems(newItems: newItems, newPagination: paginationData, isLoadMore: true));
+    updateViewState(
+      getViewState().copyWith(
+        status: ProcessState.success,
+        isLoadingMore: false,
+        items: newItems,
+        paginationData: paginationData,
+      ),
+    );
   }
 
   Future<void> refresh() async {
     if (bloc.isClosed) return;
-    final currentState = getViewState();
-
-    updateViewState(
-      ListStateWithFilter<T, F>.initial(
-        createInitialFilter: () => currentState.filter,
-        hasSearch: currentState.hasSearch,
-      ),
-    );
 
     await load(isRefresh: true);
+  }
+
+  Future<void> silentRefresh() async {
+    if (bloc.isClosed) return;
+
+    await load(isRefresh: true, isSilent: true);
   }
 
   Future<void> updateFilter(F newFilter) async {
     if (bloc.isClosed) return;
     final currentState = getViewState();
 
-    updateViewState(currentState.withUpdatedFilter(newFilter));
+    updateViewState(currentState.copyWith(filter: newFilter));
     await load();
   }
 
@@ -119,7 +120,23 @@ class FullListHandler<T, F extends FilterModel> {
     if (bloc.isClosed) return;
     final currentState = getViewState();
 
-    updateViewState(currentState.withClearedFilters());
+    updateViewState(currentState.copyWith(filter: currentState.filter..clear()));
+    await load();
+  }
+
+  Future<void> search() async {
+    if (bloc.isClosed) return;
+    final currentState = getViewState();
+
+    final query = currentState.searchController?.text ?? '';
+
+    updateViewState(
+      currentState.copyWith(
+        status: ProcessState.loading,
+        paginationData: PaginationData.initial(search: query, limit: currentState.paginationData?.limit),
+      ),
+    );
+
     await load();
   }
 }
