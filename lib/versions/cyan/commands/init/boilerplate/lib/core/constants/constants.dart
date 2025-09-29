@@ -1,6 +1,9 @@
-const String kStaticToken = 'aaaaaa';
+import 'package:newarch/environments/environments.dart';
 
-const mapApiKey = "AIzaSyBVhd2cOCrI8jskhQbTD7FPScMT3m9As7Q";
+final String kStaticToken = staticTokens[currentEnvironment]!;
+
+const kDefaultRegion = 'IN';
+const mapApiKey = "map-api-key";
 const String kLogFileName = 'app.log';
 
 const kMimeTypeVideo = 'video/';
@@ -36,7 +39,7 @@ const kGoogle = 'google';
 const kApple = 'apple';
 
 // App-link's keys
-const String kAppLinkBaseUrl = 'aaaaaa';
+final String kAppLinkBaseUrl = deeplinkBaseUrls[currentEnvironment]!;
 const String kPub = 'pub';
 const String kGroup = 'group';
 const String kClub = 'club';

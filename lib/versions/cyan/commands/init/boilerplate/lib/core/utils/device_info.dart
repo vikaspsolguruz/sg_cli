@@ -1,5 +1,9 @@
 import 'dart:io';
+
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:device_region/device_region.dart';
+import 'package:fl_country_code_picker/fl_country_code_picker.dart';
+import 'package:newarch/core/constants/constants.dart';
 import 'package:newarch/core/shared_pref/shared_pref.dart';
 import 'package:newarch/core/utils/console_print.dart';
 
@@ -20,4 +24,14 @@ Future<String> getDeviceId() async {
   }
   Prefs.setDeviceId(deviceId);
   return deviceId;
+}
+
+Future<CountryCode> getDeviceCountry() async {
+  String? region;
+  try {
+    region = await DeviceRegion.getSIMCountryCode();
+  } catch (e, s) {
+    xErrorPrint(e, stackTrace: s);
+  }
+  return CountryCode.fromCode(region ?? kDefaultRegion)!;
 }

@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:newarch/core/constants/constants.dart';
-import 'package:newarch/core/theme/styling/app_colors.dart';
+import 'package:newarch/core/data/country.dart';
 import 'package:newarch/core/theme/text_style/app_text_styles.dart';
 import 'package:newarch/core/utils/extensions.dart';
 import 'package:newarch/core/utils/input_formatters.dart';
@@ -286,7 +286,7 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
   void initState() {
     widget.textFieldController.focusNode.addListener(focusListener);
     if (widget.type == FieldType.phone) {
-      selectedCountry = widget.selectedCountry ?? CountryCode.fromCode('IN')!;
+      selectedCountry = widget.selectedCountry ?? deviceCountry;
     }
     super.initState();
   }
@@ -344,7 +344,11 @@ class _CommonTextFormFieldState extends State<CommonTextFormField> {
                 hintText: widget.hintText ?? widget.labelText,
                 suffixIcon: _suffixIconBuilder(),
                 errorStyle: AppTextStyles.p3Regular.copyWith(color: context.colors.textErrorSecondary, fontSize: widget.isCustomError ? 0 : 12),
-                hintStyle: AppTextStyles.p3Medium.copyWith(color: context.colors.textNeutralDisable, height: 1.7, fontWeight: widget.type == FieldType.search ? FontWeight.w400 : null),
+                hintStyle: AppTextStyles.p3Medium.copyWith(
+                  color: context.colors.textNeutralDisable,
+                  height: 1.7,
+                  fontWeight: widget.type == FieldType.search ? FontWeight.w400 : null,
+                ),
                 prefixIconConstraints: (widget.prefixIcon ?? widget.prefixIconPath ?? widget.prefixIconData) != null ? null : const BoxConstraints(minWidth: 12),
                 suffixIconConstraints: widget.suffixIcon != null ? null : const BoxConstraints(minWidth: 12),
                 prefixIcon: _prefixIconBuilder(),
