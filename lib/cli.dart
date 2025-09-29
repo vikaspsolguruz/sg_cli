@@ -1,5 +1,6 @@
 import 'package:sg_cli/constants/constants.dart';
 import 'package:sg_cli/data/global_vars.dart';
+import 'package:sg_cli/models/sg_config.dart';
 import 'package:sg_cli/utils/config_helper.dart';
 import 'package:sg_cli/versions/amber/amber.dart';
 import 'package:sg_cli/versions/bronze/bronze.dart';
@@ -8,7 +9,13 @@ import 'package:sg_cli/versions/cyan/cyan.dart';
 void runCLI(List<String> args) {
   arguments = args;
   final config = getConfig();
-  if (config == null) return;
+  if (config == null) {
+    if (args.length == 1 && args.first == 'init') {
+      sgConfig = SgConfig(version: kCyan, routePaths: []);
+      Cyan.runCommand();
+    }
+    return;
+  }
   sgConfig = config;
 
   final cliVersions = {
