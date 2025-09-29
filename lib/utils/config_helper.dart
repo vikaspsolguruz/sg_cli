@@ -17,15 +17,9 @@ SgConfig? getConfig() {
           routePaths: routePaths,
         );
         return sgConfig;
-      } else {
-        print("❌  Error: Missing data config file sg_cli.yaml");
       }
-    } else {
-      print("❌  Error: This project doesn't have config file sg_cli.yaml");
     }
   } catch (e) {
-    print(e);
-    print("❌  Error: Invalid config file sg_cli.yaml");
     return null;
   }
   return null;
