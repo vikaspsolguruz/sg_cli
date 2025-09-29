@@ -28,6 +28,7 @@ class Cyan {
   Cyan._();
 
   static void runCommand() {
+    bool isHelpCommand = arguments.length == 1 && (arguments[0] == 'help' || arguments[0] == '--help' || arguments[0] == '-h');
     bool isInitCommand = arguments.length == 1 && arguments[0] == 'init';
     bool isCreateScreenCommand = arguments.length == 3 && arguments[0] == 'create' && arguments[1] == 'screen';
     bool isCreateSubScreenCommand = arguments.length == 5 && arguments[0] == 'create' && arguments[1] == 'sub_screen' && arguments[3] == 'in';
@@ -44,7 +45,11 @@ class Cyan {
       print("❌  Error: Invalid command format\n  • Should be in lowercase only\n  • Start with alphabet\n  • No special characters allowed other then underscore (_)");
       return;
     }
-
+    if (isHelpCommand) {
+      // Show Help
+      _showHelp();
+      return;
+    }
     if (isInitCommand) {
       // Initialize Project
       _initProject();

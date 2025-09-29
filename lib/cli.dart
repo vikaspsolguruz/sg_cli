@@ -13,6 +13,9 @@ void runCLI(List<String> args) {
     if (args.length == 1 && args.first == 'init') {
       sgConfig = SgConfig(version: kCyan, routePaths: []);
       Cyan.runCommand();
+    } else if (args.length == 1 && (args.first == 'help' || args.first == '--help' || args.first == '-h')) {
+      sgConfig = SgConfig(version: kCyan, routePaths: []);
+      Cyan.runCommand();
     }
     return;
   }
