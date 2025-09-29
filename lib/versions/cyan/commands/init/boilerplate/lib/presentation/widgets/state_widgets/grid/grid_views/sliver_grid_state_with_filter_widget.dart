@@ -62,10 +62,10 @@ class SliverGridStateWithFilterWidget<B extends StateStreamable<S>, S, T, F exte
             ProcessState.loading =>
               isExpanded
                   ? SliverFillRemaining(
-                      child: loaderView ?? const LoaderWidget(),
+                      child: loaderView ?? const CommonLoader(),
                     )
                   : SliverToBoxAdapter(
-                      child: loaderView ?? const LoaderWidget(),
+                      child: loaderView ?? const CommonLoader(),
                     ),
             // 2. Error state - show error view
             ProcessState.error =>
@@ -127,7 +127,7 @@ class SliverGridStateWithFilterWidget<B extends StateStreamable<S>, S, T, F exte
                             onLoadMore: () => onLoadMore?.call(context.read<B>().state),
                           ),
 
-                          if (listState.canLoadMore) const SliverToBoxAdapter(child: LoaderWidget()),
+                          if (listState.canLoadMore) const SliverToBoxAdapter(child: CommonLoader()),
                         ],
                       ),
                     ),

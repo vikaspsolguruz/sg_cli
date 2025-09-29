@@ -1,4 +1,10 @@
 final passwordRegex = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#])[A-Za-z\d@$!%*?&#.]{8,}$');
-final instagramRegex = RegExp(r'^(https?:\/\/)?(www\.)?instagram\.com\/[A-Za-z0-9._%-]+(\/[A-Za-z0-9._%-]+)*(\/)?(\?.*)?$', caseSensitive: false);
-final facebookRegEx = RegExp(r'^(https?:\/\/)?(www\.)?(facebook\.com)\/[A-Za-z0-9\.]+(\/[A-Za-z0-9\.]+)*(\/)?(\?.*)?$', caseSensitive: false);
-final whatsappRegex = RegExp(r'^(https?:\/\/)?(www\.)?(wa\.me\/\d+|api\.whatsapp\.com\/send\?phone=\d+.*)$', caseSensitive: false);
+final min8CharsRegex = RegExp(r'^.{8,}$');
+final min1UppercaseRegex = RegExp(r'^(?=.*[A-Z])');
+final min1LowercaseRegex = RegExp(r'^(?=.*[a-z])');
+final min1DigitRegex = RegExp(r'^(?=.*\d)');
+final specialCharRegex = RegExp(r'(?=.*[@$!%*?&.#])');
+final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+final personNameRegex = RegExp(r"[a-zA-Z0-9\s\-_]");
+final numberWithDecimalRegex = RegExp(r'^\d*\.?\d*$');
+final usaZipCodeRegex = RegExp(r'^\d{5}(-\d{4})?$');

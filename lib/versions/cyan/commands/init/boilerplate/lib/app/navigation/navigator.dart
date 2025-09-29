@@ -10,7 +10,7 @@ class Go {
     Navigator.of(context ?? AppState.appContext).maybePop(result);
   }
 
-  static backToNamed<T extends Object?>(String routeName, {BuildContext? context}) {
+  static void backToNamed<T extends Object?>(String routeName, {BuildContext? context}) {
     Navigator.of(context ?? AppState.appContext).popUntil((route) {
       return route.settings.name == routeName || route.isFirst;
     });
@@ -56,7 +56,7 @@ class Go {
     BuildContext? context,
     Map<String, dynamic>? arguments,
     bool enableDrag = true,
-    bool showDragHandle = false,
+    bool showDragHandle = true,
     bool useSafeArea = true,
     bool isDismissible = true,
   }) {

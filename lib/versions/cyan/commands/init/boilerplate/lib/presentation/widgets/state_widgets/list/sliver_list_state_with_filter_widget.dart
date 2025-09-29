@@ -59,10 +59,10 @@ class SliverListStateWithFilterWidget<B extends StateStreamable<S>, S, T, F exte
             ProcessState.loading =>
               isExpanded
                   ? SliverFillRemaining(
-                      child: loaderView ?? const LoaderWidget(),
+                      child: loaderView ?? const CommonLoader(),
                     )
                   : SliverToBoxAdapter(
-                      child: loaderView ?? const LoaderWidget(),
+                      child: loaderView ?? const CommonLoader(),
                     ),
             // 2. Error state - show error view
             ProcessState.error =>
@@ -169,7 +169,7 @@ class _SliverListFilterContent<T, F extends FilterModel> extends StatelessWidget
         itemBuilder: (context, index) {
           // Loading more indicator using LoaderWidget with onBuild for pagination
           if (index == listState.items.length) {
-            return LoaderWidget(onBuild: () => onLoadMore?.call());
+            return CommonLoader(onBuild: () => onLoadMore?.call());
           }
 
           final item = listState.items[index];
@@ -215,7 +215,7 @@ class _SliverListFilterWithSeparators<T, F extends FilterModel> extends Stateles
         addSemanticIndexes: addSemanticIndexes,
         itemBuilder: (context, index) {
           if (index == listState.items.length) {
-            return LoaderWidget(
+            return CommonLoader(
               onBuild: () => onLoadMore?.call(),
             );
           }

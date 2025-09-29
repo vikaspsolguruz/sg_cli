@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:newarch/core/utils/extensions.dart';
 
-class BackButtonWidget extends StatelessWidget {
-  const BackButtonWidget({
+class CommonBackButton extends StatelessWidget {
+  const CommonBackButton({
     super.key,
     this.onPressed,
   });

@@ -12,7 +12,7 @@ String _generateRouteEntry(
 
   return '''$indent  AppRoute(
 $indent    name: Routes.$constantName,
-$indent    blocProvider: BlocPageProvider<${className}Bloc>(
+$indent    blocProvider: BlocRouteProvider<${className}Bloc>(
 $indent      bloc: (context) => ${className}Bloc(),
 $indent      page: const $className${isBottomSheet ? 'BottomSheet' : isDialog ? 'Dialog' : 'Screen'}(),
 $indent    ),

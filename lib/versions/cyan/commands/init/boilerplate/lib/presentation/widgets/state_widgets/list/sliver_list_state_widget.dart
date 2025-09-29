@@ -77,7 +77,7 @@ class SliverListStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
         final hasFilteredData = filteredItems.isNotEmpty;
 
         return switch (listState.status) {
-          ProcessState.loading => isExpanded ? const SliverFillRemaining(child: LoaderWidget()) : const SliverToBoxAdapter(child: LoaderWidget()),
+          ProcessState.loading => isExpanded ? const SliverFillRemaining(child: CommonLoader()) : const SliverToBoxAdapter(child: CommonLoader()),
 
           ProcessState.error =>
             isExpanded
@@ -176,7 +176,7 @@ class _SliverListContent<T> extends StatelessWidget {
         itemBuilder: (context, index) {
           // Loading more indicator
           if (index == items.length) {
-            return LoaderWidget(
+            return CommonLoader(
               onBuild: () => onLoadMore?.call(),
             );
           }
@@ -227,7 +227,7 @@ class _SliverListWithSeparators<T> extends StatelessWidget {
         itemBuilder: (context, index) {
           // Loading more indicator
           if (index == items.length) {
-            return LoaderWidget(
+            return CommonLoader(
               onBuild: () => onLoadMore?.call(),
             );
           }

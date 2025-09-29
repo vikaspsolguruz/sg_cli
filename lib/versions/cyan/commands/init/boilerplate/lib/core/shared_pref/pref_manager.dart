@@ -53,7 +53,7 @@ class _PrefManager {
     }
   }
 
-  static Future<T?> getString<T>(String key, {required T Function(String?) dataParser}) async {
+  T? getString<T>(String key, {required T? Function(String? value) dataParser}) {
     try {
       final value = _sharedPref.getString(key);
       return dataParser(value);
@@ -63,7 +63,7 @@ class _PrefManager {
     }
   }
 
-  static Future<T?> getInt<T>(String key, {required T Function(int?) dataParser}) async {
+  T? getInt<T>(String key, {required T? Function(int? value) dataParser}) {
     try {
       final value = _sharedPref.getInt(key);
       return dataParser(value);
@@ -73,7 +73,7 @@ class _PrefManager {
     }
   }
 
-  static Future<T?> getBool<T>(String key, {required T Function(bool?) dataParser}) async {
+  T? getBool<T>(String key, {required T? Function(bool? value) dataParser}) {
     try {
       final value = _sharedPref.getBool(key);
       return dataParser(value);
@@ -83,7 +83,7 @@ class _PrefManager {
     }
   }
 
-  static Future<T?> getDouble<T>(String key, {required T Function(double?) dataParser}) async {
+  T? getDouble<T>(String key, {required T? Function(double? value) dataParser}) {
     try {
       final value = _sharedPref.getDouble(key);
       return dataParser(value);
@@ -93,7 +93,7 @@ class _PrefManager {
     }
   }
 
-  static Future<T?> getStringList<T>(String key, {required T Function(List<String>?) dataParser}) async {
+  T? getStringList<T>(String key, {required T? Function(List<String>? value) dataParser}) {
     try {
       final value = _sharedPref.getStringList(key);
       return dataParser(value);

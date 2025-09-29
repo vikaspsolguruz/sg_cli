@@ -42,7 +42,7 @@ class CommonAppbar extends StatelessWidget implements PreferredSizeWidget {
       child: show
           ? AppBar(
               title: titleWidget ?? (title != null ? Text(title!, style: context.theme.appBarTheme.titleTextStyle) : null),
-              leading: leading ?? (context.canPop ? const BackButtonWidget() : null),
+              leading: leading ?? (context.canPop ? const CommonBackButton() : null),
               actions: actions,
               bottom: bottom,
               leadingWidth: leadingWidth,

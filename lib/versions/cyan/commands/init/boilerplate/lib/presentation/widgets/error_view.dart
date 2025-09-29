@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:newarch/core/constants/app_strings.dart';
 import 'package:newarch/core/constants/constants.dart';
+import 'package:newarch/core/utils/extensions.dart';
+import 'package:newarch/gen/assets.gen.dart';
 
 class ErrorView extends StatelessWidget {
   final String? svgPath;
@@ -27,7 +29,7 @@ class ErrorView extends StatelessWidget {
           SizedBox.square(
             dimension: 136,
             child: SvgPicture.asset(
-              svgPath ?? 'Assets.images.svg.icError',
+              svgPath ?? Assets.images.svg.icError,
               width: 136,
               height: 136,
             ),
@@ -44,7 +46,7 @@ class ErrorView extends StatelessWidget {
               padding: const EdgeInsets.only(top: 24, left: 16, right: 16),
               child: ElevatedButton(
                 onPressed: onRetry,
-                child: const Text(AppStrings.retry, textAlign: TextAlign.center),
+                child: Text(AppStrings.retry.tr, textAlign: TextAlign.center),
               ),
             ),
         ],

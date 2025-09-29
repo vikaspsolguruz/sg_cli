@@ -126,3 +126,7 @@ extension RegexHelperExtension on String {
 
   bool hasSpecialCharacter() => RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(this);
 }
+
+extension LocalizedString on String {
+  String get tr => Translations.instance.translate(this); // Placeholder for localization, replace with actual localization logic
+}

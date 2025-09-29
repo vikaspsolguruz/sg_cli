@@ -42,7 +42,7 @@ class SliverGridStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
       builder: (context, listState) {
         return switch (listState.status) {
           // 1. Loading state - show loader
-          ProcessState.loading => isExpanded ? const SliverFillRemaining(child: LoaderWidget()) : const SliverToBoxAdapter(child: LoaderWidget()),
+          ProcessState.loading => isExpanded ? const SliverFillRemaining(child: CommonLoader()) : const SliverToBoxAdapter(child: CommonLoader()),
 
           // 2. Error state - show error view
           ProcessState.error =>
@@ -94,7 +94,7 @@ class SliverGridStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
                           onLoadMore: () => onLoadMore?.call(context.read<B>().state),
                         ),
 
-                        if (listState.canLoadMore) const SliverToBoxAdapter(child: LoaderWidget()),
+                        if (listState.canLoadMore) const SliverToBoxAdapter(child: CommonLoader()),
                       ],
                     ),
                   ),

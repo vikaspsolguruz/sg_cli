@@ -11,4 +11,8 @@ class Prefs {
   static Future<void> initialize() async => await _prefManager.initialize();
 
   static Future<void> clear() async => _prefManager.clear();
+
+  static void setDeviceId(String deviceId) => _prefManager.setString('device_id', deviceId);
+
+  static String? getDeviceId() => _prefManager.getString('device_id', dataParser: (value) => value);
 }

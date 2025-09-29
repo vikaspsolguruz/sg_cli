@@ -2,9 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:newarch/core/utils/extensions.dart';
 
-class LoaderWidget extends StatefulWidget {
-  const LoaderWidget({
+class CommonLoader extends StatefulWidget {
+  const CommonLoader({
     super.key,
     this.size = 30,
     this.visible = true,
@@ -18,10 +19,10 @@ class LoaderWidget extends StatefulWidget {
   final int? progress;
 
   @override
-  State<LoaderWidget> createState() => _LoaderWidgetState();
+  State<CommonLoader> createState() => _CommonLoaderState();
 }
 
-class _LoaderWidgetState extends State<LoaderWidget> {
+class _CommonLoaderState extends State<CommonLoader> {
   @override
   void initState() {
     widget.onBuild?.call();
@@ -39,7 +40,7 @@ class _LoaderWidgetState extends State<LoaderWidget> {
         child: Platform.isIOS && widget.progress == null
             ? const FittedBox(child: CupertinoActivityIndicator())
             : CircularProgressIndicator(
-                color: Theme.of(context).primaryColor,
+                color: context.theme.primaryColor,
                 strokeWidth: widget.size * 0.1,
                 strokeCap: StrokeCap.round,
                 value: widget.progress != null ? widget.progress! / 100 : null,

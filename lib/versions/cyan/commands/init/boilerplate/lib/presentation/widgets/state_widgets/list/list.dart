@@ -14,7 +14,7 @@ import 'package:newarch/core/models/view_states/list_state_with_filter.dart';
 import 'package:newarch/core/utils/console_print.dart';
 import 'package:newarch/presentation/widgets/empty_view.dart';
 import 'package:newarch/presentation/widgets/error_view.dart';
-import 'package:newarch/presentation/widgets/loader_widget.dart';
+import 'package:newarch/presentation/widgets/loader.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 part 'sliver_list_state_widget.dart';

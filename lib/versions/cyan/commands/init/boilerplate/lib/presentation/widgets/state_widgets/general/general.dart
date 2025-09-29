@@ -10,6 +10,6 @@ import 'package:newarch/core/enums/process_state.dart';
 import 'package:newarch/core/models/view_states/view_state.dart';
 import 'package:newarch/presentation/widgets/empty_view.dart';
 import 'package:newarch/presentation/widgets/error_view.dart';
-import 'package:newarch/presentation/widgets/loader_widget.dart';
+import 'package:newarch/presentation/widgets/loader.dart';
 
 part 'view_state_widget.dart';
