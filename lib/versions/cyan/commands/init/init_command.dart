@@ -202,25 +202,15 @@ void _copyTests() {
 }
 
 void _generateConfigFiles() {
+  final String boilerplatePath = _getBoilerplatePath();
+
+  final boilerplateConfig = File('$boilerplatePath/sg_cli.yaml');
   final configFile = File('sg_cli.yaml');
+  configFile.writeAsStringSync(boilerplateConfig.readAsStringSync());
+  print('${ConsoleSymbols.success}Generated sg_cli.yaml configuration file');
 
-  if (!configFile.existsSync()) {
-    final content = '''version: cyan
-route_paths: lib/presentation/screens
-  lib/presentation/bottom_sheets
-  lib/presentation/dialogs
-''';
-
-    configFile.writeAsStringSync(content);
-    print('${ConsoleSymbols.success}Generated sg_cli.yaml configuration file');
-  }
+  final boilerplateAnalysis = File('$boilerplatePath/analysis_options.yaml');
   final analysisFile = File('analysis_options.yaml');
-
-  if (!analysisFile.existsSync()) {
-    final analysisContent = '''
-  ''';
-
-    analysisFile.writeAsStringSync(analysisContent);
-    print('${ConsoleSymbols.success}Generated lints and rules');
-  }
+  analysisFile.writeAsStringSync(boilerplateAnalysis.readAsStringSync());
+  print('${ConsoleSymbols.success}Generated lints and rules');
 }

@@ -16,15 +16,8 @@ void runCLI(List<String> args) {
     } else if (args.length == 1 && (args.first == 'help' || args.first == '--help' || args.first == '-h')) {
       sgConfig = SgConfig(version: kCyan, routePaths: []);
       Cyan.runCommand();
-    } else if (args.length == 1 && args.first == 'setup_flavors') {
-      sgConfig = SgConfig(version: kCyan, routePaths: []);
-      Cyan.runCommand();
-    } else if (args.length == 1 && args.first == 'setup_deeplink') {
-      sgConfig = SgConfig(version: kCyan, routePaths: []);
-      Cyan.runCommand();
-    } else if (args.length == 1 && args.first == 'setup_firebase') {
-      sgConfig = SgConfig(version: kCyan, routePaths: []);
-      Cyan.runCommand();
+    } else {
+      print("❌ Error: Invalid config file sg_cli.yaml");
     }
     return;
   }
