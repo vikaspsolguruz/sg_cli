@@ -3,7 +3,7 @@ part of '../cyan.dart';
 String _deeplinkAndroidManifestTemplate(String domain) {
   return '''<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-The name '_deeplinkAndroidManifestTemplate' is already defined.
+
     <application>
         <activity android:name=".MainActivity">
             <intent-filter android:autoVerify="true">
