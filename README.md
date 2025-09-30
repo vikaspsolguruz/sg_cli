@@ -1,4 +1,4 @@
-# SG CLI - Flutter Architecture Generator
+# SG CLI - A SolGuruz Flutter Architecture Generator
 
 A powerful CLI tool for generating scalable Flutter applications with BLoC pattern, clean architecture, and production-ready features.
 
