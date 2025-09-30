@@ -52,6 +52,9 @@ void _setupDeeplink() {
     // Setup iOS deep-linking
     _setupIOSDeeplink(domains);
 
+    // Setup Flutter deep-link handling
+    _setupFlutterDeepLink();
+
     print('');
     print('╔════════════════════════════════════════════════════════════════════════════════╗');
     print('║                ${ConsoleSymbols.success} Deep-Linking Setup Complete!                             ║');
@@ -160,4 +163,43 @@ void _createIOSEntitlements(String flavor, String domain) {
 
   entitlementsFile.writeAsStringSync(entitlementsContent);
   print('${ConsoleSymbols.checkmark}Created Runner-$flavor.entitlements → applinks:$domain');
+}
+
+/// Setup Flutter-side deep link handling
+void _setupFlutterDeepLink() {
+  try {
+    final projectName = getModuleName();
+    
+    // Step 1: Add app_links dependency
+    print('${ConsoleSymbols.package}Adding app_links dependency...');
+    _addDependencyToPubspec('app_links', '^6.3.2');
+    _runPubGet();
+    print('');
+    
+    // Step 2: Create deep_link_manager.dart
+    print('${ConsoleSymbols.file}Creating deep_link_manager.dart...');
+    
+    final deepLinkDir = Directory('lib/core/utils');
+    if (!deepLinkDir.existsSync()) {
+      deepLinkDir.createSync(recursive: true);
+    }
+    
+    final deepLinkFile = File('lib/core/utils/deep_link_manager.dart');
+    
+    if (deepLinkFile.existsSync()) {
+      print('${ConsoleSymbols.info}deep_link_manager.dart already exists, skipping...');
+    } else {
+      final content = deepLinkManagerTemplate(projectName);
+      deepLinkFile.writeAsStringSync(content);
+      print('${ConsoleSymbols.success}Created lib/core/utils/deep_link_manager.dart');
+    }
+    
+    // Step 3: Modify app.dart to add deep link initialization
+    print('${ConsoleSymbols.wrench}Modifying app.dart...');
+    modifyAppForDeepLink(projectName);
+    
+    print('${ConsoleSymbols.success}Flutter deep-link handling configured');
+  } catch (e) {
+    print('${ConsoleSymbols.error}Error setting up Flutter deep-link: $e');
+  }
 }
