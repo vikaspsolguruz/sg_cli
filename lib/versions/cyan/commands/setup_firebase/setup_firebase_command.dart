@@ -32,12 +32,12 @@ void _setupFirebase() {
       _setupSingleFirebase(packageName, projectName);
     }
   } catch (e) {
-    print('❌ Error during Firebase setup: $e');
+    print(' ❌ Error during Firebase setup: $e');
   }
 }
 
 void _setupFlavoredFirebase(String packageName, String projectName) {
-  print('🚀 Setting up flavor-based Firebase configuration...');
+  print(' 🚀 Setting up flavor-based Firebase configuration...');
   print('');
   
   // Add firebase_core dependency
@@ -65,7 +65,7 @@ void _setupFlavoredFirebase(String packageName, String projectName) {
   print('║              ✅ Flavor-Based Firebase Setup Complete!                         ║');
   print('╚════════════════════════════════════════════════════════════════════════════════╝');
   print('');
-  print('✅ What we did for you:');
+  print(' ✅ What we did for you:');
   print('   • Added firebase_core: ^4.1.1 to pubspec.yaml');
   print('   • Installed dependencies automatically');
   print('   • Created 3 Firebase option files (dev, stage, prod)');
@@ -81,7 +81,7 @@ void _setupFlavoredFirebase(String packageName, String projectName) {
   print('     firebase_auth: ^5.1.4        # For authentication');
   print('     cloud_firestore: ^5.2.1      # For Firestore database');
   print('');
-  print('🚀 STEP 2: Get Real Firebase Configuration');
+  print(' 🚀 STEP 2: Get Real Firebase Configuration');
   print('   You need to replace placeholder files with real Firebase configs.');
   print('   Choose ONE of these methods:');
   print('');
@@ -127,13 +127,13 @@ void _setupFlavoredFirebase(String packageName, String projectName) {
   print('         • ios/config/stage/GoogleService-Info.plist');
   print('         • ios/config/prod/GoogleService-Info.plist');
   print('');
-  print('🚀 STEP 3: Test Your Setup');
+  print(' 🚀 STEP 3: Test Your Setup');
   print('   Run your app with different flavors:');
   print('   • flutter run --flavor dev');
   print('   • flutter run --flavor stage');
   print('   • flutter run --flavor prod');
   print('');
-  print('💡 Note: Your _app_initializer.dart already has Firebase initialization code!');
+  print(' 💡 Note: Your _app_initializer.dart already has Firebase initialization code!');
   print('   We automatically added it after WidgetsFlutterBinding.ensureInitialized()');
   print('');
   print('❓ Need Help?');
@@ -143,7 +143,7 @@ void _setupFlavoredFirebase(String packageName, String projectName) {
 }
 
 void _setupSingleFirebase(String packageName, String projectName) {
-  print('🚀 Setting up single Firebase configuration...');
+  print(' 🚀 Setting up single Firebase configuration...');
   print('');
   
   // Add firebase_core dependency
@@ -173,7 +173,7 @@ void _setupSingleFirebase(String packageName, String projectName) {
   print('║                   ✅ Firebase Setup Complete!                                  ║');
   print('╚════════════════════════════════════════════════════════════════════════════════╝');
   print('');
-  print('✅ What we did for you:');
+  print(' ✅ What we did for you:');
   print('   • Added firebase_core: ^4.1.1 to pubspec.yaml');
   print('   • Installed dependencies automatically');
   print('   • Created Firebase options file: lib/firebase_options.dart');
@@ -217,11 +217,11 @@ void _setupSingleFirebase(String packageName, String projectName) {
   print('         • Place it in: ios/Runner/GoogleService-Info.plist');
   print('      5. Update lib/firebase_options.dart with values from Firebase console');
   print('');
-  print('🚀 STEP 3: Test Your Setup');
+  print(' 🚀 STEP 3: Test Your Setup');
   print('   Run your app:');
   print('   • flutter run');
   print('');
-  print('💡 Note: Your _app_initializer.dart already has Firebase initialization code!');
+  print(' 💡 Note: Your _app_initializer.dart already has Firebase initialization code!');
   print('   We automatically added it after WidgetsFlutterBinding.ensureInitialized()');
   print('');
   print('❓ Need Help?');

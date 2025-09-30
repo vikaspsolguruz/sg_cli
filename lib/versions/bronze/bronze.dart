@@ -34,7 +34,7 @@ class Bronze {
     bool isCreateEventCommand = arguments.length == 5 && arguments[0] == 'create' && arguments[1] == 'event' && arguments[3] == 'in';
 
     if (arguments.isEmpty) {
-      print('❌  Error: No command provided.');
+      print(' ❌  Error: No command provided.');
       return;
     }
 
@@ -75,6 +75,6 @@ class Bronze {
       _createEvent(eventName, pageName);
       return;
     }
-    print('❌  Error: Unknown command.');
+    print(' ❌  Error: Unknown command.');
   }
 }

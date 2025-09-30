@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:convert';
 
 import 'package:sg_cli/data/global_vars.dart';
 import 'package:sg_cli/utils/file_helper.dart';
@@ -57,7 +58,7 @@ class Cyan {
     bool isCreateEventCommand = arguments.length == 5 && arguments[0] == 'create' && arguments[1] == 'event' && arguments[3] == 'in';
 
     if (arguments.isEmpty) {
-      print('❌  Error: No command provided.');
+      print(' ❌  Error: No command provided.');
       return;
     }
 
@@ -127,6 +128,6 @@ class Cyan {
       _createEvent(eventName, pageName);
       return;
     }
-    print('❌  Error: Unknown command.');
+    print(' ❌  Error: Unknown command.');
   }
 }

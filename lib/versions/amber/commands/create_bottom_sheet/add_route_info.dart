@@ -27,7 +27,7 @@ void _addRouteData() {
 
   // checking if index of closing bracket is not wrong
   if (closingBracketIndex == -1) {
-    print('❌  Error: Could not find closing bracket for appRoutes.');
+    print(' ❌  Error: Could not find closing bracket for appRoutes.');
     return;
   }
 
@@ -46,7 +46,7 @@ void _addRouteName() {
   final int classClosingBracketIndex = routeNamesLines.lastIndexWhere((line) => line.trim() == '}');
   // checking if index of closing bracket is not wrong
   if (classClosingBracketIndex == -1) {
-    print('❌  Error: Could not find closing bracket for Routes class.');
+    print(' ❌  Error: Could not find closing bracket for Routes class.');
     return;
   }
   // Create line about route name
@@ -56,5 +56,5 @@ void _addRouteName() {
   // inserting lines into file
   _routeNamesFile.writeAsStringSync(routeNamesLines.join('\n'));
 
-  print('✅  Route and route name added successfully.');
+  print(' ✅  Route and route name added successfully.');
 }

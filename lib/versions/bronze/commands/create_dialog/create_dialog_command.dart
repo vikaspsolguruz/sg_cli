@@ -7,7 +7,7 @@ void _createDialogStructure() {
 
   final isAlreadyExists = _checkExistingRoute();
   if (isAlreadyExists) {
-    print('❌ Error: Route already exists');
+    print(' ❌ Error: Route already exists');
     return;
   }
   _moduleName = getModuleName();
@@ -42,5 +42,5 @@ void _createDialogStructure() {
   // Create View file
   createFile('$_viewPath/${_pageName}_$_toBeCreated.dart', _generateDialogContent(_pageName));
 
-  print('✅  $_pagePathType structure for "$_pageName" created successfully!');
+  print(' ✅  $_pagePathType structure for "$_pageName" created successfully!');
 }

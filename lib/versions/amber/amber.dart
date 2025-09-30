@@ -28,7 +28,7 @@ class Amber {
     bool isCreateEventCommand = arguments.length == 5 && arguments[0] == 'create' && arguments[1] == 'event' && arguments[3] == 'in';
 
     if (arguments.isEmpty) {
-      print('❌  Error: No command provided.');
+      print(' ❌  Error: No command provided.');
       return;
     }
 
@@ -62,7 +62,7 @@ class Amber {
       final String pageName = arguments[4];
       _createEvent(eventName, pageName);
     } else {
-      print('❌  Error: Unknown command.');
+      print(' ❌  Error: Unknown command.');
     }
   }
 }

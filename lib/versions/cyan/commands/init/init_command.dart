@@ -42,12 +42,12 @@ void _initProject() {
   print('⚠️  This will replace your current project structure with cyan architecture.\n');
   print('   📁  lib/ folder will be regenerated\n   📦  Dependencies will be updated');
   print('');
-  stdout.write('🚀 Continue with initialization? (yes/no): ');
+  stdout.write(' 🚀 Continue with initialization? (yes/no): ');
 
   final String? response = stdin.readLineSync();
 
   if (response?.toLowerCase() != 'yes' && response?.toLowerCase() != 'y') {
-    print('❌  Init cancelled.');
+    print(' ❌  Init cancelled.');
     return;
   }
 
@@ -99,7 +99,7 @@ void _initProject() {
     print('*                  🔥 🔥 🔥 🔥 🔥 🔥 🔥                   *');
     print('************************************************************');
   } catch (e) {
-    print('❌  Error during initialization: $e');
+    print(' ❌  Error during initialization: $e');
   }
 }
 
@@ -144,9 +144,9 @@ void _generateCoreArchitecture() {
 
   // Generate the entire lib directory
   _copyDirectory(sourceLibDir, targetLibDir);
-  print('✅  Generated presentation layer');
-  print('✅  Generated core infrastructure');
-  print('✅  Generated app foundation');
+  print(' ✅  Generated presentation layer');
+  print(' ✅  Generated core infrastructure');
+  print(' ✅  Generated app foundation');
 }
 
 void _updatePackageReferences() {
@@ -170,7 +170,7 @@ void _updatePackageReferences() {
     }
   }
 
-  print('✅  Updated package references in $filesUpdated files');
+  print(' ✅  Updated package references in $filesUpdated files');
 }
 
 void _updatePubspecDependencies() {
@@ -212,7 +212,7 @@ void _updatePubspecDependencies() {
   }
 
   currentPubspec.writeAsStringSync(updatedLines.join('\n'));
-  print('✅  Updated pubspec.yaml with dependencies, assets, and flutter config');
+  print(' ✅  Updated pubspec.yaml with dependencies, assets, and flutter config');
 }
 
 void _copyAssets() {
@@ -222,7 +222,7 @@ void _copyAssets() {
 
   if (sourceAssetsDir.existsSync()) {
     _copyDirectory(sourceAssetsDir, targetAssetsDir);
-    print('✅  Generated assets');
+    print(' ✅  Generated assets');
   } else {
     print('⚠️  No assets found in boilerplate');
   }
@@ -235,7 +235,7 @@ void _copyTests() {
 
   if (sourceTestDir.existsSync()) {
     _copyDirectory(sourceTestDir, targetTestDir);
-    print('✅  Generated test');
+    print(' ✅  Generated test');
   } else {
     print('⚠️  No tests found in boilerplate');
   }
@@ -249,7 +249,7 @@ void _generateConfigFiles() {
   final targetAnalysis = File('analysis_options.yaml');
   if (sourceAnalysis.existsSync()) {
     sourceAnalysis.copySync(targetAnalysis.path);
-    print('✅  Updated lints and rules');
+    print(' ✅  Updated lints and rules');
   }
 
   // Generate .editorconfig
@@ -257,7 +257,7 @@ void _generateConfigFiles() {
   final targetEditor = File('.editorconfig');
   if (sourceEditor.existsSync()) {
     sourceEditor.copySync(targetEditor.path);
-    print('✅  Generated editor configuration');
+    print(' ✅  Generated editor configuration');
   }
 
   // Generate sg_cli.yaml only if it doesn't exist
@@ -266,7 +266,7 @@ void _generateConfigFiles() {
     final sourceSgCli = File('$boilerplatePath/sg_cli.yaml');
     if (sourceSgCli.existsSync()) {
       sourceSgCli.copySync(targetSgCli.path);
-      print('✅  Generated sg_cli configuration');
+      print(' ✅  Generated sg_cli configuration');
     }
   }
 }
@@ -278,7 +278,7 @@ void _runPubGet() {
     final result = Process.runSync('flutter', ['pub', 'get']);
 
     if (result.exitCode == 0) {
-      print('✅  Dependencies installed successfully');
+      print(' ✅  Dependencies installed successfully');
     } else {
       print('⚠️  Warning: Failed to install dependencies automatically');
       print('   Please run: flutter pub get');
