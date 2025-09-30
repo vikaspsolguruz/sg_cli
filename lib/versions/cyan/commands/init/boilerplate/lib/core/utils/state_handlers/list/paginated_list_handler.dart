@@ -1,8 +1,8 @@
+import 'package:newarch/core/enums/process_state.dart';
 import 'package:newarch/core/models/pagination_model.dart';
 import 'package:newarch/core/models/response_data_model.dart';
 import 'package:newarch/core/models/view_states/list_state.dart';
 import 'package:newarch/core/utils/bloc/base_bloc.dart';
-import 'package:newarch/core/utils/extensions.dart';
 
 /// 🔥 PAGINATED LIST HANDLER - List with pagination & search (no filter)
 class PaginatedListHandler<T> {
@@ -11,42 +11,44 @@ class PaginatedListHandler<T> {
     required this.getViewState,
     required this.updateViewState,
     required this.repositoryCall,
-    this.onLoadMoreRetry,
+    required this.loadMoreEvent,
   });
 
   final BaseBloc bloc;
   final ListState<T> Function() getViewState;
   final void Function(ListState<T> newViewState) updateViewState;
-  final Future<ResponseData<PaginationData<List<T>>>> Function({required PaginationData paginationData, String? searchQuery}) repositoryCall;
-  final void Function()? onLoadMoreRetry;
+  final Future<ResponseData<PaginationData<List<T>>>> Function() repositoryCall;
+  final dynamic Function() loadMoreEvent;
 
-  Future<void> load({bool isRefresh = false}) async {
+  Future<void> load({bool isRefresh = false, bool isSilent = false}) async {
     if (bloc.isClosed) return;
-    final currentState = getViewState();
+
+    // backup used if using silentRefresh
+    final backedUpState = getViewState();
+
+    if (isRefresh) backedUpState.searchController?.clear();
 
     updateViewState(
-      ListState<T>.loading(
-        currentItems: isRefresh ? null : currentState.items,
-        existingController: currentState.searchController,
+      backedUpState.copyWith(
+        status: isSilent ? null : ProcessState.loading,
+        paginationData: isRefresh ? PaginationData.initial(limit: isSilent ? backedUpState.items.length : backedUpState.paginationData?.limit) : null,
+        isLoadingMore: false,
+        items: const [],
       ),
     );
 
-    final response = await repositoryCall(
-      paginationData: currentState.paginationData!,
-      searchQuery: currentState.currentSearch,
-    );
-
+    final response = await repositoryCall();
     if (bloc.isClosed) return;
 
     if (response.hasError) {
       updateViewState(
-        ListState<T>.error(
-          error: response.message!,
-          currentItems: currentState.items,
-          currentPagination: currentState.paginationData,
-          searchController: currentState.searchController,
+        getViewState().copyWith(
+          status: ProcessState.error,
+          items: const [],
+          errorMessage: response.message,
         ),
       );
+
       return;
     }
 
@@ -54,51 +56,69 @@ class PaginatedListHandler<T> {
     final newItems = paginationData.list!;
     paginationData.clearData();
 
-    updateViewState(currentState.withNewItems(newItems: newItems, newPagination: paginationData, isLoadMore: false));
+    updateViewState(
+      getViewState().copyWith(
+        status: ProcessState.success,
+        items: newItems,
+        isLoadingMore: false,
+        paginationData: paginationData.copyWith(limit: isSilent ? backedUpState.paginationData?.limit : null),
+      ),
+    );
   }
 
   Future<void> loadMore() async {
-    final currentState = getViewState();
-    if (bloc.isClosed || !currentState.canLoadMore) return;
+    if (bloc.isClosed || !getViewState().canLoadMore) return;
 
-    updateViewState(currentState.startLoadingMore());
+    updateViewState(getViewState().copyWith(isLoadingMore: true));
 
-    final response = await repositoryCall(
-      paginationData: currentState.paginationData!,
-      searchQuery: currentState.currentSearch,
-    );
+    final response = await repositoryCall();
 
     if (bloc.isClosed) return;
 
     if (response.hasError) {
-      if (onLoadMoreRetry != null) {
-        Future.delayed(const Duration(seconds: 1), onLoadMoreRetry!);
-        return;
-      }
-
-      updateViewState(
-        ListState<T>.error(
-          error: response.message!,
-          currentItems: currentState.items,
-          currentPagination: currentState.paginationData,
-          searchController: currentState.searchController,
-        ),
-      );
+      Future.delayed(const Duration(seconds: 1), () => bloc.add(loadMoreEvent()));
       return;
     }
 
     final paginationData = response.data!;
-    final newItems = paginationData.list!;
+    final newItems = [...getViewState().items, ...?response.data?.list];
     paginationData.clearData();
 
-    updateViewState(currentState.withNewItems(newItems: newItems, newPagination: paginationData, isLoadMore: true));
+    updateViewState(
+      getViewState().copyWith(
+        status: ProcessState.success,
+        isLoadingMore: false,
+        items: newItems,
+        paginationData: paginationData,
+      ),
+    );
   }
 
   Future<void> refresh() async {
     if (bloc.isClosed) return;
+
+    await load(isRefresh: true);
+  }
+
+  Future<void> silentRefresh() async {
+    if (bloc.isClosed) return;
+
+    await load(isRefresh: true, isSilent: true);
+  }
+
+  Future<void> search() async {
+    if (bloc.isClosed) return;
     final currentState = getViewState();
 
-    updateViewState(ListState<T>.initial(hasSearch: currentState.hasSearch));
-    await load(isRefresh: true);
+    final query = currentState.searchController?.text ?? '';
+
+    updateViewState(
+      currentState.copyWith(
+        status: ProcessState.loading,
+        paginationData: PaginationData.initial(search: query, limit: currentState.paginationData?.limit),
+      ),
+    );
+
+    await load();
   }
 }

@@ -29,72 +29,16 @@ class ListState<T> extends ViewState {
   ListState.initial({
     bool isPaginated = true,
     bool hasSearch = false,
+    int? pageLimit,
     this.hasDataOverride,
   }) : items = const [],
-       paginationData = isPaginated ? PaginationData.initial(limit: 15) : null,
+       paginationData = isPaginated ? PaginationData.initial(limit: pageLimit) : null,
        status = ProcessState.loading,
-       // 🎯 Loading is initial state!
        errorMessage = null,
        isSearching = false,
        isLoadingMore = false,
        searchController = hasSearch ? TextEditingController() : null;
 
-  ListState.loading({
-    List<T>? currentItems,
-    bool isPaginated = true,
-    TextEditingController? existingController,
-    this.hasDataOverride,
-  }) : items = currentItems ?? const [],
-       paginationData = isPaginated ? PaginationData.initial(limit: 15) : null,
-       status = ProcessState.loading,
-       errorMessage = null,
-       isSearching = false,
-       isLoadingMore = false,
-       searchController = existingController;
-
-  ListState.success({
-    required this.items,
-    this.paginationData,
-    this.isSearching = false,
-    this.searchController,
-    this.hasDataOverride,
-  }) : status = ProcessState.success,
-       errorMessage = null,
-       isLoadingMore = false;
-
-  ListState.error({
-    required String error,
-    List<T>? currentItems,
-    PaginationData? currentPagination,
-    this.searchController,
-    this.hasDataOverride,
-  }) : items = currentItems ?? const [],
-       paginationData = currentPagination,
-       status = ProcessState.error,
-       errorMessage = error,
-       isSearching = false,
-       isLoadingMore = false;
-
-  ListState.loadingMore({
-    required this.items,
-    required this.paginationData,
-    this.isSearching = false,
-    this.searchController,
-    this.hasDataOverride,
-  }) : status = ProcessState.success,
-       errorMessage = null,
-       isLoadingMore = true;
-
-  ListState.searching({
-    bool isPaginated = true,
-    required this.searchController,
-    this.hasDataOverride,
-  }) : items = const [],
-       paginationData = isPaginated ? PaginationData.initial(limit: 15) : null,
-       status = ProcessState.loading,
-       errorMessage = null,
-       isSearching = true,
-       isLoadingMore = false;
 
   @override
   bool get hasData => hasDataOverride?.call(this) ?? items.isNotEmpty;

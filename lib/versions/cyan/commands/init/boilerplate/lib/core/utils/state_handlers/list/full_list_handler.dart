@@ -12,14 +12,14 @@ class FullListHandler<T, F extends FilterModel> {
     required this.getViewState,
     required this.updateViewState,
     required this.repositoryCall,
-    this.onLoadMoreRetry,
+    required this.loadMoreEvent,
   });
 
   final BaseBloc bloc;
   final ListStateWithFilter<T, F> Function() getViewState;
   final void Function(ListStateWithFilter<T, F> newViewState) updateViewState;
   final Future<ResponseData<PaginationData<List<T>>>> Function() repositoryCall;
-  final void Function()? onLoadMoreRetry;
+  final dynamic Function() loadMoreEvent;
 
   Future<void> load({bool isRefresh = false, bool isSilent = false}) async {
     if (bloc.isClosed) return;
@@ -31,7 +31,7 @@ class FullListHandler<T, F extends FilterModel> {
 
     updateViewState(
       backedUpState.copyWith(
-        status: ProcessState.loading,
+        status: isSilent ? null : ProcessState.loading,
         paginationData: isRefresh ? PaginationData.initial(limit: isSilent ? backedUpState.items.length : backedUpState.paginationData?.limit) : null,
         isLoadingMore: false,
         items: const [],
@@ -78,7 +78,7 @@ class FullListHandler<T, F extends FilterModel> {
     if (bloc.isClosed) return;
 
     if (response.hasError) {
-      Future.delayed(const Duration(seconds: 1), () => onLoadMoreRetry?.call());
+      Future.delayed(const Duration(seconds: 1), () => bloc.add(loadMoreEvent()));
       return;
     }
 

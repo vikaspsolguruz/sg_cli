@@ -1,4 +1,5 @@
 import 'package:newarch/core/constants/app_strings.dart';
+import 'package:newarch/core/enums/process_state.dart';
 import 'package:newarch/core/models/response_data_model.dart';
 import 'package:newarch/core/models/view_states/data_state.dart';
 import 'package:newarch/core/utils/bloc/base_bloc.dart';
@@ -17,32 +18,63 @@ class BasicDataHandler<T> {
   final void Function(DataState<T> newViewState) updateViewState;
   final Future<ResponseData<T>> Function() repositoryCall;
 
-  Future<void> load({bool isRefresh = false}) async {
+  Future<void> load({bool isRefresh = false, bool isSilent = false}) async {
     if (bloc.isClosed) return;
-    final currentState = getViewState();
 
-    updateViewState(DataState<T>.loading(currentData: isRefresh ? null : currentState.data));
+    // backup used if using silentRefresh
+    final backedUpState = getViewState();
+
+    updateViewState(
+      backedUpState.copyWith(
+        status: isSilent ? null : ProcessState.loading,
+        data: isSilent ? backedUpState.data : null,
+      ),
+    );
 
     final response = await repositoryCall();
 
     if (bloc.isClosed) return;
 
     if (response.hasError) {
-      updateViewState(DataState<T>.error(error: response.message!, currentData: currentState.data));
+      updateViewState(
+        getViewState().copyWith(
+          status: ProcessState.error,
+          errorMessage: response.message,
+          data: null,
+        ),
+      );
+
       return;
     }
 
     final newData = response.data;
     if (newData != null) {
-      updateViewState(DataState<T>.success(newData));
+      updateViewState(
+        getViewState().copyWith(
+          status: ProcessState.success,
+          data: newData,
+        ),
+      );
     } else {
-      updateViewState(DataState<T>.error(error: response.message ?? AppStrings.somethingWentWrong, currentData: currentState.data));
+      updateViewState(
+        getViewState().copyWith(
+          status: ProcessState.error,
+          errorMessage: response.message ?? AppStrings.somethingWentWrong,
+          data: null,
+        ),
+      );
     }
   }
 
   Future<void> refresh() async {
     if (bloc.isClosed) return;
-    updateViewState(DataState<T>.initial());
+
     await load(isRefresh: true);
+  }
+
+  Future<void> silentRefresh() async {
+    if (bloc.isClosed) return;
+
+    await load(isRefresh: true, isSilent: true);
   }
 }

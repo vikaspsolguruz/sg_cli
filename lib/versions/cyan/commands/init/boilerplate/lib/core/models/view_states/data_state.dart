@@ -21,50 +21,17 @@ class DataState<T> extends ViewState {
     this.hasDataOverride,
   });
 
-  DataState.initial({bool hasSearch = false, this.hasDataOverride})
-    : data = null,
-      status = ProcessState.loading,
-      errorMessage = null,
-      isSearching = false,
-      searchController = hasSearch ? TextEditingController() : null;
-
-  DataState.loading({
-    T? currentData,
+  factory DataState.initial({
     bool hasSearch = false,
-    TextEditingController? existingController,
-    this.hasDataOverride,
-  }) : data = currentData,
-       status = ProcessState.loading,
-       errorMessage = null,
-       isSearching = false,
-       searchController = existingController ?? (hasSearch ? TextEditingController() : null);
-
-  DataState.success(
-    this.data, {
-    this.searchController,
-    this.hasDataOverride,
-  }) : status = ProcessState.success,
-       errorMessage = null,
-       isSearching = false;
-
-  DataState.error({
-    required String error,
-    T? currentData,
-    this.searchController,
-    this.hasDataOverride,
-  }) : data = currentData,
-       status = ProcessState.error,
-       errorMessage = error,
-       isSearching = false;
-
-  DataState.searching({
-    T? currentData,
-    required this.searchController,
-    this.hasDataOverride,
-  }) : data = currentData,
-       status = ProcessState.loading,
-       errorMessage = null,
-       isSearching = true;
+    bool Function(DataState<T> state)? hasDataOverride,
+  }) {
+    return DataState._(
+      status: ProcessState.loading,
+      isSearching: false,
+      searchController: hasSearch ? TextEditingController() : null,
+      hasDataOverride: hasDataOverride,
+    );
+  }
 
   @override
   bool get hasData => hasDataOverride?.call(this) ?? (data != null && status == ProcessState.success);
@@ -87,7 +54,7 @@ class DataState<T> extends ViewState {
     return DataState._(
       data: data ?? this.data,
       status: status ?? this.status,
-      errorMessage: errorMessage,
+      errorMessage: errorMessage ?? this.errorMessage,
       isSearching: isSearching ?? this.isSearching,
       searchController: searchController ?? this.searchController,
       hasDataOverride: hasDataOverride ?? this.hasDataOverride,
@@ -100,5 +67,10 @@ class DataState<T> extends ViewState {
   }
 
   @override
-  List<Object?> get props => [data, status, errorMessage, isSearching];
+  List<Object?> get props => [
+    data,
+    status,
+    errorMessage,
+    isSearching,
+  ];
 }

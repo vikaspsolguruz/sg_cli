@@ -1,4 +1,5 @@
 import 'package:newarch/core/constants/app_strings.dart';
+import 'package:newarch/core/enums/process_state.dart';
 import 'package:newarch/core/models/filter_model.dart';
 import 'package:newarch/core/models/response_data_model.dart';
 import 'package:newarch/core/models/view_states/data_state_with_filter.dart';
@@ -16,52 +17,51 @@ class FilteredDataHandler<T, F extends FilterModel> {
   final BaseBloc bloc;
   final DataStateWithFilter<T, F> Function() getViewState;
   final void Function(DataStateWithFilter<T, F> newViewState) updateViewState;
-  final Future<ResponseData<T>> Function({required F filter}) repositoryCall;
+  final Future<ResponseData<T>> Function() repositoryCall;
 
-  Future<void> load({bool isRefresh = false}) async {
+  Future<void> load({bool isRefresh = false, bool isSilent = false}) async {
     if (bloc.isClosed) return;
-    final currentState = getViewState();
+
+    // backup used if using silentRefresh
+    final backedUpState = getViewState();
 
     updateViewState(
-      DataStateWithFilter<T, F>.loading(
-        currentData: isRefresh ? null : currentState.data,
-        filter: currentState.filter,
-        existingController: currentState.searchController,
+      backedUpState.copyWith(
+        status: isSilent ? null : ProcessState.loading, // null keeps current status
+        data: isSilent ? backedUpState.data : null,
       ),
     );
 
-    final response = await repositoryCall(filter: currentState.filter);
+    final response = await repositoryCall();
 
     if (bloc.isClosed) return;
 
     if (response.hasError) {
       updateViewState(
-        DataStateWithFilter<T, F>.error(
-          error: response.message!,
-          currentData: currentState.data,
-          filter: currentState.filter,
-          searchController: currentState.searchController,
+        getViewState().copyWith(
+          status: ProcessState.error,
+          errorMessage: response.message,
+          data: null,
         ),
       );
+
       return;
     }
 
     final newData = response.data;
     if (newData != null) {
       updateViewState(
-        DataStateWithFilter<T, F>.success(
-          newData,
-          filter: currentState.filter,
-          searchController: currentState.searchController,
+        getViewState().copyWith(
+          status: ProcessState.success,
+          data: newData,
         ),
       );
     } else {
       updateViewState(
-        DataStateWithFilter<T, F>.error(
-          error: response.message ?? AppStrings.somethingWentWrong,
-          filter: currentState.filter,
-          currentData: currentState.data,
-          searchController: currentState.searchController,
+        getViewState().copyWith(
+          status: ProcessState.error,
+          errorMessage: response.message ?? AppStrings.somethingWentWrong,
+          data: null,
         ),
       );
     }
@@ -69,15 +69,14 @@ class FilteredDataHandler<T, F extends FilterModel> {
 
   Future<void> refresh() async {
     if (bloc.isClosed) return;
-    final currentState = getViewState();
 
-    updateViewState(
-      DataStateWithFilter<T, F>.initial(
-        createInitialFilter: () => currentState.filter,
-        hasSearch: currentState.hasSearch,
-      ),
-    );
     await load(isRefresh: true);
+  }
+
+  Future<void> silentRefresh() async {
+    if (bloc.isClosed) return;
+
+    await load(isRefresh: true, isSilent: true);
   }
 
   Future<void> updateFilter(F newFilter) async {
@@ -92,7 +91,19 @@ class FilteredDataHandler<T, F extends FilterModel> {
     if (bloc.isClosed) return;
     final currentState = getViewState();
 
-    updateViewState(currentState.copyWith(filter: currentState.filter.clear() as F));
+    updateViewState(currentState.copyWith(filter: currentState.filter..clear()));
+    await load();
+  }
+
+  Future<void> search() async {
+    if (bloc.isClosed) return;
+
+    updateViewState(
+      getViewState().copyWith(
+        status: ProcessState.loading,
+      ),
+    );
+
     await load();
   }
 }

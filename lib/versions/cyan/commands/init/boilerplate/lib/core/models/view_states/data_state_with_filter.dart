@@ -38,38 +38,6 @@ class DataStateWithFilter<T, F extends FilterModel> extends ViewState {
     );
   }
 
-  DataStateWithFilter.loading({
-    T? currentData,
-    required this.filter,
-    bool hasSearch = false,
-    TextEditingController? existingController,
-    this.hasDataOverride,
-  }) : data = currentData,
-       status = ProcessState.loading,
-       errorMessage = null,
-       isSearching = false,
-       searchController = existingController ?? (hasSearch ? TextEditingController() : null);
-
-  DataStateWithFilter.success(
-    this.data, {
-    required this.filter,
-    this.searchController,
-    this.hasDataOverride,
-  }) : status = ProcessState.success,
-       errorMessage = null,
-       isSearching = false;
-
-  DataStateWithFilter.error({
-    required String error,
-    T? currentData,
-    required this.filter,
-    this.searchController,
-    this.hasDataOverride,
-  }) : data = currentData,
-       status = ProcessState.error,
-       errorMessage = error,
-       isSearching = false;
-
   @override
   bool get hasData => hasDataOverride?.call(this) ?? (data != null && status == ProcessState.success);
 
