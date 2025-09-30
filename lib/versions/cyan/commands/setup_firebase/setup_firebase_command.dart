@@ -39,12 +39,13 @@ void _setupFirebase() {
 void _setupFlavoredFirebase(String packageName, String projectName) {
   print('🚀 Setting up flavor-based Firebase configuration...');
   print('');
-
+  
   // Add firebase_core dependency
   print('📦 Adding firebase_core dependency...');
   _addDependencyToPubspec('firebase_core', '^4.1.1');
+  _runPubGet();
   print('');
-
+  
   // Generate firebase_options_*.dart files
   _generateFirebaseOptionsDartFiles(packageName);
 
@@ -65,14 +66,12 @@ void _setupFlavoredFirebase(String packageName, String projectName) {
   print('╚════════════════════════════════════════════════════════════════════════════════╝');
   print('');
   print('✅ What we did for you:');
-  print('   • Added firebase_core dependency to pubspec.yaml');
+  print('   • Added firebase_core: ^4.1.1 to pubspec.yaml');
+  print('   • Installed dependencies automatically');
   print('   • Created 3 Firebase option files (dev, stage, prod)');
   print('   • Added Firebase initialization code to your _app_initializer.dart');
   print('   • Created placeholder config files for Android and iOS');
   print('   • Added all necessary imports automatically');
-  print('');
-  print('⚠️  IMPORTANT: Run this command now:');
-  print('   flutter pub get');
   print('');
   print('📦 Optional Dependencies (Add if needed):');
   print('   You can manually add these to pubspec.yaml:');
@@ -146,10 +145,11 @@ void _setupFlavoredFirebase(String packageName, String projectName) {
 void _setupSingleFirebase(String packageName, String projectName) {
   print('🚀 Setting up single Firebase configuration...');
   print('');
-
+  
   // Add firebase_core dependency
   print('📦 Adding firebase_core dependency...');
   _addDependencyToPubspec('firebase_core', '^4.1.1');
+  _runPubGet();
   print('');
   
   // Generate single firebase_options.dart file
@@ -174,13 +174,11 @@ void _setupSingleFirebase(String packageName, String projectName) {
   print('╚════════════════════════════════════════════════════════════════════════════════╝');
   print('');
   print('✅ What we did for you:');
-  print('   • Added firebase_core dependency to pubspec.yaml');
+  print('   • Added firebase_core: ^4.1.1 to pubspec.yaml');
+  print('   • Installed dependencies automatically');
   print('   • Created Firebase options file: lib/firebase_options.dart');
   print('   • Added Firebase initialization code to your _app_initializer.dart');
   print('   • Added all necessary imports automatically');
-  print('');
-  print('⚠️  IMPORTANT: Run this command now:');
-  print('   flutter pub get');
   print('');
   print('📦 Optional Dependencies (Add if needed):');
   print('   You can manually add these to pubspec.yaml:');

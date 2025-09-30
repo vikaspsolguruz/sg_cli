@@ -66,6 +66,7 @@ void _injectFirebaseInitialization(String projectName, bool hasFlavors) {
   
   if (hasFlavors) {
     imports.addAll([
+      "import 'package:$projectName/environments/environments.dart';",
       "import 'package:$projectName/firebase_options_dev.dart' as dev;",
       "import 'package:$projectName/firebase_options_stage.dart' as stage;",
       "import 'package:$projectName/firebase_options_prod.dart' as prod;",
