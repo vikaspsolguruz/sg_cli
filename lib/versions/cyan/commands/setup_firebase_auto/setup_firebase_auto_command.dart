@@ -103,7 +103,7 @@ Future<void> _setupFirebaseAutoFlavored(String packageName, String projectName) 
   print('');
 
   // Step 2: Get list of apps in the selected project
-  print(' ${ConsoleSymbols.search}Checking apps in project...');
+  print('${ConsoleSymbols.search}Checking apps in project...');
   final apps = await _getFirebaseApps(selectedProject['projectId']);
 
   if (apps == null) {
@@ -136,10 +136,10 @@ Future<void> _setupFirebaseAutoFlavored(String packageName, String projectName) 
 
     if (appExists) {
       existingApps.add(flavor);
-      print('  ${ConsoleSymbols.checkmark}$flavorName: Found app with package $flavorPackage');
+      print('${ConsoleSymbols.checkmark}$flavorName: Found app with package $flavorPackage');
     } else {
       missingApps.add('$flavorName ($flavorPackage)');
-      print('  ${ConsoleSymbols.cross}$flavorName: Missing app with package $flavorPackage');
+      print('${ConsoleSymbols.cross}$flavorName: Missing app with package $flavorPackage');
     }
   }
 
@@ -364,8 +364,8 @@ Future<bool> _runFlutterFireConfigureWithProject(
 Future<void> _setupFirebaseAutoSingle(String packageName, String projectName) async {
   print('${ConsoleSymbols.clipboard}Prerequisites:');
   print('   You need to have created a Firebase project in Firebase Console with:');
-  print('   ${ConsoleSymbols.checkmark}Android app with package name: $packageName');
-  print('   ${ConsoleSymbols.checkmark}iOS app with bundle ID: $packageName');
+  print('${ConsoleSymbols.checkmark}Android app with package name: $packageName');
+  print('${ConsoleSymbols.checkmark}iOS app with bundle ID: $packageName');
   print('');
 
   // Ask user if they've completed the prerequisites
@@ -468,7 +468,7 @@ Future<bool> _runFlutterFireConfigure(String flavor, String packageName) async {
 void _showSuccessMessage(bool hasFlavors, String packageName) {
   print('');
   print('╔════════════════════════════════════════════════════════════════════════════════╗');
-  print('║              ${ConsoleSymbols.success}Automated Firebase Setup Complete!                            ║');
+  print('║           ${ConsoleSymbols.success}Automated Firebase Setup Complete!                            ║');
   print('╚════════════════════════════════════════════════════════════════════════════════╝');
   print('');
   print('${ConsoleSymbols.success}What we did for you:');

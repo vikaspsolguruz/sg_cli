@@ -27,7 +27,7 @@ void _addRouteData({bool isBottomSheet = false, bool isDialog = false}) {
 
   // checking if index of closing bracket is not wrong
   if (closingBracketIndex == -1) {
-    print(' ${ConsoleSymbols.error}  Error: Could not find closing bracket for the routes.');
+    print('${ConsoleSymbols.error}  Error: Could not find closing bracket for the routes.');
     return;
   }
 
@@ -55,7 +55,7 @@ void _addSubRouteData({required String subPageName, required String parentPageNa
   // 1. Locate AppRoute with name: Routes.<parentPageName>
   int nameIndex = routesLines.indexWhere((line) => line.contains('name: Routes.$parentPageName'));
   if (nameIndex == -1) {
-    print(' ${ConsoleSymbols.error} Could not find parent route: $parentPageName');
+    print('${ConsoleSymbols.error} Could not find parent route: $parentPageName');
     return;
   }
 
@@ -64,7 +64,7 @@ void _addSubRouteData({required String subPageName, required String parentPageNa
   while (!routesLines[routeStartIndex].contains('AppRoute(')) {
     routeStartIndex--;
     if (routeStartIndex < 0) {
-      print(' ${ConsoleSymbols.error} Failed to find AppRoute() start.');
+      print('${ConsoleSymbols.error} Failed to find AppRoute() start.');
       return;
     }
   }
@@ -83,7 +83,7 @@ void _addSubRouteData({required String subPageName, required String parentPageNa
   }
 
   if (routeEndIndex == -1) {
-    print(' ${ConsoleSymbols.error} Could not find end of AppRoute block.');
+    print('${ConsoleSymbols.error} Could not find end of AppRoute block.');
     return;
   }
 
@@ -102,7 +102,7 @@ void _addSubRouteData({required String subPageName, required String parentPageNa
     if (closingIndex != -1) {
       routesLines.insert(closingIndex, subRouteEntry);
     } else {
-      print(' ${ConsoleSymbols.error} Malformed subRoutes block.');
+      print('${ConsoleSymbols.error} Malformed subRoutes block.');
     }
   } else {
     // 5. Find end of blocProvider
@@ -129,7 +129,7 @@ $subRouteEntry
         ],''';
       routesLines.insert(blocEndIndex + 1, subRoutesBlock);
     } else {
-      print(' ${ConsoleSymbols.error} Could not find blocProvider block to insert subRoutes.');
+      print('${ConsoleSymbols.error} Could not find blocProvider block to insert subRoutes.');
     }
   }
 

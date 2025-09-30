@@ -7,7 +7,7 @@ void _createBottomSheetStructure() {
 
   final isAlreadyExists = _checkExistingRoute();
   if (isAlreadyExists) {
-    print(' ${ConsoleSymbols.error} Error: Route already exists');
+    print('${ConsoleSymbols.error} Error: Route already exists');
     return;
   }
   _moduleName = getModuleName();
@@ -42,5 +42,5 @@ void _createBottomSheetStructure() {
   // Create View file
   createFile('$_viewPath/${_pageName}_$_toBeCreated.dart', _generateBottomSheetContent(_pageName));
 
-  print(' ${ConsoleSymbols.success}  $_pagePathType structure for "$_pageName" created successfully!');
+  print('${ConsoleSymbols.success}  $_pagePathType structure for "$_pageName" created successfully!');
 }

@@ -5,7 +5,7 @@ void _injectFirebaseInitialization(String projectName, bool hasFlavors) {
   final appInitializerFile = File('lib/_app_initializer.dart');
   
   if (!appInitializerFile.existsSync()) {
-    print('  ${ConsoleSymbols.warning}  lib/_app_initializer.dart not found, skipping code injection...');
+    print('${ConsoleSymbols.warning}  lib/_app_initializer.dart not found, skipping code injection...');
     return;
   }
   
@@ -13,7 +13,7 @@ void _injectFirebaseInitialization(String projectName, bool hasFlavors) {
   
   // Check if Firebase initialization already exists
   if (content.contains('Firebase.initializeApp')) {
-    print('  ${ConsoleSymbols.info}  Firebase initialization already exists in _app_initializer.dart');
+    print('${ConsoleSymbols.info}  Firebase initialization already exists in _app_initializer.dart');
     return;
   }
   
@@ -25,7 +25,7 @@ void _injectFirebaseInitialization(String projectName, bool hasFlavors) {
   
   final match = initFunctionPattern.firstMatch(content);
   if (match == null) {
-    print('  ${ConsoleSymbols.warning}  Could not find initializeApp() function in _app_initializer.dart');
+    print('${ConsoleSymbols.warning}  Could not find initializeApp() function in _app_initializer.dart');
     return;
   }
   
@@ -57,7 +57,7 @@ void _injectFirebaseInitialization(String projectName, bool hasFlavors) {
   }
   
   appInitializerFile.writeAsStringSync(content);
-  print('  ${ConsoleSymbols.checkmark} Injected Firebase initialization code into _app_initializer.dart');
+  print('${ConsoleSymbols.checkmark} Injected Firebase initialization code into _app_initializer.dart');
   
   // Add required imports
   List<String> imports = [

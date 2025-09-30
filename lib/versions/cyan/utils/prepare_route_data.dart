@@ -13,12 +13,12 @@ bool _prepareRouteData({bool isBottomSheet = false, bool isDialog = false}) {
   _routesFile = File(_routesFilePath);
   _routeNamesFile = File(_routeNamesFilePath);
   if (!_routesFile.existsSync()) {
-    print(' ${ConsoleSymbols.error}  Error: Routes file not found: $_routesFilePath');
+    print('${ConsoleSymbols.error}  Error: Routes file not found: $_routesFilePath');
     return false;
   }
 
   if (!_routeNamesFile.existsSync()) {
-    print(' ${ConsoleSymbols.error}  Error: Route names file not found: $_routeNamesFilePath');
+    print('${ConsoleSymbols.error}  Error: Route names file not found: $_routeNamesFilePath');
     return false;
   }
   return true;

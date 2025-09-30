@@ -5,7 +5,7 @@ void _addDependencyToPubspec(String packageName, String version) {
   final pubspecFile = File('pubspec.yaml');
   
   if (!pubspecFile.existsSync()) {
-    print('  ${ConsoleSymbols.warning}  pubspec.yaml not found');
+    print('${ConsoleSymbols.warning}  pubspec.yaml not found');
     return;
   }
   
@@ -13,7 +13,7 @@ void _addDependencyToPubspec(String packageName, String version) {
   
   // Check if dependency already exists
   if (content.contains('$packageName:')) {
-    print('  ${ConsoleSymbols.info}  $packageName already exists in pubspec.yaml');
+    print('${ConsoleSymbols.info}  $packageName already exists in pubspec.yaml');
     return;
   }
   
@@ -22,7 +22,7 @@ void _addDependencyToPubspec(String packageName, String version) {
   final match = dependenciesPattern.firstMatch(content);
   
   if (match == null) {
-    print('  ${ConsoleSymbols.warning}  Could not find dependencies section in pubspec.yaml');
+    print('${ConsoleSymbols.warning}  Could not find dependencies section in pubspec.yaml');
     return;
   }
   
@@ -61,5 +61,5 @@ void _addDependencyToPubspec(String packageName, String version) {
   content = lines.join('\n');
   pubspecFile.writeAsStringSync(content);
   
-  print('  ${ConsoleSymbols.checkmark} Added $packageName: $version to pubspec.yaml');
+  print('${ConsoleSymbols.checkmark} Added $packageName: $version to pubspec.yaml');
 }

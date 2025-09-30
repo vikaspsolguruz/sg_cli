@@ -10,7 +10,7 @@ void _addRouteName({String? parentPageName}) {
   final int classClosingBracketIndex = routeNamesLines.lastIndexWhere((line) => line.trim() == '}');
   // checking if index of closing bracket is not wrong
   if (classClosingBracketIndex == -1) {
-    print(' ${ConsoleSymbols.error}  Error: Could not find closing bracket for Routes class.');
+    print('${ConsoleSymbols.error}  Error: Could not find closing bracket for Routes class.');
     return;
   }
   // Create line about route name
@@ -20,5 +20,5 @@ void _addRouteName({String? parentPageName}) {
   // inserting lines into file
   _routeNamesFile.writeAsStringSync(routeNamesLines.join('\n'));
 
-  print(' ${ConsoleSymbols.success}  Route and route name added successfully.');
+  print('${ConsoleSymbols.success}  Route and route name added successfully.');
 }

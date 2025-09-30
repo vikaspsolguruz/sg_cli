@@ -13,7 +13,7 @@ void _setupDeeplink() {
   try {
     // Check if flavors exist
     if (!_checkFlavorsExist()) {
-      print(' ${ConsoleSymbols.error} Error: Product flavors not found!');
+      print('${ConsoleSymbols.error} Error: Product flavors not found!');
       print('   Please run: sg setup_flavors first');
       return;
     }
@@ -32,12 +32,12 @@ void _setupDeeplink() {
     final prodDomain = stdin.readLineSync()?.trim() ?? '';
 
     if (devDomain.isEmpty || stageDomain.isEmpty || prodDomain.isEmpty) {
-      print(' ${ConsoleSymbols.error} All domains are required!');
+      print('${ConsoleSymbols.error} All domains are required!');
       return;
     }
 
     print('');
-    print(' ${ConsoleSymbols.rocket} Configuring deep-linking...');
+    print('${ConsoleSymbols.rocket} Configuring deep-linking...');
     print('');
 
     final domains = {
@@ -54,7 +54,7 @@ void _setupDeeplink() {
 
     print('');
     print('╔════════════════════════════════════════════════════════════════════════════════╗');
-    print('║                   ${ConsoleSymbols.success} Deep-Linking Setup Complete!                             ║');
+    print('║                ${ConsoleSymbols.success} Deep-Linking Setup Complete!                             ║');
     print('╚════════════════════════════════════════════════════════════════════════════════╝');
     print('');
     print('📱 Android Configuration:');
@@ -85,7 +85,7 @@ void _setupDeeplink() {
     print('   • https://$prodDomain/.well-known/apple-app-site-association');
     print('');
   } catch (e) {
-    print(' ${ConsoleSymbols.error} Error during deep-link setup: $e');
+    print('${ConsoleSymbols.error} Error during deep-link setup: $e');
   }
 }
 

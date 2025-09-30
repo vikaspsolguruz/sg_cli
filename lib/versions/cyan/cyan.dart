@@ -59,7 +59,7 @@ class Cyan {
     bool isCreateEventCommand = arguments.length == 5 && arguments[0] == 'create' && arguments[1] == 'event' && arguments[3] == 'in';
 
     if (arguments.isEmpty) {
-      print(' ${ConsoleSymbols.error}  Error: No command provided.');
+      print('${ConsoleSymbols.error}  Error: No command provided.');
       return;
     }
 
@@ -129,6 +129,6 @@ class Cyan {
       _createEvent(eventName, pageName);
       return;
     }
-    print(' ${ConsoleSymbols.error}  Error: Unknown command.');
+    print('${ConsoleSymbols.error}  Error: Unknown command.');
   }
 }
