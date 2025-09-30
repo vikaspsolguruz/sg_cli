@@ -117,10 +117,10 @@ void _generateCoreArchitecture() {
 void _updatePackageReferences() {
   final pubspecFile = File('pubspec.yaml');
   final pubspecLines = pubspecFile.readAsLinesSync();
-  
+
   final oldProjectName = _extractProjectName(pubspecLines);
   final projectDescription = _extractProjectDescription(pubspecLines);
-  
+
   _moduleName = getModuleName();
 
   // Find all Dart files
@@ -186,7 +186,7 @@ void _updatePubspecDependencies() {
 void _copyAssets() {
   final assetsSource = Directory('${_getBoilerplatePath()}/assets');
   final assetsTarget = Directory('assets');
-  
+
   if (assetsSource.existsSync()) {
     _copyDirectory(assetsSource, assetsTarget);
   }
@@ -195,7 +195,7 @@ void _copyAssets() {
 void _copyTests() {
   final testsSource = Directory('${_getBoilerplatePath()}/test');
   final testsTarget = Directory('test');
-  
+
   if (testsSource.existsSync()) {
     _copyDirectory(testsSource, testsTarget);
   }
@@ -203,34 +203,24 @@ void _copyTests() {
 
 void _generateConfigFiles() {
   final configFile = File('sg_cli.yaml');
-  
-  if (configFile.existsSync()) {
-    print('${ConsoleSymbols.info}sg_cli.yaml already exists, skipping...');
-    return;
-  }
-  
-  final content = '''# SG CLI Configuration
-# This file is used by sg_cli to identify and manage the project
 
-# Architecture version
-version: cyan
-
-# Project metadata
-project:
-  name: $_moduleName
-  architecture: cyan
-  
-# BLoC pattern settings
-bloc:
-  use_equatable: true
-  generate_tests: false
-
-# Generation settings
-generation:
-  add_comments: true
-  create_folders: true
+  if (!configFile.existsSync()) {
+    final content = '''version: cyan
+route_paths: lib/presentation/screens
+  lib/presentation/bottom_sheets
+  lib/presentation/dialogs
 ''';
-  
-  configFile.writeAsStringSync(content);
-  print('${ConsoleSymbols.success}Created sg_cli.yaml configuration file');
+
+    configFile.writeAsStringSync(content);
+    print('${ConsoleSymbols.success}Generated sg_cli.yaml configuration file');
+  }
+  final analysisFile = File('analysis_options.yaml');
+
+  if (!analysisFile.existsSync()) {
+    final analysisContent = '''
+  ''';
+
+    analysisFile.writeAsStringSync(analysisContent);
+    print('${ConsoleSymbols.success}Generated lints and rules');
+  }
 }
