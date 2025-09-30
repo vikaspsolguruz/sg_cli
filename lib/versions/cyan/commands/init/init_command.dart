@@ -206,11 +206,19 @@ void _generateConfigFiles() {
 
   final boilerplateConfig = File('$boilerplatePath/sg_cli.yaml');
   final configFile = File('sg_cli.yaml');
+  configFile.createSync();
   configFile.writeAsStringSync(boilerplateConfig.readAsStringSync());
   print('${ConsoleSymbols.success}Generated sg_cli.yaml configuration file');
 
   final boilerplateAnalysis = File('$boilerplatePath/analysis_options.yaml');
   final analysisFile = File('analysis_options.yaml');
+  analysisFile.createSync();
   analysisFile.writeAsStringSync(boilerplateAnalysis.readAsStringSync());
   print('${ConsoleSymbols.success}Generated lints and rules');
+
+  final boilerplateEditorConfig = File('$boilerplatePath/.editorconfig');
+  final editorFile = File('.editorconfig');
+  editorFile.createSync();
+  editorFile.writeAsStringSync(boilerplateEditorConfig.readAsStringSync());
+  print('${ConsoleSymbols.success}Generated editor configs');
 }
