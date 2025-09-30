@@ -3,7 +3,7 @@ part of '../cyan.dart';
 /// Adds import statements to a file if they don't already exist
 void _addImportsToFile(File file, List<String> imports) {
   if (!file.existsSync()) {
-    print('  ⚠️  File not found: ${file.path}');
+    print('  ${ConsoleSymbols.warning}  File not found: ${file.path}');
     return;
   }
 
@@ -41,6 +41,6 @@ void _addImportsToFile(File file, List<String> imports) {
   file.writeAsStringSync(lines.join('\n'));
   
   for (final import in newImports) {
-    print('  ✓ Added import: $import');
+    print('  ${ConsoleSymbols.checkmark} Added import: $import');
   }
 }

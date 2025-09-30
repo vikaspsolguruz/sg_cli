@@ -17,6 +17,7 @@ part 'commands/setup_deeplink/setup_deeplink_command.dart';
 part 'commands/setup_firebase/setup_firebase_command.dart';
 part 'commands/setup_firebase_auto/setup_firebase_auto_command.dart';
 part 'commands/setup_flavors/setup_flavors_command.dart';
+part 'constants/console_symbols.dart';
 part 'data/cyan_vars.dart';
 part 'templates/android_manifest_template.dart';
 part 'templates/android_studio_run_config_template.dart';
@@ -58,12 +59,12 @@ class Cyan {
     bool isCreateEventCommand = arguments.length == 5 && arguments[0] == 'create' && arguments[1] == 'event' && arguments[3] == 'in';
 
     if (arguments.isEmpty) {
-      print(' ❌  Error: No command provided.');
+      print(' ${ConsoleSymbols.error}  Error: No command provided.');
       return;
     }
 
     if (arguments.any((element) => isInValidArgument(element))) {
-      print("❌  Error: Invalid command format\n  • Should be in lowercase only\n  • Start with alphabet\n  • No special characters allowed other then underscore (_)");
+      print("${ConsoleSymbols.error}  Error: Invalid command format\n  • Should be in lowercase only\n  • Start with alphabet\n  • No special characters allowed other then underscore (_)");
       return;
     }
     if (isHelpCommand) {
@@ -128,6 +129,6 @@ class Cyan {
       _createEvent(eventName, pageName);
       return;
     }
-    print(' ❌  Error: Unknown command.');
+    print(' ${ConsoleSymbols.error}  Error: Unknown command.');
   }
 }

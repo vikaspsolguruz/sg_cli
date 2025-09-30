@@ -13,7 +13,7 @@ Future<void> setupFirebaseAuto() async {
     // Get package name and project name
     final packageName = _getBasePackageId();
     final projectName = getModuleName();
-    print(' 🆔  Package: $packageName');
+    print('${ConsoleSymbols.id}Package: $packageName');
     print('');
     print('');
 
@@ -26,30 +26,30 @@ Future<void> setupFirebaseAuto() async {
     final hasFlavors = _checkFlavorsExist();
 
     if (hasFlavors) {
-      print('✓ Detected flavor-based project');
+      print('${ConsoleSymbols.checkmark}Detected flavor-based project');
       print('  Setting up Firebase for flavors: dev, stage, prod');
       print('');
       await _setupFirebaseAutoFlavored(packageName, projectName);
     } else {
-      print(' ℹ️   No flavors detected - setting up single Firebase configuration');
+      print('${ConsoleSymbols.info}No flavors detected - setting up single Firebase configuration');
       print('');
       await _setupFirebaseAutoSingle(packageName, projectName);
     }
   } catch (e) {
-    print(' ❌  Error during Firebase setup: $e');
+    print('${ConsoleSymbols.error}Error during Firebase setup: $e');
   }
 }
 
 /// Check if FlutterFire CLI is installed and user is logged in
 bool _checkPrerequisites() {
-  print('🔍 Checking prerequisites...');
+  print('${ConsoleSymbols.search}Checking prerequisites...');
   print('');
 
   // Check if FlutterFire CLI is installed
   if (!_isFlutterFireInstalled()) {
-    print(' ❌  FlutterFire CLI is not installed!');
+    print('${ConsoleSymbols.error}FlutterFire CLI is not installed!');
     print('');
-    print(' 📦 Install it by running:');
+    print('${ConsoleSymbols.package}Install it by running:');
     print('   dart pub global activate flutterfire_cli');
     print('');
     print('After installation, run this command again.');
@@ -58,7 +58,7 @@ bool _checkPrerequisites() {
 
   // Check if Firebase CLI is installed (optional but recommended)
   if (!_isFirebaseCliInstalled()) {
-    print(' ⚠️   Firebase CLI not found (optional)');
+    print('${ConsoleSymbols.warning}Firebase CLI not found (optional)');
   }
 
   print('');
@@ -87,31 +87,31 @@ bool _isFirebaseCliInstalled() {
 
 /// Setup Firebase for flavored projects using FlutterFire CLI
 Future<void> _setupFirebaseAutoFlavored(String packageName, String projectName) async {
-  print(' 📋  Setting up Firebase for flavored project...');
+  print('${ConsoleSymbols.clipboard}Setting up Firebase for flavored project...');
   print('');
 
   // Step 1: List Firebase projects and let user select ONE
-  print(' 🔍 Fetching your Firebase projects...');
+  print('${ConsoleSymbols.search}Fetching your Firebase projects...');
   final selectedProject = await _selectFirebaseProject();
 
   if (selectedProject == null) {
-    print(' ❌ Could not select Firebase project');
+    print('${ConsoleSymbols.error}Could not select Firebase project');
     return;
   }
 
-  print(' ✅  Selected project: ${selectedProject['displayName']}');
+  print('${ConsoleSymbols.success}Selected project: ${selectedProject['displayName']}');
   print('');
 
   // Step 2: Get list of apps in the selected project
-  print(' 🔍 Checking apps in project...');
+  print(' ${ConsoleSymbols.search}Checking apps in project...');
   final apps = await _getFirebaseApps(selectedProject['projectId']);
 
   if (apps == null) {
-    print(' ❌ Could not fetch apps from project');
+    print('${ConsoleSymbols.error}Could not fetch apps from project');
     return;
   }
 
-  print(' ✅  Found ${apps.length} app(s) in project');
+  print('${ConsoleSymbols.success}Found ${apps.length} app(s) in project');
   print('');
 
   // Step 3: Check which flavor apps exist
@@ -136,10 +136,10 @@ Future<void> _setupFirebaseAutoFlavored(String packageName, String projectName) 
 
     if (appExists) {
       existingApps.add(flavor);
-      print('  ✓ $flavorName: Found app with package $flavorPackage');
+      print('  ${ConsoleSymbols.checkmark}$flavorName: Found app with package $flavorPackage');
     } else {
       missingApps.add('$flavorName ($flavorPackage)');
-      print('  ✗ $flavorName: Missing app with package $flavorPackage');
+      print('  ${ConsoleSymbols.cross}$flavorName: Missing app with package $flavorPackage');
     }
   }
 
@@ -147,26 +147,26 @@ Future<void> _setupFirebaseAutoFlavored(String packageName, String projectName) 
 
   // If apps are missing, inform user
   if (missingApps.isNotEmpty) {
-    print(' ⚠️   Missing apps in Firebase project:');
+    print('${ConsoleSymbols.warning}Missing apps in Firebase project:');
     for (final missing in missingApps) {
       print('   • $missing');
     }
     print('');
-    print(' 📝  Please add these apps in Firebase Console:');
+    print('${ConsoleSymbols.note}Please add these apps in Firebase Console:');
     print('   https://console.firebase.google.com/project/${selectedProject['projectId']}/settings/general');
     print('');
 
     if (existingApps.isEmpty) {
-      print(' ❌  No matching apps found. Setup cannot continue.');
+      print('${ConsoleSymbols.error}No matching apps found. Setup cannot continue.');
       return;
     }
 
-    print(' 💡  Continuing with available apps only...');
+    print('${ConsoleSymbols.bulb}Continuing with available apps only...');
     print('');
   }
 
   // Step 4: Add firebase_core dependency
-  print(' 📦  Adding firebase_core dependency...');
+  print('${ConsoleSymbols.package}Adding firebase_core dependency...');
   _addDependencyToPubspec('firebase_core', '^4.1.1');
   _runPubGet();
   print('');
@@ -177,7 +177,7 @@ Future<void> _setupFirebaseAutoFlavored(String packageName, String projectName) 
     final flavorPackage = flavor['package']!;
 
     print('═══════════════════════════════════════════════════════════════');
-    print('🔧 Configuring Firebase for ${flavorName.toUpperCase()} flavor');
+    print('${ConsoleSymbols.wrench}Configuring Firebase for ${flavorName.toUpperCase()} flavor');
     print('═══════════════════════════════════════════════════════════════');
     print('');
 
@@ -186,14 +186,14 @@ Future<void> _setupFirebaseAutoFlavored(String packageName, String projectName) 
       flavorName,
       flavorPackage,
     )) {
-      print(' ⚠️   Failed to configure Firebase for $flavorName');
+      print('${ConsoleSymbols.warning}Failed to configure Firebase for $flavorName');
     }
 
     print('');
   }
 
   // Step 6: Inject Firebase initialization code
-  print(' 📝 Modifying _app_initializer.dart...');
+  print('${ConsoleSymbols.note}Modifying _app_initializer.dart...');
   _injectFirebaseInitialization(projectName, true);
 
   // Show success message
@@ -211,13 +211,13 @@ Future<Map<String, dynamic>?> _selectFirebaseProject() async {
     );
 
     if (result.exitCode != 0) {
-      print(' ❌  Failed to list Firebase projects');
+      print('${ConsoleSymbols.error}Failed to list Firebase projects');
       print('');
 
       // Check stderr for error details
       final stderr = result.stderr.toString();
       if (stderr.contains('not logged in') || stderr.contains('login') || stderr.contains('authenticate')) {
-        print(' 💡 You need to login to Firebase first:');
+        print('${ConsoleSymbols.bulb}You need to login to Firebase first:');
         print('   firebase login');
       } else if (stderr.isNotEmpty) {
         print('Error: $stderr');
@@ -232,7 +232,7 @@ Future<Map<String, dynamic>?> _selectFirebaseProject() async {
 
     // Firebase CLI wraps response in {status: "success", result: [...]}
     if (decoded['status'] != 'success') {
-      print(' ❌  Firebase CLI returned error status');
+      print('${ConsoleSymbols.error}Firebase CLI returned error status');
       final error = decoded['error'] ?? decoded['message'] ?? 'Unknown error';
       print('Error: $error');
       print('');
@@ -240,7 +240,7 @@ Future<Map<String, dynamic>?> _selectFirebaseProject() async {
       // Check for common error types
       final errorStr = error.toString().toLowerCase();
       if (errorStr.contains('not logged in') || errorStr.contains('login') || errorStr.contains('authenticate')) {
-        print(' 💡  You need to login to Firebase first:');
+        print('${ConsoleSymbols.bulb}You need to login to Firebase first:');
         print('   firebase login');
       }
 
@@ -251,9 +251,9 @@ Future<Map<String, dynamic>?> _selectFirebaseProject() async {
     final projects = decoded['result'] as List?;
 
     if (projects == null || projects.isEmpty) {
-      print(' ❌  No Firebase projects found');
+      print('${ConsoleSymbols.error}No Firebase projects found');
       print('');
-      print(' 💡  Create a project at:');
+      print('${ConsoleSymbols.bulb}Create a project at:');
       print('   https://console.firebase.google.com');
       return null;
     }
@@ -266,21 +266,21 @@ Future<Map<String, dynamic>?> _selectFirebaseProject() async {
       print('  ${i + 1}. ${project['displayName']} (${project['projectId']})');
     }
     print('');
-    print(' ❓  Select a project (1-${projects.length}):');
+    print('${ConsoleSymbols.question}Select a project (1-${projects.length}):');
 
     final input = stdin.readLineSync();
     final selection = int.tryParse(input ?? '');
 
     if (selection == null || selection < 1 || selection > projects.length) {
-      print(' ❌  Invalid selection');
+      print('${ConsoleSymbols.error}Invalid selection');
       return null;
     }
 
     return projects[selection - 1] as Map<String, dynamic>;
   } catch (e) {
-    print(' ❌  Error listing projects: $e');
+    print('${ConsoleSymbols.error}Error listing projects: $e');
     print('');
-    print(' 💡  Make sure Firebase CLI is installed and you are logged in:');
+    print('${ConsoleSymbols.bulb}Make sure Firebase CLI is installed and you are logged in:');
     print('   npm install -g firebase-tools');
     print('   firebase login');
     return null;
@@ -297,7 +297,7 @@ Future<List<Map<String, dynamic>>?> _getFirebaseApps(String projectId) async {
     );
 
     if (result.exitCode != 0) {
-      print(' ⚠️   Failed to list apps in project');
+      print('${ConsoleSymbols.warning}Failed to list apps in project');
       return null;
     }
 
@@ -315,7 +315,7 @@ Future<List<Map<String, dynamic>>?> _getFirebaseApps(String projectId) async {
 
     return apps;
   } catch (e) {
-    print(' ⚠️   Error getting apps: $e');
+    print('${ConsoleSymbols.warning}Error getting apps: $e');
     return null;
   }
 }
@@ -336,7 +336,7 @@ Future<bool> _runFlutterFireConfigureWithProject(
       '--yes', // Auto-confirm
     ];
 
-    print(' 🔄 Running: flutterfire ${args.join(' ')}');
+    print('${ConsoleSymbols.loading}Running: flutterfire ${args.join(' ')}');
     print('');
 
     final process = await Process.start(
@@ -348,33 +348,33 @@ Future<bool> _runFlutterFireConfigureWithProject(
     final exitCode = await process.exitCode;
 
     if (exitCode == 0) {
-      print(' ✅  Firebase configured successfully for $flavor');
+      print('${ConsoleSymbols.success}Firebase configured successfully for $flavor');
       return true;
     } else {
-      print(' ❌  Configuration failed');
+      print('${ConsoleSymbols.error}Configuration failed');
       return false;
     }
   } catch (e) {
-    print(' ❌  Error: $e');
+    print('${ConsoleSymbols.error}Error: $e');
     return false;
   }
 }
 
 /// Setup Firebase for non-flavored projects using FlutterFire CLI
 Future<void> _setupFirebaseAutoSingle(String packageName, String projectName) async {
-  print(' 📋  Prerequisites:');
+  print('${ConsoleSymbols.clipboard}Prerequisites:');
   print('   You need to have created a Firebase project in Firebase Console with:');
-  print('   ✓ Android app with package name: $packageName');
-  print('   ✓ iOS app with bundle ID: $packageName');
+  print('   ${ConsoleSymbols.checkmark}Android app with package name: $packageName');
+  print('   ${ConsoleSymbols.checkmark}iOS app with bundle ID: $packageName');
   print('');
 
   // Ask user if they've completed the prerequisites
-  print('❓ Have you created this Firebase project? (y/n)');
+  print('${ConsoleSymbols.question}Have you created this Firebase project? (y/n)');
   final answer = stdin.readLineSync();
 
   if (answer?.toLowerCase() != 'y') {
     print('');
-    print(' 📝  Please complete these steps:');
+    print('${ConsoleSymbols.note}Please complete these steps:');
     print('   1. Go to: https://console.firebase.google.com');
     print('   2. Create a Firebase project (or use existing one)');
     print('   3. Add Android and iOS apps with the package name above');
@@ -384,21 +384,21 @@ Future<void> _setupFirebaseAutoSingle(String packageName, String projectName) as
   }
 
   print('');
-  print(' 🚀  Great! Let\'s configure Firebase...');
+  print('${ConsoleSymbols.rocket}Great! Let\'s configure Firebase...');
   print('');
 
   // Add firebase_core dependency
-  print(' 📦  Adding firebase_core dependency...');
+  print('${ConsoleSymbols.package}Adding firebase_core dependency...');
   _addDependencyToPubspec('firebase_core', '^4.1.1');
   _runPubGet();
   print('');
 
   // Run FlutterFire configure
-  print(' 🔧 Running FlutterFire CLI...');
+  print('${ConsoleSymbols.wrench}Running FlutterFire CLI...');
   print('');
 
   if (!await _runFlutterFireConfigure('', packageName)) {
-    print(' ⚠️  Failed to configure Firebase');
+    print('${ConsoleSymbols.warning}Failed to configure Firebase');
     print('   Please configure manually using:');
     print('   flutterfire configure');
     return;
@@ -406,7 +406,7 @@ Future<void> _setupFirebaseAutoSingle(String packageName, String projectName) as
 
   // Inject Firebase initialization code
   print('');
-  print(' 📝  Modifying _app_initializer.dart...');
+  print('${ConsoleSymbols.note}Modifying _app_initializer.dart...');
   _injectFirebaseInitialization(projectName, false);
 
   // Show success message
@@ -427,7 +427,7 @@ Future<bool> _runFlutterFireConfigure(String flavor, String packageName) async {
       ]);
     }
 
-    print(' 🔄  Running: flutterfire ${args.join(' ')}');
+    print('${ConsoleSymbols.loading}Running: flutterfire ${args.join(' ')}');
     print('');
 
     // Run FlutterFire configure interactively
@@ -443,12 +443,12 @@ Future<bool> _runFlutterFireConfigure(String flavor, String packageName) async {
     print('');
 
     if (exitCode == 0) {
-      print(' ✅  Firebase configured successfully${flavor.isNotEmpty ? ' for $flavor' : ''}');
+      print('${ConsoleSymbols.success}Firebase configured successfully${flavor.isNotEmpty ? ' for $flavor' : ''}');
       return true;
     } else {
-      print(' ❌  FlutterFire configure failed (Exit code: $exitCode)');
+      print('${ConsoleSymbols.error}FlutterFire configure failed (Exit code: $exitCode)');
       print('');
-      print(' 💡 Common issues:');
+      print('${ConsoleSymbols.bulb}Common issues:');
       print('   • Not logged in: Run "firebase login"');
       print('   • No projects: Create one at https://console.firebase.google.com');
       print('   • No apps in project: Add Android/iOS apps with correct package names');
@@ -456,9 +456,9 @@ Future<bool> _runFlutterFireConfigure(String flavor, String packageName) async {
     }
   } catch (e) {
     print('');
-    print(' ❌  Error running FlutterFire CLI: $e');
+    print('${ConsoleSymbols.error}Error running FlutterFire CLI: $e');
     print('');
-    print(' 💡 Make sure FlutterFire CLI is installed:');
+    print('${ConsoleSymbols.bulb}Make sure FlutterFire CLI is installed:');
     print('   dart pub global activate flutterfire_cli');
     return false;
   }
@@ -468,10 +468,10 @@ Future<bool> _runFlutterFireConfigure(String flavor, String packageName) async {
 void _showSuccessMessage(bool hasFlavors, String packageName) {
   print('');
   print('╔════════════════════════════════════════════════════════════════════════════════╗');
-  print('║              ✅ Automated Firebase Setup Complete!                            ║');
+  print('║              ${ConsoleSymbols.success}Automated Firebase Setup Complete!                            ║');
   print('╚════════════════════════════════════════════════════════════════════════════════╝');
   print('');
-  print(' ✅ What we did for you:');
+  print('${ConsoleSymbols.success}What we did for you:');
   print('   • Added firebase_core: ^4.1.1 to pubspec.yaml');
   print('   • Installed dependencies automatically');
 
@@ -486,21 +486,21 @@ void _showSuccessMessage(bool hasFlavors, String packageName) {
   print('   • Added Firebase initialization code to _app_initializer.dart');
   print('   • Added all necessary imports automatically');
   print('');
-  print(' 🚀  Your app is ready to use Firebase!');
+  print('${ConsoleSymbols.rocket}Your app is ready to use Firebase!');
   print('');
 
   if (hasFlavors) {
-    print(' 💡  Test your setup with different flavors:');
+    print('${ConsoleSymbols.bulb}Test your setup with different flavors:');
     print('   • flutter run --flavor dev');
     print('   • flutter run --flavor stage');
     print('   • flutter run --flavor prod');
   } else {
-    print(' 💡  Test your setup:');
+    print('${ConsoleSymbols.bulb}Test your setup:');
     print('   • flutter run');
   }
 
   print('');
-  print(' 📚  Learn more:');
+  print('${ConsoleSymbols.books}Learn more:');
   print('   • Firebase Docs: https://firebase.google.com/docs/flutter/setup');
   print('   • FlutterFire CLI: https://firebase.flutter.dev/docs/cli');
   print('');

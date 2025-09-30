@@ -28,7 +28,7 @@ void _setupFlavors() {
     final bool isGroovyDsl = buildGradle.existsSync();
 
     if (!isKotlinDsl && !isGroovyDsl) {
-      print(' ❌ Error: No build.gradle or build.gradle.kts found in android/app/');
+      print(' ${ConsoleSymbols.error} Error: No build.gradle or build.gradle.kts found in android/app/');
       return;
     }
 
@@ -52,7 +52,7 @@ void _setupFlavors() {
 
     print('');
     print('╔════════════════════════════════════════════════════════════════════════════════╗');
-    print('║                   ✅ Flavors Setup Complete!                                   ║');
+    print('║                   ${ConsoleSymbols.success} Flavors Setup Complete!                                   ║');
     print('╚════════════════════════════════════════════════════════════════════════════════╝');
     print('');
     print('📱 Product flavors added to Android:');
@@ -75,11 +75,11 @@ void _setupFlavors() {
     print('   • .run/stage.run.xml');
     print('   • .run/prod.run.xml');
     print('');
-    print(' 🚀 Next steps:');
+    print(' ${ConsoleSymbols.rocket} Next steps:');
     print('   1. Run: sg setup_deeplink   (to configure deep-linking per flavor)');
     print('   2. Run: sg setup_firebase   (to add Firebase configs per flavor)');
     print('');
-    print(' 💡 Test your flavors:');
+    print(' ${ConsoleSymbols.bulb} Test your flavors:');
     print('   flutter run --flavor dev');
     print('   flutter run --flavor stage');
     print('   flutter run --flavor prod');
@@ -87,7 +87,7 @@ void _setupFlavors() {
     print('   Or use Android Studio run configurations (select from dropdown)');
     print('');
   } catch (e) {
-    print(' ❌ Error during flavor setup: $e');
+    print(' ${ConsoleSymbols.error} Error during flavor setup: $e');
   }
 }
 
@@ -95,7 +95,7 @@ bool _validateCyanConfig() {
   final configFile = File('sg_cli.yaml');
 
   if (!configFile.existsSync()) {
-    print(' ❌ Error: sg_cli.yaml not found!');
+    print(' ${ConsoleSymbols.error} Error: sg_cli.yaml not found!');
     print('   This command only works with cyan architecture projects.');
     print('   Run: sg init');
     return false;
@@ -103,7 +103,7 @@ bool _validateCyanConfig() {
 
   final content = configFile.readAsStringSync();
   if (!content.contains('version: cyan')) {
-    print(' ❌ Error: This command only works with cyan architecture.');
+    print(' ${ConsoleSymbols.error} Error: This command only works with cyan architecture.');
     print('   Current config is not cyan version.');
     return false;
   }

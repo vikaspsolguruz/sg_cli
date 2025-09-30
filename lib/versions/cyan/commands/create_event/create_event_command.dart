@@ -10,7 +10,7 @@ void _createEvent(final String eventName, final String pageName) {
     }
   }
   if (mainFolderPath.isEmpty) {
-    print(' ❌  Error: Page folder not found: for $pageName');
+    print(' ${ConsoleSymbols.error}  Error: Page folder not found: for $pageName');
     return;
   }
   final String eventFilePath = '$mainFolderPath/logic/${pageName}_event.dart';
@@ -19,7 +19,7 @@ void _createEvent(final String eventName, final String pageName) {
   if (!eventFile.existsSync()) {
     eventFile = File(eventFilePath);
     if (!eventFile.existsSync()) {
-      print(' ❌  Error: Event file not found: $eventFilePath');
+      print(' ${ConsoleSymbols.error}  Error: Event file not found: $eventFilePath');
       return;
     }
     return;
@@ -30,14 +30,14 @@ void _createEvent(final String eventName, final String pageName) {
   final String newEventClass = generateEventContent(eventName, pageName);
 
   if (content.contains('class $eventClassName {')) {
-    print('⚠️ Event "$eventClassName" already exists in $eventFilePath.');
+    print('${ConsoleSymbols.warning} Event "$eventClassName" already exists in $eventFilePath.');
     return;
   }
 
   final String updatedContent = content.trim() + newEventClass;
 
   eventFile.writeAsStringSync(updatedContent);
-  print(' ✅  Event "$eventClassName" added to $eventFilePath');
+  print(' ${ConsoleSymbols.success}  Event "$eventClassName" added to $eventFilePath');
 
   final blocFilePath = '$mainFolderPath/logic/${pageName}_bloc.dart';
   final blocFile = File(blocFilePath);
@@ -45,7 +45,7 @@ void _createEvent(final String eventName, final String pageName) {
     final blocContent = blocFile.readAsStringSync();
     final startIndex = blocContent.indexOf('eventListeners() {');
     if (startIndex == -1) {
-      print(' ❌  Error: Unable to find "eventListeners() {" in $blocFilePath');
+      print(' ${ConsoleSymbols.error}  Error: Unable to find "eventListeners() {" in $blocFilePath');
       return;
     }
 
@@ -56,7 +56,7 @@ void _createEvent(final String eventName, final String pageName) {
 
     int endIndex = blocContentWithListener.indexOf('}', startIndex);
     if (endIndex == -1) {
-      print(' ❌  Error: Unable to find "}" after "eventListeners() {" in $blocFilePath');
+      print(' ${ConsoleSymbols.error}  Error: Unable to find "}" after "eventListeners() {" in $blocFilePath');
       return;
     }
     endIndex++;
@@ -68,6 +68,6 @@ void _createEvent(final String eventName, final String pageName) {
 
     blocFile.writeAsStringSync(newBlocContent);
   } else {
-    print(' ❌  Error: Bloc file not found: $blocFilePath');
+    print(' ${ConsoleSymbols.error}  Error: Bloc file not found: $blocFilePath');
   }
 }

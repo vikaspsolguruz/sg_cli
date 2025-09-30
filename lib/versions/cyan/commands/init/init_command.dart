@@ -6,20 +6,20 @@ void _showHelp() {
   print('║                              🔥 SG CLI - Cyan Version 🔥                      ║');
   print('╚════════════════════════════════════════════════════════════════════════════════╝');
   print('');
-  print(' 📚 Available Commands:');
+  print(' ${ConsoleSymbols.books} Available Commands:');
   print('');
-  print(' 🚀  sg init                              Initialize cyan architecture in your project');
+  print(' ${ConsoleSymbols.rocket}  sg init                              Initialize cyan architecture in your project');
   print(' 🎨  sg setup_flavors                     Setup dev/stage/prod flavors (Android/iOS)');
   print(' 🔗  sg setup_deeplink                    Configure deep-linking per flavor');
   print(' 🔥  sg setup_firebase                    Generate Firebase configs per flavor');
   print(' 📱  sg create screen <name>              Create a new screen with BLoC pattern');
   print(' 📄  sg create sub_screen <name> in <parent>  Create a sub-screen under parent screen');
-  print(' 📋  sg create bs <name>                  Create a new bottom sheet');
+  print(' ${ConsoleSymbols.clipboard}  sg create bs <name>                  Create a new bottom sheet');
   print(' 💬  sg create dialog <name>              Create a new dialog');
   print(' ⚡   sg create event <name> in <page>     Create a new BLoC event in specific page');
-  print(' ❓  sg help                              Show this help message');
+  print(' ${ConsoleSymbols.question}  sg help                              Show this help message');
   print('');
-  print(' 💡  Examples:');
+  print(' ${ConsoleSymbols.bulb}  Examples:');
   print('');
   print('    sg init                               # Setup cyan architecture');
   print('    sg setup_flavors                      # Add dev/stage/prod flavors');
@@ -39,20 +39,20 @@ void _initProject() {
   // Get current project name from pubspec.yaml
   _moduleName = getModuleName();
 
-  print('⚠️  This will replace your current project structure with cyan architecture.\n');
-  print('   📁  lib/ folder will be regenerated\n   📦  Dependencies will be updated');
+  print('${ConsoleSymbols.warning}  This will replace your current project structure with cyan architecture.\n');
+  print('   📁  lib/ folder will be regenerated\n   ${ConsoleSymbols.package}  Dependencies will be updated');
   print('');
-  stdout.write(' 🚀 Continue with initialization? (yes/no): ');
+  stdout.write(' ${ConsoleSymbols.rocket} Continue with initialization? (yes/no): ');
 
   final String? response = stdin.readLineSync();
 
   if (response?.toLowerCase() != 'yes' && response?.toLowerCase() != 'y') {
-    print(' ❌  Init cancelled.');
+    print(' ${ConsoleSymbols.error}  Init cancelled.');
     return;
   }
 
   print('');
-  print('🔄  Initializing cyan architecture...');
+  print('${ConsoleSymbols.loading}  Initializing cyan architecture...');
 
   try {
     // Step 1: Delete existing folders
@@ -99,7 +99,7 @@ void _initProject() {
     print('*                  🔥 🔥 🔥 🔥 🔥 🔥 🔥                   *');
     print('************************************************************');
   } catch (e) {
-    print(' ❌  Error during initialization: $e');
+    print(' ${ConsoleSymbols.error}  Error during initialization: $e');
   }
 }
 
@@ -144,9 +144,9 @@ void _generateCoreArchitecture() {
 
   // Generate the entire lib directory
   _copyDirectory(sourceLibDir, targetLibDir);
-  print(' ✅  Generated presentation layer');
-  print(' ✅  Generated core infrastructure');
-  print(' ✅  Generated app foundation');
+  print(' ${ConsoleSymbols.success}  Generated presentation layer');
+  print(' ${ConsoleSymbols.success}  Generated core infrastructure');
+  print(' ${ConsoleSymbols.success}  Generated app foundation');
 }
 
 void _updatePackageReferences() {
@@ -170,11 +170,11 @@ void _updatePackageReferences() {
     }
   }
 
-  print(' ✅  Updated package references in $filesUpdated files');
+  print(' ${ConsoleSymbols.success}  Updated package references in $filesUpdated files');
 }
 
 void _updatePubspecDependencies() {
-  print('📦  Updating dependencies...');
+  print('${ConsoleSymbols.package}  Updating dependencies...');
 
   final String boilerplatePath = getBoilerplatePath();
   final boilerplatePubspec = File('$boilerplatePath/pubspec.yaml');
@@ -212,7 +212,7 @@ void _updatePubspecDependencies() {
   }
 
   currentPubspec.writeAsStringSync(updatedLines.join('\n'));
-  print(' ✅  Updated pubspec.yaml with dependencies, assets, and flutter config');
+  print(' ${ConsoleSymbols.success}  Updated pubspec.yaml with dependencies, assets, and flutter config');
 }
 
 void _copyAssets() {
@@ -222,9 +222,9 @@ void _copyAssets() {
 
   if (sourceAssetsDir.existsSync()) {
     _copyDirectory(sourceAssetsDir, targetAssetsDir);
-    print(' ✅  Generated assets');
+    print(' ${ConsoleSymbols.success}  Generated assets');
   } else {
-    print('⚠️  No assets found in boilerplate');
+    print('${ConsoleSymbols.warning}  No assets found in boilerplate');
   }
 }
 
@@ -235,9 +235,9 @@ void _copyTests() {
 
   if (sourceTestDir.existsSync()) {
     _copyDirectory(sourceTestDir, targetTestDir);
-    print(' ✅  Generated test');
+    print(' ${ConsoleSymbols.success}  Generated test');
   } else {
-    print('⚠️  No tests found in boilerplate');
+    print('${ConsoleSymbols.warning}  No tests found in boilerplate');
   }
 }
 
@@ -249,7 +249,7 @@ void _generateConfigFiles() {
   final targetAnalysis = File('analysis_options.yaml');
   if (sourceAnalysis.existsSync()) {
     sourceAnalysis.copySync(targetAnalysis.path);
-    print(' ✅  Updated lints and rules');
+    print(' ${ConsoleSymbols.success}  Updated lints and rules');
   }
 
   // Generate .editorconfig
@@ -257,7 +257,7 @@ void _generateConfigFiles() {
   final targetEditor = File('.editorconfig');
   if (sourceEditor.existsSync()) {
     sourceEditor.copySync(targetEditor.path);
-    print(' ✅  Generated editor configuration');
+    print(' ${ConsoleSymbols.success}  Generated editor configuration');
   }
 
   // Generate sg_cli.yaml only if it doesn't exist
@@ -266,25 +266,25 @@ void _generateConfigFiles() {
     final sourceSgCli = File('$boilerplatePath/sg_cli.yaml');
     if (sourceSgCli.existsSync()) {
       sourceSgCli.copySync(targetSgCli.path);
-      print(' ✅  Generated sg_cli configuration');
+      print(' ${ConsoleSymbols.success}  Generated sg_cli configuration');
     }
   }
 }
 
 void _runPubGet() {
-  print('📦  Installing dependencies...');
+  print('${ConsoleSymbols.package}  Installing dependencies...');
 
   try {
     final result = Process.runSync('flutter', ['pub', 'get']);
 
     if (result.exitCode == 0) {
-      print(' ✅  Dependencies installed successfully');
+      print(' ${ConsoleSymbols.success}  Dependencies installed successfully');
     } else {
-      print('⚠️  Warning: Failed to install dependencies automatically');
+      print('${ConsoleSymbols.warning}  Warning: Failed to install dependencies automatically');
       print('   Please run: flutter pub get');
     }
   } catch (e) {
-    print('⚠️  Warning: Failed to install dependencies automatically');
+    print('${ConsoleSymbols.warning}  Warning: Failed to install dependencies automatically');
     print('   Please run: flutter pub get');
   }
 }

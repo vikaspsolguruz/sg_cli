@@ -49,6 +49,6 @@ String _getBasePackageId() {
     }
   }
   
-  print('⚠️  Could not find package ID in build.gradle files, using default');
+  print('${ConsoleSymbols.warning}  Could not find package ID in build.gradle files, using default');
   return 'com.example.app';
 }

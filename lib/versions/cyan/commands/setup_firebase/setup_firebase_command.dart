@@ -15,7 +15,7 @@ void _setupFirebase() {
     final packageName = _getBasePackageId();
     final projectName = getModuleName();
     print('🆔 Package ID: $packageName');
-    print('📦 Project: $projectName');
+    print('${ConsoleSymbols.package} Project: $projectName');
     print('');
 
     // Check if flavors exist
@@ -32,16 +32,16 @@ void _setupFirebase() {
       _setupSingleFirebase(packageName, projectName);
     }
   } catch (e) {
-    print(' ❌ Error during Firebase setup: $e');
+    print(' ${ConsoleSymbols.error} Error during Firebase setup: $e');
   }
 }
 
 void _setupFlavoredFirebase(String packageName, String projectName) {
-  print(' 🚀 Setting up flavor-based Firebase configuration...');
+  print(' ${ConsoleSymbols.rocket} Setting up flavor-based Firebase configuration...');
   print('');
   
   // Add firebase_core dependency
-  print('📦 Adding firebase_core dependency...');
+  print('${ConsoleSymbols.package} Adding firebase_core dependency...');
   _addDependencyToPubspec('firebase_core', '^4.1.1');
   _runPubGet();
   print('');
@@ -57,15 +57,15 @@ void _setupFlavoredFirebase(String packageName, String projectName) {
 
   // Inject Firebase initialization into _app_initializer.dart
   print('');
-  print('📝 Modifying _app_initializer.dart...');
+  print('${ConsoleSymbols.note} Modifying _app_initializer.dart...');
   _injectFirebaseInitialization(projectName, true);
 
   print('');
   print('╔════════════════════════════════════════════════════════════════════════════════╗');
-  print('║              ✅ Flavor-Based Firebase Setup Complete!                         ║');
+  print('║              ${ConsoleSymbols.success} Flavor-Based Firebase Setup Complete!                         ║');
   print('╚════════════════════════════════════════════════════════════════════════════════╝');
   print('');
-  print(' ✅ What we did for you:');
+  print(' ${ConsoleSymbols.success} What we did for you:');
   print('   • Added firebase_core: ^4.1.1 to pubspec.yaml');
   print('   • Installed dependencies automatically');
   print('   • Created 3 Firebase option files (dev, stage, prod)');
@@ -73,7 +73,7 @@ void _setupFlavoredFirebase(String packageName, String projectName) {
   print('   • Created placeholder config files for Android and iOS');
   print('   • Added all necessary imports automatically');
   print('');
-  print('📦 Optional Dependencies (Add if needed):');
+  print('${ConsoleSymbols.package} Optional Dependencies (Add if needed):');
   print('   You can manually add these to pubspec.yaml:');
   print('');
   print('   dependencies:');
@@ -81,11 +81,11 @@ void _setupFlavoredFirebase(String packageName, String projectName) {
   print('     firebase_auth: ^5.1.4        # For authentication');
   print('     cloud_firestore: ^5.2.1      # For Firestore database');
   print('');
-  print(' 🚀 STEP 2: Get Real Firebase Configuration');
+  print(' ${ConsoleSymbols.rocket} STEP 2: Get Real Firebase Configuration');
   print('   You need to replace placeholder files with real Firebase configs.');
   print('   Choose ONE of these methods:');
   print('');
-  print('   📝 Method A - Using FlutterFire CLI (EASIEST):');
+  print('   ${ConsoleSymbols.note} Method A - Using FlutterFire CLI (EASIEST):');
   print('      1. Install FlutterFire CLI:');
   print('         dart pub global activate flutterfire_cli');
   print('');
@@ -127,13 +127,13 @@ void _setupFlavoredFirebase(String packageName, String projectName) {
   print('         • ios/config/stage/GoogleService-Info.plist');
   print('         • ios/config/prod/GoogleService-Info.plist');
   print('');
-  print(' 🚀 STEP 3: Test Your Setup');
+  print(' ${ConsoleSymbols.rocket} STEP 3: Test Your Setup');
   print('   Run your app with different flavors:');
   print('   • flutter run --flavor dev');
   print('   • flutter run --flavor stage');
   print('   • flutter run --flavor prod');
   print('');
-  print(' 💡 Note: Your _app_initializer.dart already has Firebase initialization code!');
+  print(' ${ConsoleSymbols.bulb} Note: Your _app_initializer.dart already has Firebase initialization code!');
   print('   We automatically added it after WidgetsFlutterBinding.ensureInitialized()');
   print('');
   print('❓ Need Help?');
@@ -143,11 +143,11 @@ void _setupFlavoredFirebase(String packageName, String projectName) {
 }
 
 void _setupSingleFirebase(String packageName, String projectName) {
-  print(' 🚀 Setting up single Firebase configuration...');
+  print(' ${ConsoleSymbols.rocket} Setting up single Firebase configuration...');
   print('');
   
   // Add firebase_core dependency
-  print('📦 Adding firebase_core dependency...');
+  print('${ConsoleSymbols.package} Adding firebase_core dependency...');
   _addDependencyToPubspec('firebase_core', '^4.1.1');
   _runPubGet();
   print('');
@@ -160,27 +160,27 @@ void _setupSingleFirebase(String packageName, String projectName) {
     firebaseOptionsFile.writeAsStringSync(content);
     print('✓ Created lib/firebase_options.dart');
   } else {
-    print('⚠️  lib/firebase_options.dart already exists, skipping...');
+    print('${ConsoleSymbols.warning}  lib/firebase_options.dart already exists, skipping...');
   }
 
   // Inject Firebase initialization into _app_initializer.dart
   print('');
-  print('📝 Modifying _app_initializer.dart...');
+  print('${ConsoleSymbols.note} Modifying _app_initializer.dart...');
   _injectFirebaseInitialization(projectName, false);
 
   print('');
   print('╔════════════════════════════════════════════════════════════════════════════════╗');
-  print('║                   ✅ Firebase Setup Complete!                                  ║');
+  print('║                   ${ConsoleSymbols.success} Firebase Setup Complete!                                  ║');
   print('╚════════════════════════════════════════════════════════════════════════════════╝');
   print('');
-  print(' ✅ What we did for you:');
+  print(' ${ConsoleSymbols.success} What we did for you:');
   print('   • Added firebase_core: ^4.1.1 to pubspec.yaml');
   print('   • Installed dependencies automatically');
   print('   • Created Firebase options file: lib/firebase_options.dart');
   print('   • Added Firebase initialization code to your _app_initializer.dart');
   print('   • Added all necessary imports automatically');
   print('');
-  print('📦 Optional Dependencies (Add if needed):');
+  print('${ConsoleSymbols.package} Optional Dependencies (Add if needed):');
   print('   You can manually add these to pubspec.yaml:');
   print('');
   print('   dependencies:');
@@ -192,7 +192,7 @@ void _setupSingleFirebase(String packageName, String projectName) {
   print('   You need to update firebase_options.dart with real Firebase config.');
   print('   Choose ONE of these methods:');
   print('');
-  print('   📝 Method A - Using FlutterFire CLI (EASIEST):');
+  print('   ${ConsoleSymbols.note} Method A - Using FlutterFire CLI (EASIEST):');
   print('      1. Install FlutterFire CLI:');
   print('         dart pub global activate flutterfire_cli');
   print('');
@@ -217,11 +217,11 @@ void _setupSingleFirebase(String packageName, String projectName) {
   print('         • Place it in: ios/Runner/GoogleService-Info.plist');
   print('      5. Update lib/firebase_options.dart with values from Firebase console');
   print('');
-  print(' 🚀 STEP 3: Test Your Setup');
+  print(' ${ConsoleSymbols.rocket} STEP 3: Test Your Setup');
   print('   Run your app:');
   print('   • flutter run');
   print('');
-  print(' 💡 Note: Your _app_initializer.dart already has Firebase initialization code!');
+  print(' ${ConsoleSymbols.bulb} Note: Your _app_initializer.dart already has Firebase initialization code!');
   print('   We automatically added it after WidgetsFlutterBinding.ensureInitialized()');
   print('');
   print('❓ Need Help?');
@@ -239,7 +239,7 @@ void _generateFirebaseOptionsDartFiles(String packageName) {
     final firebaseOptionsFile = File('lib/firebase_options_$flavor.dart');
 
     if (firebaseOptionsFile.existsSync()) {
-      print('  ⚠️  firebase_options_$flavor.dart already exists, skipping...');
+      print('  ${ConsoleSymbols.warning}  firebase_options_$flavor.dart already exists, skipping...');
       continue;
     }
 
@@ -267,7 +267,7 @@ void _createAndroidFirebaseConfig(String flavor, String packageName) {
   final firebaseFile = File('android/app/src/$flavor/google-services.json');
 
   if (firebaseFile.existsSync()) {
-    print('  ⚠️  google-services.json already exists for $flavor, skipping...');
+    print('  ${ConsoleSymbols.warning}  google-services.json already exists for $flavor, skipping...');
     return;
   }
 
@@ -299,7 +299,7 @@ void _createIOSFirebaseConfig(String flavor, String packageName) {
   final firebaseFile = File('ios/config/$flavor/GoogleService-Info.plist');
 
   if (firebaseFile.existsSync()) {
-    print('  ⚠️  GoogleService-Info.plist already exists for $flavor, skipping...');
+    print('  ${ConsoleSymbols.warning}  GoogleService-Info.plist already exists for $flavor, skipping...');
     return;
   }
 
