@@ -608,8 +608,8 @@ firebase login
 
 ## Requirements
 
-- **Flutter SDK:** >= 3.5.0
-- **Dart SDK:** >= 2.19.0
+- **Flutter SDK:** >= 3.32.8
+- **Dart SDK:** >= 3.8.1
 - **Firebase CLI** (for setup_firebase_auto)
 - **FlutterFire CLI** (for setup_firebase_auto)
 
