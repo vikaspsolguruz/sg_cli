@@ -14,6 +14,7 @@ part 'commands/create_sub_screen/create_sub_screen_command.dart';
 part 'commands/init/init_command.dart';
 part 'commands/setup_deeplink/setup_deeplink_command.dart';
 part 'commands/setup_firebase/setup_firebase_command.dart';
+part 'commands/setup_firebase_auto/setup_firebase_auto_command.dart';
 part 'commands/setup_flavors/setup_flavors_command.dart';
 part 'data/cyan_vars.dart';
 part 'templates/android_manifest_template.dart';
@@ -48,6 +49,7 @@ class Cyan {
     bool isSetupFlavorsCommand = arguments.length == 1 && arguments[0] == 'setup_flavors';
     bool isSetupDeeplinkCommand = arguments.length == 1 && arguments[0] == 'setup_deeplink';
     bool isSetupFirebaseCommand = arguments.length == 1 && arguments[0] == 'setup_firebase';
+    bool isSetupFirebaseAutoCommand = arguments.length == 1 && arguments[0] == 'setup_firebase_auto';
     bool isCreateScreenCommand = arguments.length == 3 && arguments[0] == 'create' && arguments[1] == 'screen';
     bool isCreateSubScreenCommand = arguments.length == 5 && arguments[0] == 'create' && arguments[1] == 'sub_screen' && arguments[3] == 'in';
     bool isCreateBottomSheetCommand = arguments.length == 3 && arguments[0] == 'create' && arguments[1] == 'bs';
@@ -86,6 +88,11 @@ class Cyan {
     if (isSetupFirebaseCommand) {
       // Setup Firebase Configs
       _setupFirebase();
+      return;
+    }
+    if (isSetupFirebaseAutoCommand) {
+      // Setup Firebase Configs Automatically using FlutterFire CLI
+      setupFirebaseAuto();
       return;
     }
     if (isCreateScreenCommand) {
