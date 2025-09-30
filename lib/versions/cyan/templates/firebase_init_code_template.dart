@@ -4,22 +4,20 @@ part of '../cyan.dart';
 String _firebaseInitCodeFlavoredTemplate(String projectName) {
   return '''
   // Firebase initialization for flavored project
-  final firebaseOptions = switch (currentEnvironment) {
-    Environments.local => dev.DefaultFirebaseOptions.currentPlatform,
-    Environments.dev => dev.DefaultFirebaseOptions.currentPlatform,
-    Environments.stage => stage.DefaultFirebaseOptions.currentPlatform,
-    Environments.prod => prod.DefaultFirebaseOptions.currentPlatform,
-    _ => dev.DefaultFirebaseOptions.currentPlatform,
+    final firebaseOptions = switch (currentEnvironment) {
+      Environments.local => dev.DefaultFirebaseOptions.currentPlatform,
+      Environments.dev => dev.DefaultFirebaseOptions.currentPlatform,
+      Environments.stage => stage.DefaultFirebaseOptions.currentPlatform,
+      Environments.prod => prod.DefaultFirebaseOptions.currentPlatform,
+      _ => dev.DefaultFirebaseOptions.currentPlatform,
   };
   
-  await Firebase.initializeApp(options: firebaseOptions);''';
+    await Firebase.initializeApp(options: firebaseOptions);''';
 }
 
 /// Template for non-flavored Firebase initialization
 String _firebaseInitCodeSingleTemplate() {
   return '''
   // Firebase initialization
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );''';
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);''';
 }
