@@ -15,7 +15,6 @@ part 'extensions/color_ext.dart';
 part 'extensions/date_time_ext.dart';
 part 'extensions/int_ext.dart';
 part 'extensions/list_merging.dart';
-part 'extensions/list_state_extensions.dart';
 part 'extensions/media_query_data.dart';
 part 'extensions/request.dart';
 part 'extensions/scroll_controller_ext.dart';
