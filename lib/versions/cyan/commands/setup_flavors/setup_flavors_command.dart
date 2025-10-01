@@ -43,7 +43,7 @@ void _setupFlavors() {
 
     // Create flavor directories
     _createFlavorDirectories();
-    
+
     // Create iOS flavor configurations
     _createIOSFlavorConfigs(packageName);
 
@@ -111,84 +111,6 @@ bool _validateCyanConfig() {
   return true;
 }
 
-void _addProductFlavors(File buildFile, bool isKotlinDsl, String projectName) {
-  var content = buildFile.readAsStringSync();
-
-  // Check if flavors already exist
-  if (content.contains('flavorDimensions')) {
-    print('⚠️  Product flavors already exist in ${buildFile.path.split('/').last}');
-    print('   Skipping flavor configuration...');
-    return;
-  }
-
-  print('📝 Adding product flavors to ${buildFile.path.split('/').last}...');
-
-  String flavorConfig;
-
-  if (isKotlinDsl) {
-    // Kotlin DSL syntax
-    flavorConfig = '''
-
-    flavorDimensions += "app"
-    productFlavors {
-        create("dev") {
-            dimension = "app"
-            resValue("string", "app_name", "Dev $projectName")
-            versionNameSuffix = "-dev"
-            applicationIdSuffix = ".dev"
-        }
-        create("stage") {
-            dimension = "app"
-            resValue("string", "app_name", "Stage $projectName")
-            versionNameSuffix = "-stage"
-            applicationIdSuffix = ".stage"
-        }
-        create("prod") {
-            dimension = "app"
-            resValue("string", "app_name", "$projectName")
-        }
-    }
-''';
-  } else {
-    // Groovy syntax
-    flavorConfig = '''
-
-    flavorDimensions "app"
-    productFlavors {
-        dev {
-            dimension "app"
-            resValue "string", "app_name", "Dev $projectName"
-            versionNameSuffix "-dev"
-            applicationIdSuffix ".dev"
-        }
-        stage {
-            dimension "app"
-            resValue "string", "app_name", "Stage $projectName"
-            versionNameSuffix "-stage"
-            applicationIdSuffix ".stage"
-        }
-        prod {
-            dimension "app"
-            resValue "string", "app_name", "$projectName"
-        }
-    }
-''';
-  }
-
-  // Find the closing brace of android block
-  final androidBlockEnd = content.lastIndexOf('}');
-
-  if (androidBlockEnd == -1) {
-    throw Exception('Could not find android block in ${buildFile.path.split('/').last}');
-  }
-
-  // Insert before the closing brace
-  content = content.substring(0, androidBlockEnd) + flavorConfig + '\n' + content.substring(androidBlockEnd);
-
-  buildFile.writeAsStringSync(content);
-  print('✓ Product flavors added successfully');
-}
-
 void _createFlavorDirectories() {
   print('📁 Creating flavor directories...');
 
@@ -207,31 +129,31 @@ void _createFlavorDirectories() {
 
 void _createIOSFlavorConfigs(String packageName) {
   print('🍎 Creating iOS flavor configurations...');
-  
+
   // Ensure Flutter directory exists
   final flutterDir = Directory('ios/Flutter');
   if (!flutterDir.existsSync()) {
     print('  ⚠️  ios/Flutter directory not found, skipping iOS configuration...');
     return;
   }
-  
+
   final flavors = ['dev', 'stage', 'prod'];
-  
+
   for (final flavor in flavors) {
     final xcconfigFile = File('ios/Flutter/$flavor.xcconfig');
-    
+
     if (xcconfigFile.existsSync()) {
       print('  ⚠️  $flavor.xcconfig already exists, skipping...');
       continue;
     }
-    
+
     final xcconfigContent = _iosXcconfigTemplate(flavor, packageName);
     xcconfigFile.writeAsStringSync(xcconfigContent);
-    
+
     final bundleId = flavor == 'prod' ? packageName : '$packageName.$flavor';
     print('  ✓ Created $flavor.xcconfig → Bundle ID: $bundleId');
   }
-  
+
   print('✓ iOS flavor configurations created');
 }
 

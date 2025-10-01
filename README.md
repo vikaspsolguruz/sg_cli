@@ -181,11 +181,11 @@ sg setup_deeplink
 
 ---
 
-#### `sg setup_firebase`
+#### `sg setup_firebase_manual`
 Generate Firebase placeholder configs per flavor.
 
 ```bash
-sg setup_firebase
+sg setup_firebase_manual
 ```
 
 **What it does:**
@@ -196,11 +196,11 @@ sg setup_firebase
 
 ---
 
-#### `sg setup_firebase_auto`
+#### `sg setup_firebase`
 Automated Firebase setup using FlutterFire CLI (real configs).
 
 ```bash
-sg setup_firebase_auto
+sg setup_firebase
 ```
 
 **Prerequisites:**
@@ -451,8 +451,9 @@ sg setup_deeplink
 #   Stage: stage-myapp.com
 #   Prod: myapp.com
 
-# 4. Setup Firebase (automated)
-sg setup_firebase_auto
+# 4. Setup Firebase
+sg setup_firebase
+sg setup_firebase_manual
 
 # 5. Create authentication flow
 sg create screen login

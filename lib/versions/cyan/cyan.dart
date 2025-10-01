@@ -1,5 +1,5 @@
-import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:sg_cli/data/global_vars.dart';
 import 'package:sg_cli/utils/file_helper.dart';
@@ -15,7 +15,7 @@ part 'commands/create_sub_screen/create_sub_screen_command.dart';
 part 'commands/init/init_command.dart';
 part 'commands/setup_deeplink/setup_deeplink_command.dart';
 part 'commands/setup_firebase/setup_firebase_command.dart';
-part 'commands/setup_firebase_auto/setup_firebase_auto_command.dart';
+part 'commands/setup_firebase_manual/setup_firebase_manual_command.dart';
 part 'commands/setup_flavors/setup_flavors_command.dart';
 part 'commands/show_help/show_help_command.dart';
 part 'constants/console_symbols.dart';
@@ -26,9 +26,10 @@ part 'templates/bloc_template.dart';
 part 'templates/deep_link_manager_template.dart';
 part 'templates/event_template.dart';
 part 'templates/firebase_android_template.dart';
+part 'templates/firebase_init_code_template.dart';
 part 'templates/firebase_ios_template.dart';
 part 'templates/firebase_options_dart_template.dart';
-part 'templates/firebase_init_code_template.dart';
+part 'templates/gradle_with_flavors.dart';
 part 'templates/ios_entitlements_template.dart';
 part 'templates/ios_xcconfig_template.dart';
 part 'templates/route_name_template.dart';
@@ -58,8 +59,8 @@ class Cyan {
     bool isInitCommand = arguments.length == 1 && arguments[0] == 'init';
     bool isSetupFlavorsCommand = arguments.length == 1 && arguments[0] == 'setup_flavors';
     bool isSetupDeeplinkCommand = arguments.length == 1 && arguments[0] == 'setup_deeplink';
-    bool isSetupFirebaseCommand = arguments.length == 1 && arguments[0] == 'setup_firebase';
-    bool isSetupFirebaseAutoCommand = arguments.length == 1 && arguments[0] == 'setup_firebase_auto';
+    bool isSetupFirebaseManualCommand = arguments.length == 1 && arguments[0] == 'setup_firebase_manual';
+    bool isSetupFirebaseAutoCommand = arguments.length == 1 && arguments[0] == 'setup_firebase';
     bool isCreateScreenCommand = arguments.length == 3 && arguments[0] == 'create' && arguments[1] == 'screen';
     bool isCreateSubScreenCommand = arguments.length == 5 && arguments[0] == 'create' && arguments[1] == 'sub_screen' && arguments[3] == 'in';
     bool isCreateBottomSheetCommand = arguments.length == 3 && arguments[0] == 'create' && arguments[1] == 'bs';
@@ -72,7 +73,9 @@ class Cyan {
     }
 
     if (arguments.any((element) => isInValidArgument(element))) {
-      print("${ConsoleSymbols.error}  Error: Invalid command format\n  • Should be in lowercase only\n  • Start with alphabet\n  • No special characters allowed other then underscore (_)");
+      print(
+        "${ConsoleSymbols.error}  Error: Invalid command format\n  • Should be in lowercase only\n  • Start with alphabet\n  • No special characters allowed other then underscore (_)",
+      );
       return;
     }
     if (isHelpCommand) {
@@ -95,7 +98,7 @@ class Cyan {
       _setupDeeplink();
       return;
     }
-    if (isSetupFirebaseCommand) {
+    if (isSetupFirebaseManualCommand) {
       // Setup Firebase Configs
       _setupFirebase();
       return;

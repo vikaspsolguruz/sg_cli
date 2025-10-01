@@ -11,8 +11,8 @@ void _showHelp() {
   print('${ConsoleSymbols.rocket}  sg init                              Initialize cyan architecture in your project');
   print(' 🎨  sg setup_flavors                     Setup dev/stage/prod flavors (Android/iOS)');
   print(' 🔗  sg setup_deeplink                    Configure deep-linking per flavor');
-  print(' 🔥  sg setup_firebase                    Generate Firebase configs per flavor');
-  print(' 🔥  sg setup_firebase_auto               Automated Firebase setup with real configs');
+  print(' 🔥  sg setup_firebase_manual             Generate Firebase configs per flavor');
+  print(' 🔥  sg setup_firebase                    Automated Firebase setup with real configs');
   print(' 📱  sg create screen <name>              Create a new screen with BLoC pattern');
   print(' 📄  sg create sub_screen <name> in <parent>  Create a sub-screen under parent screen');
   print('${ConsoleSymbols.clipboard}  sg create bs <name>                  Create a new bottom sheet');
@@ -25,8 +25,8 @@ void _showHelp() {
   print('    sg init                               # Setup cyan architecture');
   print('    sg setup_flavors                      # Add dev/stage/prod flavors');
   print('    sg setup_deeplink                     # Configure deep-linking per flavor');
-  print('    sg setup_firebase                     # Add Firebase placeholder configs');
-  print('    sg setup_firebase_auto                # Automated Firebase setup with FlutterFire CLI');
+  print('    sg setup_firebase_manual              # Add Firebase placeholder configs');
+  print('    sg setup_firebase                     # Automated Firebase setup with FlutterFire CLI');
   print('    sg create screen login                # Create login screen');
   print('    sg create sub_screen profile in home  # Create profile sub-screen in home');
   print('    sg create bs select_country           # Create select_country bottom sheet');
