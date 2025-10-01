@@ -5,6 +5,7 @@ import 'package:newarch/core/utils/console_print.dart';
 import 'package:newarch/core/utils/toast/toast.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
+// Todo: Implement social auth service when actual logic is defined
 class SocialAuthService {
   static SocialAuthService? _instance = SocialAuthService._internal();
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newarch/app/app_state.dart';
 import 'package:newarch/core/data/country.dart';
+import 'package:newarch/core/data/current_user.dart';
 import 'package:newarch/core/services/notification/notification_service.dart';
 import 'package:newarch/core/shared_pref/shared_pref.dart';
 import 'package:newarch/core/utils/bloc/bloc_observer.dart';
@@ -14,6 +15,11 @@ Future<void> initializeApp() async {
     WidgetsFlutterBinding.ensureInitialized();
     deviceCountry = await getDeviceCountry();
     await Prefs.initialize();
+    currentUser = Prefs.getCurrentUser();
+    // Todo: Fix this when profile setup actual logic is defined
+    // if (currentUser != null && currentUser?.onboardingStatus != OnBoardingStatus.finished) {
+    //   await logOutUser();
+    // }
     Bloc.observer = MyBlocObserver();
     await NotificationService.instance.initialize();
     AppState.initializeRoutes();

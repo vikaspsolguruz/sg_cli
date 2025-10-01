@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:newarch/core/models/user_model.dart';
 import 'package:newarch/core/utils/console_print.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,4 +18,8 @@ class Prefs {
   static void setDeviceId(String deviceId) => _prefManager.setString('device_id', deviceId);
 
   static String? getDeviceId() => _prefManager.getString('device_id', dataParser: (value) => value);
+
+  static void setCurrentUser(UserModel user) => _prefManager.setString('current_user', jsonEncode(user.toJson()));
+
+  static UserModel? getCurrentUser() => _prefManager.getString('current_user', dataParser: (value) => UserModel.fromJson(jsonDecode(value!)));
 }
