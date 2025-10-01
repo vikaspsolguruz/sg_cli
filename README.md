@@ -10,14 +10,14 @@ A powerful CLI tool for generating scalable Flutter applications with BLoC patte
 
 ## Table of Contents
 
-- [Features](#-features)
-- [Installation](#-installation)
-- [Quick Start](#-quick-start)
-- [Commands](#-commands)
-- [Architecture](#-architecture)
-- [Examples](#-examples)
-- [Troubleshooting](#-troubleshooting)
-- [About Us](#-about-us)
+- [Features](#features)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Commands](#commands)
+- [Architecture](#architecture)
+- [Examples](#examples)
+- [Troubleshooting](#troubleshooting)
+- [About Us](#about-us)
 
 ---
 
@@ -578,17 +578,6 @@ dart pub global activate --source path .
 # Run init
 cd your-flutter-project
 sg init
-```
-
-Other commands work fine with git activation.
-
-### Deep link setup fails
-
-**Error:** `PathNotFoundException: Cannot open file, path = 'templates/android_manifest.xml'`
-
-**Solution:** This was a bug in older versions. Update to the latest version:
-```bash
-dart pub global activate --source git https://github.com/vikaspsolguruz/sg_cli.git
 ```
 
 ### Firebase setup fails
