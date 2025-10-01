@@ -32,16 +32,19 @@ void _initProject() {
     // Step 4: Copy test directory
     _copyTests();
 
-    // Step 5: Replace package names in all .dart files
+    // Step 5: Copy integration_test directory
+    _copyIntegrationTests();
+
+    // Step 6: Replace package names in all .dart files
     _updatePackageReferences();
 
-    // Step 6: Replace pubspec.yaml with complete configuration
+    // Step 7: Replace pubspec.yaml with complete configuration
     _updatePubspecDependencies();
 
-    // Step 7: Copy other configuration files
+    // Step 8: Copy other configuration files
     _generateConfigFiles();
 
-    // Step 8: Run flutter pub get automatically
+    // Step 9: Run flutter pub get automatically
     _runPubGet();
 
     print('');
@@ -87,6 +90,12 @@ void _deleteExistingFiles() {
   final testDir = Directory('test');
   if (testDir.existsSync()) {
     testDir.deleteSync(recursive: true);
+  }
+
+  // Delete integration_test folder
+  final integrationTestDir = Directory('integration_test');
+  if (integrationTestDir.existsSync()) {
+    integrationTestDir.deleteSync(recursive: true);
   }
 
   // Delete analysis_options.yaml
@@ -244,6 +253,36 @@ void _copyTests() {
     if (filesUpdated > 0) {
       print('${ConsoleSymbols.success}  Updated package references in $filesUpdated test files');
     }
+  }
+}
+
+void _copyIntegrationTests() {
+  print('🧪  Copying integration tests...');
+  
+  final integrationTestsSource = Directory('${_getBoilerplatePath()}/integration_test');
+  final integrationTestsTarget = Directory('integration_test');
+
+  if (integrationTestsSource.existsSync()) {
+    _copyDirectory(integrationTestsSource, integrationTestsTarget);
+
+    final testFiles = _findDartFiles(integrationTestsTarget);
+    int filesUpdated = 0;
+
+    for (final file in testFiles) {
+      final content = file.readAsStringSync();
+      final updatedContent = content.replaceAll('package:newarch/', 'package:$_moduleName/');
+
+      if (content != updatedContent) {
+        file.writeAsStringSync(updatedContent);
+        filesUpdated++;
+      }
+    }
+
+    if (filesUpdated > 0) {
+      print('${ConsoleSymbols.success}  Updated package references in $filesUpdated integration test files');
+    }
+  } else {
+    print('${ConsoleSymbols.warning}  Integration test directory not found in boilerplate');
   }
 }
 
