@@ -350,41 +350,69 @@ sg -h
 
 ```
 lib/
+├── main.dart                       # App entry point
+├── _app_initializer.dart           # App initialization logic
+│
 ├── app/
 │   ├── app.dart                    # Main app widget
 │   ├── app_routes/                 # Route definitions
 │   │   ├── screen_routes.dart
 │   │   ├── bottom_sheet_routes.dart
 │   │   ├── dialog_routes.dart
+│   │   ├── route_arguments.dart    # Route argument models
 │   │   └── _route_names.dart
 │   ├── app_state.dart              # Global app state
 │   └── navigation/                 # Navigation utilities
 │
 ├── core/
 │   ├── constants/                  # App-wide constants
-│   ├── data/                       # Data models
+│   ├── data/                       # Static data (countries, validations)
 │   ├── enums/                      # Enumerations
+│   ├── models/                     # Data models & DTOs
+│   │   └── view_states/            # View state models
 │   ├── network/                    # API client, interceptors
+│   │   └── api/                    # API endpoint definitions
+│   ├── repositories/               # Data repositories
+│   ├── services/                   # App services
+│   │   ├── notification/           # Push notification service
+│   │   └── social_auth_service/    # Social auth (Google, Apple)
+│   ├── shared_pref/                # Shared preferences wrapper
 │   ├── theme/                      # Theme data, colors, text styles
-│   └── utils/                      # Utilities (bloc, localization, etc.)
-│       ├── bloc/                   # BaseBloc and helpers
-│       ├── localization/           # i18n support
-│       └── deep_link_manager.dart  # Deep link handling
+│   │   ├── styling/                # Custom styling utilities
+│   │   └── text_style/             # Text style definitions
+│   └── utils/                      # Utilities
+│       ├── analytics/              # Analytics helpers
+│       ├── bloc/                   # BaseBloc and BLoC helpers
+│       ├── extensions/             # Dart/Flutter extensions
+│       ├── localization/           # Custom localization support
+│       ├── state_handlers/         # Loading, error, empty states
+│       └── toast/                  # Toast notification helpers
 │
-├── data/
-│   ├── global_vars.dart            # Global variables
-│   └── repositories/               # Data repositories
+├── environments/
+│   └── environments.dart           # Environment configs (dev, stage, prod)
+│
+├── gen/
+│   └── assets.gen.dart             # Auto-generated asset references
 │
 └── presentation/
-    ├── screens/                    # All screens
+    ├── screens/                    # All screens (created via sg create screen)
     │   └── [screen_name]/
     │       ├── logic/              # BLoC, Events, States
     │       └── view/               # UI and widgets
-    ├── bottom_sheets/              # Bottom sheets
-    └── dialogs/                    # Dialogs
+    ├── bottom_sheets/              # Bottom sheets (created via sg create bs)
+    │   └── select_country/         # Example: country selector
+    ├── dialogs/                    # Dialogs (created via sg create dialog)
+    └── widgets/                    # Reusable widgets
+        ├── animated_tab_buttons/
+        ├── app_button/
+        ├── app_icons/
+        ├── image_picker/
+        ├── state_widgets/          # Loading, error, empty widgets
+        └── text_field/
 
 assets/
-└── images/                         # Image assets
+└── images/
+    └── svg/                        # SVG image assets
 
 android/
 └── app/src/
