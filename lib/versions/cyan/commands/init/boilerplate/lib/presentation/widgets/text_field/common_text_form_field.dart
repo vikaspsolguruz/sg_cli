@@ -10,9 +10,9 @@ import 'package:newarch/core/utils/extensions.dart';
 import 'package:newarch/core/utils/input_formatters.dart';
 import 'package:newarch/core/utils/validators.dart';
 import 'package:newarch/presentation/widgets/common_form_label.dart';
-import 'package:newarch/presentation/widgets/common_text_form_field/common_text_field_controller.dart';
-import 'package:newarch/presentation/widgets/common_text_form_field/country_info.dart';
-import 'package:newarch/presentation/widgets/common_text_form_field/password_error_widget.dart';
+import 'package:newarch/presentation/widgets/text_field/common_text_field_controller.dart';
+import 'package:newarch/presentation/widgets/text_field/country_info.dart';
+import 'package:newarch/presentation/widgets/text_field/password_error_widget.dart';
 
 enum FieldType {
   none,

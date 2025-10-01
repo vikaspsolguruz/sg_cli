@@ -7,7 +7,7 @@ import 'package:newarch/app/app_state.dart';
 import 'package:newarch/app/navigation/navigator.dart';
 import 'package:newarch/core/utils/bloc/base_bloc.dart';
 import 'package:newarch/core/utils/bloc/bloc_event.dart';
-import 'package:newarch/presentation/widgets/common_text_form_field/common_text_field_controller.dart';
+import 'package:newarch/presentation/widgets/text_field/common_text_field_controller.dart';
 
 part 'select_country_event.dart';
 part 'select_country_state.dart';

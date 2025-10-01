@@ -45,4 +45,8 @@ class AppStrings {
   static const invalidZipCode = "Invalid zip code";
   static const searchCountry = "Search Country";
 
+  static final browseFiles = "Browse Files";
+  static final supportedExtensionAndSizeMessage = "Supported extensions: {extensions}. Max size: {maxSize}";
+  static final chooseAFile = "Choose a file";
+
 }

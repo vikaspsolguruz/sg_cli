@@ -4,7 +4,7 @@ import 'package:newarch/core/constants/constants.dart';
 import 'package:newarch/core/theme/styling/app_colors.dart';
 import 'package:newarch/core/utils/extensions.dart';
 import 'package:newarch/presentation/bottom_sheets/select_country/logic/select_country_bloc.dart';
-import 'package:newarch/presentation/widgets/common_text_form_field/common_text_form_field.dart';
+import 'package:newarch/presentation/widgets/text_field/common_text_form_field.dart';
 
 class SelectCountrySearchBar extends StatelessWidget {
   const SelectCountrySearchBar({super.key});
