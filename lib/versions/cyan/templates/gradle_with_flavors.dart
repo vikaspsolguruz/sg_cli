@@ -1,6 +1,6 @@
 part of '../cyan.dart';
 
-void _addProductFlavors(File buildFile, bool isKotlinDsl, String projectName) {
+void _addProductFlavors(File buildFile, bool isKotlinDsl, String appLabel) {
   var content = buildFile.readAsStringSync();
 
   // Check if flavors already exist
@@ -23,19 +23,19 @@ void _addProductFlavors(File buildFile, bool isKotlinDsl, String projectName) {
     productFlavors {
         create("dev") {
             dimension = "app"
-            resValue("string", "app_name", "Dev $projectName")
+            resValue("string", "app_name", "Dev $appLabel")
             versionNameSuffix = "-dev"
             applicationIdSuffix = ".dev"
         }
         create("stage") {
             dimension = "app"
-            resValue("string", "app_name", "Stage $projectName")
+            resValue("string", "app_name", "Stage $appLabel")
             versionNameSuffix = "-stage"
             applicationIdSuffix = ".stage"
         }
         create("prod") {
             dimension = "app"
-            resValue("string", "app_name", "$projectName")
+            resValue("string", "app_name", "$appLabel")
         }
     }
 ''';
@@ -48,19 +48,19 @@ void _addProductFlavors(File buildFile, bool isKotlinDsl, String projectName) {
     productFlavors {
         dev {
             dimension "app"
-            resValue "string", "app_name", "Dev $projectName"
+            resValue "string", "app_name", "Dev $appLabel"
             versionNameSuffix "-dev"
             applicationIdSuffix ".dev"
         }
         stage {
             dimension "app"
-            resValue "string", "app_name", "Stage $projectName"
+            resValue "string", "app_name", "Stage $appLabel"
             versionNameSuffix "-stage"
             applicationIdSuffix ".stage"
         }
         prod {
             dimension "app"
-            resValue "string", "app_name", "$projectName"
+            resValue "string", "app_name", "$appLabel"
         }
     }
 ''';

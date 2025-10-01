@@ -13,12 +13,14 @@ void _setupFlavors() {
   try {
     final projectName = getModuleName();
     final packageName = _getBasePackageId();
+    final appLabel = _getAppLabel();
 
-    print('📦 Project: $projectName');
-    print('🆔 Package ID: $packageName');
+    print('📦  Project: $projectName');
+    print('🆔  Package ID: $packageName');
+    print('🏷️  App Label: $appLabel');
     print('');
 
-    print('🔍 Detecting build configuration file...');
+    print('🔍  Detecting build configuration file...');
 
     // Detect build file type
     final buildGradleKts = File('android/app/build.gradle.kts');
@@ -38,14 +40,14 @@ void _setupFlavors() {
     print('✓ Found: ${buildFile.path.split('/').last} ($buildType)');
     print('');
 
-    // Add product flavors
-    _addProductFlavors(buildFile, isKotlinDsl, projectName);
+    // Add product flavors (use appLabel, not projectName!)
+    _addProductFlavors(buildFile, isKotlinDsl, appLabel);
 
     // Create flavor directories
     _createFlavorDirectories();
 
-    // Create iOS flavor configurations
-    _createIOSFlavorConfigs(packageName);
+    // Create iOS flavor configurations (pass appLabel!)
+    _createIOSFlavorConfigs(packageName, appLabel);
 
     // Create Android Studio run configurations
     _createAndroidStudioRunConfigs();
@@ -127,7 +129,7 @@ void _createFlavorDirectories() {
   print('✓ Flavor directories created');
 }
 
-void _createIOSFlavorConfigs(String packageName) {
+void _createIOSFlavorConfigs(String packageName, String appLabel) {
   print('🍎 Creating iOS flavor configurations...');
 
   // Ensure Flutter directory exists
@@ -147,11 +149,12 @@ void _createIOSFlavorConfigs(String packageName) {
       continue;
     }
 
-    final xcconfigContent = _iosXcconfigTemplate(flavor, packageName);
+    final xcconfigContent = _iosXcconfigTemplate(flavor, packageName, appLabel);
     xcconfigFile.writeAsStringSync(xcconfigContent);
 
     final bundleId = flavor == 'prod' ? packageName : '$packageName.$flavor';
-    print('  ✓ Created $flavor.xcconfig → Bundle ID: $bundleId');
+    final displayName = flavor == 'prod' ? appLabel : '${flavor[0].toUpperCase()}${flavor.substring(1)} $appLabel';
+    print('  ✓ Created $flavor.xcconfig → Bundle ID: $bundleId, Display Name: $displayName');
   }
 
   print('✓ iOS flavor configurations created');

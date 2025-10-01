@@ -42,6 +42,7 @@ part 'utils/add_route_info.dart';
 part 'utils/check_existing_route.dart';
 part 'utils/copy_directory.dart';
 part 'utils/file_helpers.dart';
+part 'utils/get_app_label.dart';
 part 'utils/get_boilerplate_path.dart';
 part 'utils/get_package_id.dart';
 part 'utils/modify_app_for_deeplink.dart';
