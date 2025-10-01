@@ -164,16 +164,44 @@ void _updatePubspecDependencies() {
   final currentLines = currentContent.split('\n');
   final projectName = _extractProjectName(currentLines);
   final projectDescription = _extractProjectDescription(currentLines);
+  
+  // Extract app label and package ID for patrol configuration
+  final appLabel = _getAppLabel();
+  final packageId = _getBasePackageId();
 
-  // Read boilerplate and replace name/description
+  // Read boilerplate and replace name/description/patrol config
   final boilerplateLines = boilerplateContent.split('\n');
   final updatedLines = <String>[];
+  
+  bool inPatrolSection = false;
 
   for (final line in boilerplateLines) {
     if (line.startsWith('name:')) {
       updatedLines.add('name: $projectName');
     } else if (line.startsWith('description:')) {
       updatedLines.add('description: "$projectDescription"');
+    } else if (line.trim().startsWith('patrol:')) {
+      // Entering patrol section
+      inPatrolSection = true;
+      updatedLines.add(line);
+    } else if (inPatrolSection) {
+      // Replace patrol configuration values while preserving indentation
+      if (line.contains('app_name:')) {
+        final indent = line.substring(0, line.indexOf('app_name:'));
+        updatedLines.add('${indent}app_name: $appLabel');
+      } else if (line.contains('package_name:')) {
+        final indent = line.substring(0, line.indexOf('package_name:'));
+        updatedLines.add('${indent}package_name: $packageId');
+      } else if (line.contains('bundle_id:')) {
+        final indent = line.substring(0, line.indexOf('bundle_id:'));
+        updatedLines.add('${indent}bundle_id: $packageId');
+      } else {
+        updatedLines.add(line);
+        // Exit patrol section if we hit a line that's not indented or starts a new section
+        if (line.trim().isNotEmpty && !line.startsWith(' ') && !line.startsWith('\t')) {
+          inPatrolSection = false;
+        }
+      }
     } else {
       updatedLines.add(line);
     }
@@ -181,6 +209,7 @@ void _updatePubspecDependencies() {
 
   currentPubspec.writeAsStringSync(updatedLines.join('\n'));
   print('${ConsoleSymbols.success}  Updated pubspec.yaml with dependencies, assets, and flutter config');
+  print('${ConsoleSymbols.success}  Configured Patrol with app: $appLabel, package: $packageId');
 }
 
 void _copyAssets() {

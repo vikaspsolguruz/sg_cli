@@ -77,3 +77,10 @@ flutter:
 
   assets:
     - assets/images/svg/
+
+patrol:
+  app_name: NewArch
+  android:
+    package_name: com.example.newarch
+  ios:
+    bundle_id: com.example.newarch
