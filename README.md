@@ -1,6 +1,7 @@
 # SG CLI - A SolGuruz Flutter Architecture Generator
 
-A powerful CLI tool for generating scalable Flutter applications with BLoC pattern, clean architecture, and production-ready features.
+A powerful CLI tool for generating scalable Flutter applications with BLoC pattern, clean
+architecture, and production-ready features.
 
 [![Version](https://img.shields.io/badge/version-cyan-blue)](https://github.com/vikaspsolguruz/sg_cli)
 [![Flutter](https://img.shields.io/badge/Flutter-3.5.0+-02569B?logo=flutter)](https://flutter.dev)
@@ -24,12 +25,14 @@ A powerful CLI tool for generating scalable Flutter applications with BLoC patte
 ## Features
 
 ### Complete Architecture Setup
+
 - **Cyan Architecture** - Production-ready folder structure
 - **BLoC Pattern** - State management with bloc pattern
 - **Clean Architecture** - Separation of concerns (presentation, core, data)
 - **Route Management** - Automatic route generation and management
 
 ### Code Generation
+
 - **Screens** - Full-featured screens with BLoC
 - **Sub-Screens** - Nested screens with parent-child routing
 - **Bottom Sheets** - Reusable bottom sheet components
@@ -37,12 +40,14 @@ A powerful CLI tool for generating scalable Flutter applications with BLoC patte
 - **Events** - BLoC events with proper structure
 
 ### Production Features
+
 - **Product Flavors** - Dev, Stage, Prod configurations (Android + iOS)
 - **Deep Linking** - Per-flavor deep link configuration
 - **Firebase Integration** - Automated Firebase setup with FlutterFire CLI
 - **Multi-platform** - Android, iOS, Web ready
 
 ### Developer Experience
+
 - **Automated Dependency Management** - Auto-runs `flutter pub get`
 - **Smart Path Resolution** - Works with local and git activation
 - **Consistent Naming** - Enforces snake_case conventions
@@ -52,21 +57,10 @@ A powerful CLI tool for generating scalable Flutter applications with BLoC patte
 
 ## Installation
 
-### Option 1: Git Activation (Recommended)
+### Git Activation
 
 ```bash
 dart pub global activate --source git https://github.com/vikaspsolguruz/sg_cli.git
-```
-
-### Option 2: Local Activation (For Development)
-
-```bash
-# Clone the repository
-git clone https://github.com/vikaspsolguruz/sg_cli.git
-cd sg_cli
-
-# Activate locally
-dart pub global activate --source path .
 ```
 
 ### Verify Installation
@@ -85,12 +79,14 @@ sg -h
 
 ### 1. Initialize Cyan Architecture
 
+Into the project root directory run:
+
 ```bash
-cd your-flutter-project
 sg init
 ```
 
 This will:
+
 - Generate complete folder structure
 - Create core utilities and theme files
 - Set up routing system
@@ -112,6 +108,7 @@ sg create screen login
 ```
 
 Generates:
+
 ```
 lib/presentation/screens/login/
 ├── logic/
@@ -130,6 +127,7 @@ lib/presentation/screens/login/
 ### Project Setup Commands
 
 #### `sg init`
+
 Initialize Cyan architecture in your Flutter project.
 
 ```bash
@@ -137,6 +135,7 @@ sg init
 ```
 
 **What it does:**
+
 - Generates complete folder structure (presentation, core, data)
 - Creates app foundation (routing, state management, theme)
 - Sets up BLoC pattern infrastructure
@@ -146,6 +145,7 @@ sg init
 ---
 
 #### `sg setup_flavors`
+
 Setup product flavors (dev, stage, prod) for Android and iOS.
 
 ```bash
@@ -153,6 +153,7 @@ sg setup_flavors
 ```
 
 **What it does:**
+
 - Creates flavor-specific configurations
 - Generates Android build types
 - Configures iOS schemes
@@ -161,6 +162,7 @@ sg setup_flavors
 ---
 
 #### `sg setup_deeplink`
+
 Configure deep-linking per flavor with native + Flutter integration.
 
 ```bash
@@ -168,11 +170,13 @@ sg setup_deeplink
 ```
 
 **Interactive prompts:**
+
 - Dev domain (e.g., `dev-app.com`)
 - Stage domain (e.g., `stage.app.com`)
 - Prod domain (e.g., `app.com`)
 
 **What it does:**
+
 - Creates Android manifests per flavor
 - Generates iOS entitlements per flavor
 - Creates `deep_link_manager.dart` for Flutter
@@ -182,6 +186,7 @@ sg setup_deeplink
 ---
 
 #### `sg setup_firebase_manual`
+
 Generate Firebase placeholder configs per flavor.
 
 ```bash
@@ -189,6 +194,7 @@ sg setup_firebase_manual
 ```
 
 **What it does:**
+
 - Creates placeholder `google-services.json` (Android)
 - Creates placeholder `GoogleService-Info.plist` (iOS)
 - Generates `firebase_options.dart` template
@@ -197,6 +203,7 @@ sg setup_firebase_manual
 ---
 
 #### `sg setup_firebase`
+
 Automated Firebase setup using FlutterFire CLI (real configs).
 
 ```bash
@@ -204,11 +211,13 @@ sg setup_firebase
 ```
 
 **Prerequisites:**
+
 - Firebase CLI installed
 - FlutterFire CLI installed
 - Firebase project created
 
 **What it does:**
+
 - Downloads real Firebase configs per flavor
 - Runs FlutterFire configure automatically
 - Adds `firebase_core` dependency
@@ -219,6 +228,7 @@ sg setup_firebase
 ### Code Generation Commands
 
 #### `sg create screen <name>`
+
 Create a new screen with BLoC pattern.
 
 ```bash
@@ -226,6 +236,7 @@ sg create screen profile
 ```
 
 **Generates:**
+
 ```
 lib/presentation/screens/profile/
 ├── logic/
@@ -238,12 +249,14 @@ lib/presentation/screens/profile/
 ```
 
 **Auto-updates:**
+
 - `app/app_routes/screen_routes.dart` - Adds route
 - `app/app_routes/_route_names.dart` - Adds route name
 
 ---
 
 #### `sg create sub_screen <name> in <parent>`
+
 Create a sub-screen under a parent screen.
 
 ```bash
@@ -251,6 +264,7 @@ sg create sub_screen edit_profile in profile
 ```
 
 **Generates:**
+
 ```
 lib/presentation/screens/profile/edit_profile/
 ├── logic/
@@ -267,6 +281,7 @@ lib/presentation/screens/profile/edit_profile/
 ---
 
 #### `sg create bs <name>`
+
 Create a bottom sheet component.
 
 ```bash
@@ -274,6 +289,7 @@ sg create bs select_country
 ```
 
 **Generates:**
+
 ```
 lib/presentation/bottom_sheets/select_country/
 ├── logic/
@@ -286,11 +302,13 @@ lib/presentation/bottom_sheets/select_country/
 ```
 
 **Auto-updates:**
+
 - `app/app_routes/bottom_sheet_routes.dart`
 
 ---
 
 #### `sg create dialog <name>`
+
 Create a dialog component.
 
 ```bash
@@ -298,6 +316,7 @@ sg create dialog confirm_logout
 ```
 
 **Generates:**
+
 ```
 lib/presentation/dialogs/confirm_logout/
 ├── logic/
@@ -310,11 +329,13 @@ lib/presentation/dialogs/confirm_logout/
 ```
 
 **Auto-updates:**
+
 - `app/app_routes/dialog_routes.dart`
 
 ---
 
 #### `sg create event <name> in <page>`
+
 Create a new BLoC event in an existing screen/bottom sheet/dialog.
 
 ```bash
@@ -332,6 +353,7 @@ class SubmitFormEvent extends LoginEvent {
 ---
 
 #### `sg help`
+
 Show all available commands with examples.
 
 ```bash
@@ -434,12 +456,14 @@ All screens, bottom sheets, and dialogs follow the BLoC pattern:
 ```dart
 // Event
 abstract class LoginEvent {}
+
 class SubmitLoginEvent extends LoginEvent {}
 
 // State
 class LoginState {
   final bool isLoading;
   final String? error;
+
   LoginState({this.isLoading = false, this.error});
 }
 
@@ -449,10 +473,8 @@ class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
     on<SubmitLoginEvent>(_onSubmitLogin);
   }
 
-  Future<void> _onSubmitLogin(
-    SubmitLoginEvent event,
-    Emitter<LoginState> emit,
-  ) async {
+  Future<void> _onSubmitLogin(SubmitLoginEvent event,
+      Emitter<LoginState> emit,) async {
     // Handle event
   }
 }
@@ -507,68 +529,96 @@ sg create event update_profile in edit_profile
 ### Using Generated Code
 
 **Navigate to a screen:**
+
 ```dart
-Go.toNamed(Routes.profile);
+Go.toNamed
+(
+Routes.profile);
 
 // With arguments (use RouteArguments class)
 Go.toNamed(
-  Routes.profile,
-  arguments: {
-    RouteArguments.userId: '123',
-    RouteArguments.userName: 'John',
-  },
+Routes.profile,
+arguments: {
+RouteArguments.userId: '123',
+RouteArguments.userName: 'John',
+},
 );
 ```
 
 **Show a bottom sheet:**
+
 ```dart
-Go.openBottomSheet(Routes.selectLanguage);
+Go.openBottomSheet
+(
+Routes.selectLanguage);
 
 // With custom options
 Go.openBottomSheet(
-  Routes.selectLanguage,
-  arguments: {RouteArguments.currentLanguage: 'en'},
-  enableDrag: true,
-  showDragHandle: true,
-  isDismissible: true,
+Routes.selectLanguage,
+arguments: {RouteArguments.currentLanguage: 'en'},
+enableDrag: true,
+showDragHandle: true,
+isDismissible:
+true
+,
 );
 ```
 
 **Show a dialog:**
+
 ```dart
-Go.openDialog(Routes.confirmAction);
+Go.openDialog
+(
+Routes.confirmAction);
 
 // With arguments and custom alignment
 Go.openDialog(
-  Routes.confirmAction,
-  arguments: {
-    RouteArguments.title: 'Confirm',
-    RouteArguments.message: 'Are you sure?',
-  },
-  alignment: Alignment.center,
-  isDismissible: true,
+Routes.confirmAction,
+arguments: {
+RouteArguments.title: 'Confirm',
+RouteArguments.message: 'Are you sure?',
+},
+alignment: Alignment.center,
+isDismissible: true,
 );
 ```
 
 **Navigate back:**
+
 ```dart
-Go.back();
+Go.back
+();
 
 // Back with result
-Go.back(result: {RouteArguments.confirmed: true});
+Go.back
+(
+result: {RouteArguments.confirmed: true});
 ```
 
 **Replace current screen:**
+
 ```dart
-Go.replaceToNamed(Routes.newScreen);
+Go.replaceToNamed
+(
+Routes
+.
+newScreen
+);
 ```
 
 **Clear stack and navigate:**
+
 ```dart
-Go.replaceAllToNamed(Routes.login);
+Go.replaceAllToNamed
+(
+Routes
+.
+login
+);
 ```
 
 **Access route arguments in your screen:**
+
 ```dart
 // In your screen/bottom sheet/dialog
 final userId = AppState.currentRouteArguments[RouteArguments.userId];
@@ -597,6 +647,7 @@ source ~/.zshrc
 If you encounter template errors with git activation:
 
 **Solution:** Use local activation for `sg init`:
+
 ```bash
 # Clone and activate locally
 git clone https://github.com/vikaspsolguruz/sg_cli.git
@@ -611,6 +662,7 @@ sg init
 ### Firebase setup fails
 
 **Prerequisites for `setup_firebase`:**
+
 ```bash
 # Install Firebase CLI
 npm install -g firebase-tools
@@ -635,7 +687,8 @@ firebase login
 
 ## About Us
 
-Engineering Quality Solutions by employing technologies with Passion and Love | Web and Mobile App Development Company in India and Canada.
+Engineering Quality Solutions by employing technologies with Passion and Love | Web and Mobile App
+Development Company in India and Canada.
 
 ## Links
 
@@ -711,7 +764,7 @@ SOFTWARE.
 
 ## Star Us!
 
-If you find this CLI tool helpful, please give us a star on GitHub! 
+If you find this CLI tool helpful, please give us a star on GitHub!
 
 **Repository:** [github.com/vikaspsolguruz/sg_cli](https://github.com/vikaspsolguruz/sg_cli)
 
