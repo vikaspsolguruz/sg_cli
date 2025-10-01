@@ -198,6 +198,23 @@ void _copyTests() {
 
   if (testsSource.existsSync()) {
     _copyDirectory(testsSource, testsTarget);
+
+    final testFiles = _findDartFiles(testsTarget);
+    int filesUpdated = 0;
+
+    for (final file in testFiles) {
+      final content = file.readAsStringSync();
+      final updatedContent = content.replaceAll('package:newarch/', 'package:$_moduleName/');
+
+      if (content != updatedContent) {
+        file.writeAsStringSync(updatedContent);
+        filesUpdated++;
+      }
+    }
+
+    if (filesUpdated > 0) {
+      print('${ConsoleSymbols.success}  Updated package references in $filesUpdated test files');
+    }
   }
 }
 
