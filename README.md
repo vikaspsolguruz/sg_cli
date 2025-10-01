@@ -593,7 +593,7 @@ dart pub global activate --source git https://github.com/vikaspsolguruz/sg_cli.g
 
 ### Firebase setup fails
 
-**Prerequisites for `setup_firebase_auto`:**
+**Prerequisites for `setup_firebase`:**
 ```bash
 # Install Firebase CLI
 npm install -g firebase-tools
@@ -611,8 +611,8 @@ firebase login
 
 - **Flutter SDK:** >= 3.32.8
 - **Dart SDK:** >= 3.8.1
-- **Firebase CLI** (for setup_firebase_auto)
-- **FlutterFire CLI** (for setup_firebase_auto)
+- **Firebase CLI** (for setup_firebase)
+- **FlutterFire CLI** (for setup_firebase)
 
 ---
 
