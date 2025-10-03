@@ -35,7 +35,10 @@ void _initProject() {
     // Step 5: Copy integration_test directory
     _copyIntegrationTests();
 
-    // Step 6: Replace package names in all .dart files
+    // Step 6: Setup Patrol native configuration
+    _setupPatrolNative();
+
+    // Step 7: Replace package names in all .dart files
     _updatePackageReferences();
 
     // Step 7: Replace pubspec.yaml with complete configuration

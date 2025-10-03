@@ -32,6 +32,9 @@ part 'templates/firebase_options_dart_template.dart';
 part 'templates/gradle_with_flavors.dart';
 part 'templates/ios_entitlements_template.dart';
 part 'templates/ios_xcconfig_template.dart';
+part 'templates/patrol_android_test_template.dart';
+part 'templates/patrol_ios_test_template.dart';
+part 'templates/patrol_podfile_template.dart';
 part 'templates/route_name_template.dart';
 part 'templates/route_template.dart';
 part 'templates/view_template.dart';
@@ -51,6 +54,9 @@ part 'utils/prepare_page_imports.dart';
 part 'utils/prepare_route_data.dart';
 part 'utils/pubspec_helpers.dart';
 part 'utils/run_pub_get.dart';
+part 'utils/setup_patrol_native.dart';
+part 'utils/update_android_build_gradle_for_patrol.dart';
+part 'utils/update_ios_podfile_for_patrol.dart';
 
 class Cyan {
   Cyan._();
