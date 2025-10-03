@@ -14,7 +14,7 @@ FutureOr<XFile?> cropImage(XFile rawFile, {BuildContext? context}) async {
   try {
     final imageProvider = FileImage(File(rawFile.path));
 
-    croppedResult = await showMaterialImageCropper(
+    croppedResult = await showAdaptiveImageCropper(
       context.secured,
       imageProvider: imageProvider,
       allowedAspectRatios: [const CropAspectRatio(width: 1, height: 1)],
