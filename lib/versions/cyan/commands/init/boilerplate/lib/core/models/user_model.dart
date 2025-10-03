@@ -7,6 +7,7 @@ class UserModel {
   String? token;
   String? googleId;
   String? appleId;
+  String? name;
 
   UserModel({
     this.id,
@@ -17,6 +18,7 @@ class UserModel {
     this.token,
     this.googleId,
     this.appleId,
+    this.name,
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -30,6 +32,7 @@ class UserModel {
     token = userJson['token'];
     googleId = userJson['google_id'];
     appleId = userJson['apple_id'];
+    name = userJson['name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -43,6 +46,7 @@ class UserModel {
         'token': token,
         'google_id': googleId,
         'apple_id': appleId,
+        'name': name,
       },
     };
   }
@@ -56,6 +60,7 @@ class UserModel {
     String? token,
     String? googleId,
     String? appleId,
+    String? name,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -66,6 +71,7 @@ class UserModel {
       token: token ?? this.token,
       googleId: googleId ?? this.googleId,
       appleId: appleId ?? this.appleId,
+      name: name ?? this.name,
     );
   }
 

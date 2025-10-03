@@ -1,10 +1,13 @@
-
+import 'package:newarch/core/data/current_user.dart';
+import 'package:newarch/core/models/user_model.dart';
+import 'package:newarch/core/network/api/api_client.dart';
+import 'package:newarch/core/shared_pref/shared_pref.dart';
 
 class GlobalDataManager {
   GlobalDataManager._();
 
   static void syncAll() {
-    // if (currentUser == null) return;
+    if (currentUser == null) return;
     syncUser();
     _getPosition();
   }
@@ -18,12 +21,12 @@ class GlobalDataManager {
     // }
   }
 
-  // static Future<void> saveUser(UserModel? user) async {
-    // if (user == null) return;
-    // currentUser = user;
-    // ApiClient.instance.setBaseToken(token: currentUser?.token);
-    // await Prefs.setCurrentUser(currentUser);
-  // }
+  static Future<void> saveUser(UserModel? user) async {
+    if (user == null) return;
+    currentUser = user;
+    ApiClient.instance.setBaseToken(token: currentUser?.token);
+    await Prefs.setCurrentUser(currentUser);
+  }
 
   static Future<void> _getPosition() async {
     // final position = await LocationManager.getPosition();

@@ -44,9 +44,9 @@ class AppStrings {
   static const zipCodeNotEmptyMessage = "Zip code can't be empty";
   static const invalidZipCode = "Invalid zip code";
   static const searchCountry = "Search Country";
-
   static final browseFiles = "Browse Files";
   static final supportedExtensionAndSizeMessage = "Supported extensions: {extensions}. Max size: {maxSize}";
   static final chooseAFile = "Choose a file";
-
+  static final appleLoginError = "Failed to sign in with Apple";
+  static final googleLoginError = "Failed to sign in with Google";
 }
