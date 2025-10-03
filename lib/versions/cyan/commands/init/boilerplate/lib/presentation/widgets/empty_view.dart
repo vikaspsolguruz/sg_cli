@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:newarch/core/constants/app_strings.dart';
 import 'package:newarch/core/constants/constants.dart';
+import 'package:newarch/gen/assets.gen.dart';
 
 class EmptyView extends StatelessWidget {
   final String? svgPath;
@@ -30,7 +31,7 @@ class EmptyView extends StatelessWidget {
             SizedBox.square(
               dimension: 136,
               child: SvgPicture.asset(
-                svgPath!,
+                svgPath ?? Assets.images.svg.empty.noData,
                 width: 136,
                 height: 136,
               ),

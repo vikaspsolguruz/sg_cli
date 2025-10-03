@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newarch/core/theme/styling/app_colors.dart';
 import 'package:newarch/core/theme/styling/input_decorations.dart';
+import 'package:newarch/gen/fonts.gen.dart';
 
 class AppThemes {
   AppThemes._();
@@ -19,7 +20,7 @@ class AppThemes {
         surfaceTintColor: Colors.transparent,
         titleTextStyle: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: appColors.shadesBlack),
       ),
-      // fontFamily: FontFamily.inter,
+      fontFamily: FontFamily.inter,
       bottomSheetTheme: BottomSheetThemeData(dragHandleColor: appColors.iconNeutralPressed, dragHandleSize: const Size(38, 4)),
       inputDecorationTheme: InputDecorationTheme(labelStyle: InputDecorations.labelStyleBright, hintStyle: InputDecorations.hintStyleBright, isDense: true),
       tabBarTheme: TabBarThemeData(indicatorColor: brand.shade600, labelColor: appColors.shadesBlack, unselectedLabelColor: appColors.textNeutralDisable),
@@ -43,7 +44,7 @@ class AppThemes {
         surfaceTintColor: Colors.transparent,
         titleTextStyle: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: appColors.shadesBlack),
       ),
-      // fontFamily: FontFamily.inter,
+      fontFamily: FontFamily.inter,
       bottomSheetTheme: BottomSheetThemeData(dragHandleColor: appColors.iconNeutralPressed, dragHandleSize: const Size(38, 4)),
       inputDecorationTheme: InputDecorationTheme(labelStyle: InputDecorations.labelStyleBright, hintStyle: InputDecorations.hintStyleBright, isDense: true),
       tabBarTheme: TabBarThemeData(indicatorColor: brand.shade600, labelColor: appColors.shadesBlack, unselectedLabelColor: appColors.textNeutralDisable),

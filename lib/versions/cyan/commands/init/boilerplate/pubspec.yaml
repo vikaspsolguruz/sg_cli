@@ -78,6 +78,17 @@ flutter:
 
   assets:
     - assets/images/svg/
+    - assets/images/svg/empty/
+    - assets/fonts/inter/
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/inter/Inter-Variable.ttf
+          weight: 400
+        - asset: assets/fonts/inter/Inter-Italic-Variable.ttf
+          weight: 400
+          style: italic
 
 patrol:
   app_name: NewArch
