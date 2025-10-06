@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:newarch/core/local_storage/pref_keys.dart';
 import 'package:newarch/core/models/user_model.dart';
 import 'package:newarch/core/utils/console_print.dart';
@@ -23,4 +24,8 @@ class LocalStorage {
   static Future setCurrentUser(UserModel? user) async => await _prefManager.setString(PrefKeys.user, jsonEncode(user?.toJson()));
 
   static UserModel? getCurrentUser() => _prefManager.getString(PrefKeys.user, dataParser: (value) => UserModel.fromJson(jsonDecode(value)));
+
+  static Future setDeviceCountry(CountryCode? country) async => await _prefManager.setString(PrefKeys.deviceCountry, country?.code);
+
+  static CountryCode? getDeviceCountry() => _prefManager.getString(PrefKeys.deviceCountry, dataParser: (value) => CountryCode.fromCode(value));
 }

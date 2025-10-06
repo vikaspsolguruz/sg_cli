@@ -5,40 +5,60 @@ late SharedPreferences _sharedPref;
 class _PrefManager {
   Future<void> initialize() async => _sharedPref = await SharedPreferences.getInstance();
 
-  Future<void> setString(String key, String value) async {
+  Future<void> setString(String key, String? value) async {
     try {
+      if (value == null) {
+        await _sharedPref.remove(key);
+        return;
+      }
       await _sharedPref.setString(key, value);
     } catch (e, s) {
       xErrorPrint("Pref Writing failed for $key: $e", stackTrace: s);
     }
   }
 
-  Future<void> setInt(String key, int value) async {
+  Future<void> setInt(String key, int? value) async {
     try {
+      if (value == null) {
+        await _sharedPref.remove(key);
+        return;
+      }
       await _sharedPref.setInt(key, value);
     } catch (e, s) {
       xErrorPrint("Pref Writing failed for $key: $e", stackTrace: s);
     }
   }
 
-  Future<void> setBool(String key, bool value) async {
+  Future<void> setBool(String key, bool? value) async {
     try {
+      if (value == null) {
+        await _sharedPref.remove(key);
+        return;
+      }
       await _sharedPref.setBool(key, value);
     } catch (e, s) {
       xErrorPrint("Pref Writing failed for $key: $e", stackTrace: s);
     }
   }
 
-  Future<void> setDouble(String key, double value) async {
+  Future<void> setDouble(String key, double? value) async {
     try {
+      if (value == null) {
+        await _sharedPref.remove(key);
+        return;
+      }
       await _sharedPref.setDouble(key, value);
     } catch (e, s) {
       xErrorPrint("Pref Writing failed for $key: $e", stackTrace: s);
     }
   }
 
-  Future<void> setStringList(String key, List<String> value) async {
+  Future<void> setStringList(String key, List<String>? value) async {
     try {
+      if (value == null) {
+        await _sharedPref.remove(key);
+        return;
+      }
       await _sharedPref.setStringList(key, value);
     } catch (e, s) {
       xErrorPrint("Pref Writing failed for $key: $e", stackTrace: s);
