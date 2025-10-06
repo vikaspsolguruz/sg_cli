@@ -47,7 +47,11 @@ void _initProject() {
     // Step 8: Copy other configuration files
     _generateConfigFiles();
 
-    // Step 9: Run flutter pub get automatically
+    // Step 9: Configure Android and iOS for notifications
+    _setupAndroidNotifications();
+    _setupIOSNotifications();
+
+    // Step 10: Run flutter pub get automatically
     _runPubGet();
 
     print('');

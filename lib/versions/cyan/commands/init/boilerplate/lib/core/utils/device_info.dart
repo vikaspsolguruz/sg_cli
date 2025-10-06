@@ -4,7 +4,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:device_region/device_region.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:newarch/core/constants/constants.dart';
-import 'package:newarch/core/shared_pref/shared_pref.dart';
+import 'package:newarch/core/local_storage/local_storage.dart';
 import 'package:newarch/core/utils/console_print.dart';
 
 Future<String> getDeviceId() async {
@@ -22,7 +22,7 @@ Future<String> getDeviceId() async {
   } catch (e, s) {
     xErrorPrint(e, stackTrace: s);
   }
-  Prefs.setDeviceId(deviceId);
+  LocalStorage.setDeviceId(deviceId);
   return deviceId;
 }
 

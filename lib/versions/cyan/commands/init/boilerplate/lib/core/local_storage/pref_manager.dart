@@ -1,4 +1,4 @@
-part of 'shared_pref.dart';
+part of 'local_storage.dart';
 
 late SharedPreferences _sharedPref;
 
@@ -53,9 +53,10 @@ class _PrefManager {
     }
   }
 
-  T? getString<T>(String key, {required T? Function(String? value) dataParser}) {
+  T? getString<T>(String key, {required T? Function(String value) dataParser}) {
     try {
       final value = _sharedPref.getString(key);
+      if (value == null) return null;
       return dataParser(value);
     } catch (e, s) {
       xErrorPrint("Pref Reading failed for $key: $e", stackTrace: s);
@@ -63,9 +64,10 @@ class _PrefManager {
     }
   }
 
-  T? getInt<T>(String key, {required T? Function(int? value) dataParser}) {
+  T? getInt<T>(String key, {required T? Function(int value) dataParser}) {
     try {
       final value = _sharedPref.getInt(key);
+      if (value == null) return null;
       return dataParser(value);
     } catch (e, s) {
       xErrorPrint("Pref Reading failed for $key: $e", stackTrace: s);
@@ -73,9 +75,10 @@ class _PrefManager {
     }
   }
 
-  T? getBool<T>(String key, {required T? Function(bool? value) dataParser}) {
+  T? getBool<T>(String key, {required T? Function(bool value) dataParser}) {
     try {
       final value = _sharedPref.getBool(key);
+      if (value == null) return null;
       return dataParser(value);
     } catch (e, s) {
       xErrorPrint("Pref Reading failed for $key: $e", stackTrace: s);
@@ -83,9 +86,10 @@ class _PrefManager {
     }
   }
 
-  T? getDouble<T>(String key, {required T? Function(double? value) dataParser}) {
+  T? getDouble<T>(String key, {required T? Function(double value) dataParser}) {
     try {
       final value = _sharedPref.getDouble(key);
+      if (value == null) return null;
       return dataParser(value);
     } catch (e, s) {
       xErrorPrint("Pref Reading failed for $key: $e", stackTrace: s);
@@ -93,9 +97,10 @@ class _PrefManager {
     }
   }
 
-  T? getStringList<T>(String key, {required T? Function(List<String>? value) dataParser}) {
+  T? getStringList<T>(String key, {required T? Function(List<String> value) dataParser}) {
     try {
       final value = _sharedPref.getStringList(key);
+      if (value == null) return null;
       return dataParser(value);
     } catch (e, s) {
       xErrorPrint("Pref Reading failed for $key: $e", stackTrace: s);

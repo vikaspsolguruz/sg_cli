@@ -1,7 +1,7 @@
 import 'package:newarch/core/data/current_user.dart';
 import 'package:newarch/core/models/user_model.dart';
 import 'package:newarch/core/network/api/api_client.dart';
-import 'package:newarch/core/shared_pref/shared_pref.dart';
+import 'package:newarch/core/local_storage/local_storage.dart';
 
 class GlobalDataManager {
   GlobalDataManager._();
@@ -25,7 +25,7 @@ class GlobalDataManager {
     if (user == null) return;
     currentUser = user;
     ApiClient.instance.setBaseToken(token: currentUser?.token);
-    await Prefs.setCurrentUser(currentUser);
+    await LocalStorage.setCurrentUser(currentUser);
   }
 
   static Future<void> _getPosition() async {

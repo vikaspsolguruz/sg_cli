@@ -4,7 +4,7 @@ import 'package:newarch/app/app_state.dart';
 import 'package:newarch/core/data/country.dart';
 import 'package:newarch/core/data/current_user.dart';
 import 'package:newarch/core/services/notification/notification_service.dart';
-import 'package:newarch/core/shared_pref/shared_pref.dart';
+import 'package:newarch/core/local_storage/local_storage.dart';
 import 'package:newarch/core/utils/bloc/bloc_observer.dart';
 import 'package:newarch/core/utils/console_print.dart';
 import 'package:newarch/core/utils/device_info.dart';
@@ -14,15 +14,15 @@ Future<void> initializeApp() async {
   try {
     WidgetsFlutterBinding.ensureInitialized();
     deviceCountry = await getDeviceCountry();
-    await Prefs.initialize();
-    currentUser = Prefs.getCurrentUser();
+    await LocalStorage.initialize();
+    currentUser = LocalStorage.getCurrentUser();
     // Todo: Fix this when profile setup actual logic is defined
     // if (currentUser != null && currentUser?.onboardingStatus != OnBoardingStatus.finished) {
     //   await logOutUser();
     // }
     Bloc.observer = MyBlocObserver();
-    await NotificationService.instance.initialize();
     AppState.initializeRoutes();
+    await NotificationService.instance.initialize();
   } catch (e, s) {
     xErrorPrint("App Initialization failed : $e", stackTrace: s);
   }
