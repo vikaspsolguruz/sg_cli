@@ -128,11 +128,5 @@ extension RegexHelperExtension on String {
 }
 
 extension LocalizedString on String {
-  String get tr {
-    // Trigger rebuild when locale changes by accessing Localizations
-    if (AppState.appContext.mounted) {
-      Localizations.localeOf(AppState.appContext);
-    }
-    return Translations.translate(this);
-  }
+  String get tr => Translations.translate(this);
 }
