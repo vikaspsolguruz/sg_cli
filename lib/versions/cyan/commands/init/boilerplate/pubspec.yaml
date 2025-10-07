@@ -23,6 +23,8 @@ dependencies:
   dio: ^5.9.0
 
   # Localization & Formatting
+  flutter_localizations:
+    sdk: flutter
   intl: ^0.20.2
 
   # UI & Styling

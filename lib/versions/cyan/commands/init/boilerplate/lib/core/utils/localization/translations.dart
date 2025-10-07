@@ -19,6 +19,21 @@ class Translations {
   }
 
   Locale get currentLocale => _currentLocale;
+
+  /// Handles locale resolution for MaterialApp
+  static Locale? resolveLocale(Locale? deviceLocale, Iterable<Locale> supportedLocales) {
+    // Find best match between device and supported locales
+    final matched = supportedLocales.firstWhere(
+      (locale) => locale.languageCode == deviceLocale?.languageCode,
+      orElse: () => supportedLocales.first,
+    );
+    
+    // Update the translation system with the matched locale
+    instance.changeLocale(matched);
+    
+    // Return the matched locale for Flutter to use
+    return matched;
+  }
 }
 
 final Map<String, Map<String, String>> translationsData = {

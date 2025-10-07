@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:newarch/app/app_routes/_route_names.dart';
 import 'package:newarch/app/app_state.dart';
 import 'package:newarch/core/theme/styling/app_theme_data.dart';
@@ -38,17 +39,13 @@ class _MyAppState extends State<MyApp> {
       navigatorObservers: [AppState.navigationObserver],
       theme: AppThemes.light(),
       darkTheme: AppThemes.dark(),
-      supportedLocales: const [
-        Locale('en'),
+      supportedLocales: const [Locale('en')],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
-      localeResolutionCallback: (deviceLocale, supportedLocales) {
-        final matched = supportedLocales.firstWhere(
-          (locale) => locale.languageCode == deviceLocale?.languageCode,
-          orElse: () => supportedLocales.first,
-        );
-        Translations.instance.changeLocale(matched);
-        return matched;
-      },
+      localeResolutionCallback: Translations.resolveLocale,
       builder: (context, child) {
         if (child == null) return const SizedBox();
         AppState.appContext = context;
