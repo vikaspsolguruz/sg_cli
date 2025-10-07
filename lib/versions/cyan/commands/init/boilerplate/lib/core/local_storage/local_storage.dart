@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:newarch/core/local_storage/pref_keys.dart';
 import 'package:newarch/core/models/user_model.dart';
 import 'package:newarch/core/utils/console_print.dart';
@@ -29,9 +30,10 @@ class LocalStorage {
 
   static CountryCode? getDeviceCountry() => _prefManager.getString(PrefKeys.deviceCountry, dataParser: (value) => CountryCode.fromCode(value));
 
-  static Future setThemeMode(String themeModeString) async => await _prefManager.setString(PrefKeys.themeMode, themeModeString);
+  static Future setThemeMode(ThemeMode themeMode) async => await _prefManager.setString(PrefKeys.themeMode, themeMode.name);
 
-  static String? getThemeMode() => _prefManager.getString(PrefKeys.themeMode, dataParser: (value) => value);
+  static ThemeMode getThemeMode() =>
+      (_prefManager.getString(PrefKeys.themeMode, dataParser: (value) => ThemeMode.values.where((tm) => tm.name == value).firstOrNull) ?? ThemeMode.system);
 
   static Future setLocale(String localeCode) async => await _prefManager.setString(PrefKeys.locale, localeCode);
 
