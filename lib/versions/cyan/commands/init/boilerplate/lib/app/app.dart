@@ -4,10 +4,21 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:newarch/app/app_routes/_route_names.dart';
 import 'package:newarch/app/app_state.dart';
 import 'package:newarch/core/theme/styling/app_theme_data.dart';
+import 'package:newarch/core/utils/extensions.dart';
 import 'package:newarch/core/utils/localization/translations.dart';
+import 'package:sizer/sizer.dart';
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const MyApp({
+    super.key,
+    this.themeMode,
+    this.locale,
+    this.initialRoute,
+  });
+
+  final ThemeMode? themeMode;
+  final Locale? locale;
+  final String? initialRoute;
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -34,12 +45,14 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorKey: AppState.rootNavigatorKey,
-      initialRoute: Routes.initialRoute,
+      initialRoute: widget.initialRoute ?? Routes.initialRoute,
       routes: routes,
       navigatorObservers: [AppState.navigationObserver],
       theme: AppThemes.light(),
       darkTheme: AppThemes.dark(),
-      supportedLocales: const [Locale('en')],
+      themeMode: widget.themeMode,
+      locale: widget.locale,
+      supportedLocales: const [Locale('en'), Locale('es')],
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -50,15 +63,19 @@ class _MyAppState extends State<MyApp> {
         if (child == null) return const SizedBox();
         AppState.appContext = context;
 
-        return AnnotatedRegion<SystemUiOverlayStyle>(
-          value: const SystemUiOverlayStyle(
-            statusBarBrightness: Brightness.dark,
-            statusBarIconBrightness: Brightness.dark,
-          ),
-          child: MediaQuery(
-            data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
-            child: child,
-          ),
+        return Sizer(
+          builder: (context, _, _) {
+            return AnnotatedRegion<SystemUiOverlayStyle>(
+              value: SystemUiOverlayStyle(
+                statusBarBrightness: context.isDarkMode ? Brightness.light : Brightness.dark,
+                statusBarIconBrightness: context.isDarkMode ? Brightness.light : Brightness.dark,
+              ),
+              child: MediaQuery(
+                data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
+                child: child,
+              ),
+            );
+          },
         );
       },
     );

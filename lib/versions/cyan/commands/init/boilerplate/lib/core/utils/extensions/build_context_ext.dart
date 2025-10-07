@@ -38,7 +38,7 @@ extension AppBuildContextExtensions on BuildContext {
 
   ThemeData get theme => Theme.of(this);
 
-  bool get isDark => theme.brightness == Brightness.dark;
+  bool get isDarkMode => theme.brightness == Brightness.dark;
 
   Map<String, dynamic>? get arguments => (ModalRoute.of(this)?.settings.arguments) as Map<String, dynamic>?;
 }
@@ -48,7 +48,7 @@ extension OnNullableContext on BuildContext? {
 }
 
 extension ContextToColors on BuildContext {
-  AppColors get colors => isDark ? AppColors.dark() : AppColors.light();
+  AppColors get colors => isDarkMode ? AppColors.dark() : AppColors.light();
 }
 
 extension ShowBottomSheet on BuildContext {

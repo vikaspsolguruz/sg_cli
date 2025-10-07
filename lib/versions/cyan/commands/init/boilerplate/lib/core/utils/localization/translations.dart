@@ -27,10 +27,10 @@ class Translations {
       (locale) => locale.languageCode == deviceLocale?.languageCode,
       orElse: () => supportedLocales.first,
     );
-    
+
     // Update the translation system with the matched locale
     instance.changeLocale(matched);
-    
+
     // Return the matched locale for Flutter to use
     return matched;
   }

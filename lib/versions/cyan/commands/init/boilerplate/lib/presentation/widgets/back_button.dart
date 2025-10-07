@@ -19,7 +19,7 @@ class CommonBackButton extends StatelessWidget {
         padding: EdgeInsets.zero,
         icon: Icon(
           TablerIcons.arrow_left,
-          color: context.isDark ? Colors.white : Colors.black,
+          color: context.isDarkMode ? Colors.white : Colors.black,
         ),
       ),
     );

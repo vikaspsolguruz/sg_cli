@@ -28,4 +28,12 @@ class LocalStorage {
   static Future setDeviceCountry(CountryCode? country) async => await _prefManager.setString(PrefKeys.deviceCountry, country?.code);
 
   static CountryCode? getDeviceCountry() => _prefManager.getString(PrefKeys.deviceCountry, dataParser: (value) => CountryCode.fromCode(value));
+
+  static Future setThemeMode(String themeModeString) async => await _prefManager.setString(PrefKeys.themeMode, themeModeString);
+
+  static String? getThemeMode() => _prefManager.getString(PrefKeys.themeMode, dataParser: (value) => value);
+
+  static Future setLocale(String localeCode) async => await _prefManager.setString(PrefKeys.locale, localeCode);
+
+  static String? getLocale() => _prefManager.getString(PrefKeys.locale, dataParser: (value) => value);
 }

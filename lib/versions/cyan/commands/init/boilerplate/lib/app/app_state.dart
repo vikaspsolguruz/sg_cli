@@ -30,7 +30,7 @@ class AppState {
 
   static late BuildContext appContext;
 
-  static AppColors get colors => appContext.isDark ? AppColors.dark() : AppColors.light();
+  static AppColors get colors => appContext.isDarkMode ? AppColors.dark() : AppColors.light();
 
   /// Must required step before running the app
   static void initializeRoutes() {
