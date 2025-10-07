@@ -2,14 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:newarch/core/network/api/api_exception.dart';
 import 'package:newarch/core/utils/console_print.dart';
+import 'package:newarch/core/utils/log_out.dart';
 
 class ApiInterceptor extends InterceptorsWrapper {
-  final Stopwatch _stopwatch = Stopwatch();
-
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    if (kDebugMode) {
-      _stopwatch.start();
+    if (!kReleaseMode) {
+      options.extra['stopwatch'] = Stopwatch()..start();
     }
     xPayloadPrint(options.headers, title: 'API HEADERS');
     return super.onRequest(options, handler);
@@ -17,14 +16,10 @@ class ApiInterceptor extends InterceptorsWrapper {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    if (response.statusCode == 401) {
-      // logOutUser();
-      xErrorPrint(response.data);
-      return;
-    }
-    if (kDebugMode) {
-      _stopwatch.stop();
-      final String time = _stopwatch.elapsedMilliseconds.toString();
+    if (!kReleaseMode) {
+      final Stopwatch stopWatch = response.requestOptions.extra['stopwatch'];
+      stopWatch.stop();
+      final String time = stopWatch.elapsedMilliseconds.toString();
       Object? payload = response.requestOptions.data;
       if (payload is FormData) {
         payload = payload.fields.map((e) => e.toString());
@@ -40,13 +35,14 @@ class ApiInterceptor extends InterceptorsWrapper {
   @override
   Future<void> onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401) {
-      // logOutUser();
+      logOutUser();
       xErrorPrint(err.response?.data);
       return;
     }
-    if (kDebugMode) {
-      _stopwatch.stop();
-      final String time = _stopwatch.elapsedMilliseconds.toString();
+    if (!kReleaseMode) {
+      final Stopwatch stopWatch = err.requestOptions.extra['stopwatch'];
+      stopWatch.stop();
+      final String time = stopWatch.elapsedMilliseconds.toString();
       xPayloadPrint(err.requestOptions.data);
       xPrint("${err.response?.statusCode ?? ''} ${err.requestOptions.method} | ${err.requestOptions.uri} | $time ms", title: 'API ERROR');
 

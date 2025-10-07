@@ -31,16 +31,14 @@ class ApiClient {
     // Setting base options
     _dio.options = BaseOptions(
       baseUrl: ApiLinks.baseUrl,
-      headers: {'applicationCode': "RadonMitigation", 'Content-Type': 'application/json'},
+      headers: {'Content - Type': 'application / json'},
       sendTimeout: const Duration(seconds: 300),
       receiveTimeout: const Duration(seconds: 300),
       connectTimeout: const Duration(seconds: 300),
       followRedirects: true,
       persistentConnection: true,
       preserveHeaderCase: true,
-      validateStatus: (status) {
-        return status! < 500;
-      },
+      validateStatus: (status) => status! < 500 && status != 401,
     );
 
     // Setting http client
