@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:newarch/core/local_storage/local_storage.dart';
+import 'package:newarch/core/localization/translations.dart';
 
 class AppSettings {
   static final ValueNotifier<ThemeMode> _themeMode = ValueNotifier(ThemeMode.system);
-  static final ValueNotifier<Locale> _locale = ValueNotifier(const Locale('en'));
+  static final ValueNotifier<Locale> _locale = ValueNotifier(Translations.currentLocales.first);
 
   static ValueNotifier<ThemeMode> get themeMode => _themeMode;
 
@@ -27,6 +28,7 @@ class AppSettings {
 
   /// Change app locale
   static void changeLocale(Locale newLocale) {
+    if (newLocale == locale.value) return;
     _locale.value = newLocale;
     LocalStorage.setLocale(newLocale.languageCode);
   }

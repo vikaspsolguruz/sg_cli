@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:newarch/app/app_routes/_route_names.dart';
 import 'package:newarch/app/app_state.dart';
+import 'package:newarch/core/localization/translations.dart';
 import 'package:newarch/core/theme/styling/app_theme_data.dart';
 import 'package:newarch/core/utils/extensions.dart';
-import 'package:newarch/core/utils/localization/translations.dart';
 import 'package:sizer/sizer.dart';
 
 class MyApp extends StatefulWidget {
@@ -52,13 +52,13 @@ class _MyAppState extends State<MyApp> {
       darkTheme: AppThemes.dark(),
       themeMode: widget.themeMode,
       locale: widget.locale,
-      supportedLocales: const [Locale('en'), Locale('es')],
+      supportedLocales: Translations.currentLocales,
+      localeResolutionCallback: Translations.resolveLocale,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      localeResolutionCallback: Translations.resolveLocale,
       builder: (context, child) {
         if (child == null) return const SizedBox();
         AppState.appContext = context;

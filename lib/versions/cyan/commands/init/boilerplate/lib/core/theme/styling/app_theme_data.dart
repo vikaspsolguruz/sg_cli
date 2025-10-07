@@ -48,7 +48,7 @@ class AppThemes {
       bottomSheetTheme: BottomSheetThemeData(dragHandleColor: appColors.iconNeutralPressed, dragHandleSize: const Size(38, 4)),
       inputDecorationTheme: InputDecorationTheme(labelStyle: InputDecorations.labelStyleBright, hintStyle: InputDecorations.hintStyleBright, isDense: true),
       tabBarTheme: TabBarThemeData(indicatorColor: brand.shade600, labelColor: appColors.shadesBlack, unselectedLabelColor: appColors.textNeutralDisable),
-      colorScheme: ColorScheme.fromSwatch(backgroundColor: appColors.shadesWhite, primarySwatch: brand, accentColor: brand.shade700),
+      colorScheme: ColorScheme.fromSwatch(backgroundColor: appColors.shadesWhite, primarySwatch: brand, accentColor: brand.shade700, brightness: Brightness.dark),
       pageTransitionsTheme: _transitionTheme,
     );
   }

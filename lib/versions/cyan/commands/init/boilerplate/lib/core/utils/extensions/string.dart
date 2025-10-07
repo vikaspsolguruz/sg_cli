@@ -133,6 +133,6 @@ extension LocalizedString on String {
     if (AppState.appContext.mounted) {
       Localizations.localeOf(AppState.appContext);
     }
-    return Translations.instance.translate(this);
+    return Translations.translate(this);
   }
 }
