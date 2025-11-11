@@ -1,12 +1,10 @@
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
-import 'package:newarch/app/app_routes/_route_names.dart';
+import 'package:newarch/app/app_routes/app_route_config.dart';
 import 'package:newarch/app/app_routes/route_arguments.dart';
 import 'package:newarch/app/navigation/navigator.dart';
-
 import 'package:newarch/core/constants/constants.dart';
-import 'package:newarch/core/theme/styling/app_colors.dart';
 import 'package:newarch/core/theme/text_style/app_text_styles.dart';
 import 'package:newarch/core/utils/extensions.dart';
 
@@ -27,7 +25,7 @@ class CountryInfo extends StatelessWidget {
     return GestureDetector(
       onTap: canTap
           ? () async {
-              final result = await Go.openBottomSheet(Routes.selectCountry, arguments: {RouteArguments.selectedCountry: selectedCountry});
+              final result = await Go.openBottomSheet(SelectCountryRoute(arguments: SelectCountryArguments(selectedCountry: selectedCountry)));
               if (result is CountryCode) onSelectCountry(result);
             }
           : null,

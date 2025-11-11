@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:newarch/app/app_routes/app_route_config.dart';
+import 'package:newarch/app/app_routes/route_arguments.dart';
 import 'package:newarch/app/app_state.dart';
 import 'package:newarch/core/utils/extensions.dart';
 import 'package:newarch/presentation/widgets/dialog_wrapper.dart';
@@ -16,45 +18,40 @@ class Go {
     });
   }
 
-  static Future<T?> toNamed<T extends Object?>(
-    String routeName, {
-    Map<String, dynamic>? arguments,
-  }) {
-    final state = _navigatorStateFromScreenRoute(routeName);
-    return state?.pushNamed(routeName, arguments: arguments) ?? Future.value();
+  static Future<T?> to<T extends Object?, A extends RouteArguments>(
+    AppRouteConfig<A> route,
+  ) {
+    final state = _navigatorStateFromScreenRoute(route.routeName);
+    return state?.pushNamed(route.routeName, arguments: route.arguments) ?? Future.value();
   }
 
-  static Future<T?> replaceToNamed<T extends Object?>(
-    String routeName, {
-    Map<String, dynamic>? arguments,
+  static Future<T?> replaceTo<T extends Object?, A extends RouteArguments>(
+    AppRouteConfig<A> route, {
     Object? result,
   }) {
-    final state = _navigatorStateFromScreenRoute(routeName);
-    return state?.pushReplacementNamed(routeName, arguments: arguments, result: result) ?? Future.value();
+    final state = _navigatorStateFromScreenRoute(route.routeName);
+    return state?.pushReplacementNamed(route.routeName, arguments: route.arguments, result: result) ?? Future.value();
   }
 
-  static Future<T?> popAndToNamed<T extends Object?>(
-    String routeName, {
+  static Future<T?> popAndTo<T extends Object?, A extends RouteArguments>(
+    AppRouteConfig<A> route, {
     BuildContext? context,
-    Map<String, dynamic>? arguments,
     Object? result,
   }) {
-    final state = _navigatorStateFromScreenRoute(routeName);
-    return state?.popAndPushNamed(routeName, arguments: arguments, result: result) ?? Future.value();
+    final state = _navigatorStateFromScreenRoute(route.routeName);
+    return state?.popAndPushNamed(route.routeName, arguments: route.arguments, result: result) ?? Future.value();
   }
 
-  static Future<T?> replaceAllToNamed<T extends Object?>(
-    String routeName, {
-    Map<String, dynamic>? arguments,
-  }) {
-    final state = _navigatorStateFromScreenRoute(routeName);
-    return state?.pushNamedAndRemoveUntil(routeName, (route) => false, arguments: arguments) ?? Future.value();
+  static Future<T?> replaceAllTo<T extends Object?, A extends RouteArguments>(
+    AppRouteConfig<A> route,
+  ) {
+    final state = _navigatorStateFromScreenRoute(route.routeName);
+    return state?.pushNamedAndRemoveUntil(route.routeName, (route) => false, arguments: route.arguments) ?? Future.value();
   }
 
-  static Future<T?> openBottomSheet<T>(
-    String routeName, {
+  static Future<T?> openBottomSheet<T, A extends RouteArguments>(
+    AppRouteConfig<A> route, {
     BuildContext? context,
-    Map<String, dynamic>? arguments,
     bool enableDrag = true,
     bool showDragHandle = true,
     bool useSafeArea = true,
@@ -63,7 +60,7 @@ class Go {
     context ??= AppState.rootNavigatorKey.currentState?.context;
     if (context == null) return Future.value();
 
-    final bottomSheetView = AppState.routes.where((element) => element.name == routeName).firstOrNull?.blocProvider;
+    final bottomSheetView = AppState.routes.where((element) => element.name == route.routeName).firstOrNull?.blocProvider;
     if (bottomSheetView == null) return Future.value();
     return showModalBottomSheet(
       context: context,
@@ -72,7 +69,7 @@ class Go {
       isScrollControlled: true,
       enableDrag: enableDrag,
       isDismissible: isDismissible,
-      routeSettings: RouteSettings(name: routeName, arguments: arguments),
+      routeSettings: RouteSettings(name: route.routeName, arguments: route.arguments),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(36)),
       ),
@@ -80,27 +77,26 @@ class Go {
     );
   }
 
-  static Future<T?> openDialog<T extends Object?>(
-    String routeName, {
+  static Future<T?> openDialog<T extends Object?, A extends RouteArguments>(
+    AppRouteConfig<A> route, {
     BuildContext? context,
     bool isDismissible = true,
-    Map<String, dynamic>? arguments,
     AlignmentGeometry alignment = Alignment.center,
   }) {
-    final state = _navigatorStateFromScreenRoute(routeName);
-    final dialogView = AppState.routes.where((element) => element.name == routeName).firstOrNull?.blocProvider;
+    final state = _navigatorStateFromScreenRoute(route.routeName);
+    final dialogView = AppState.routes.where((element) => element.name == route.routeName).firstOrNull?.blocProvider;
     if (dialogView == null || state == null) return Future.value();
 
     return state.push(
       RawDialogRoute(
         pageBuilder: (context, animation, secondaryAnimation) => DialogWrapper(alignment: alignment, child: dialogView),
-        settings: RouteSettings(name: routeName, arguments: arguments),
+        settings: RouteSettings(name: route.routeName, arguments: route.arguments),
         barrierDismissible: isDismissible,
       ),
     );
   }
 
-  static Future<T?> to<T extends Object?>(
+  static Future<T?> toWidget<T extends Object?>(
     Widget page, {
     BuildContext? context,
     Map<String, dynamic>? arguments,

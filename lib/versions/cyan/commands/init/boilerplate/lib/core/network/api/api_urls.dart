@@ -23,4 +23,7 @@ class ApiLinks {
   static final logout = '$baseUrl/auth/logout';
   static final deleteAccount = '$baseUrl/users/account';
   static final changePassword = '$baseUrl/users/change-password';
+
+  // Misc
+  static final updateFcmToken = '$baseUrl/users/update-fcm-token';
 }

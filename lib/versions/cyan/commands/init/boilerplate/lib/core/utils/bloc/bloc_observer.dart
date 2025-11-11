@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newarch/core/utils/analytics/analytics_helper.dart';
-import 'package:newarch/core/utils/bloc/bloc_event.dart';
+import 'package:newarch/core/utils/bloc/base_event.dart';
 
 class MyBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object? event) {
-    if (event is BlocEvent) {
+    if (event is BaseEvent) {
       AnalyticsHelper.logCustomEvent(
         event.runtimeType.toString(),
         blocName: bloc.runtimeType.toString(),

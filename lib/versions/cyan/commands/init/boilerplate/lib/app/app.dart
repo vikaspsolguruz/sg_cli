@@ -8,7 +8,8 @@ import 'package:newarch/core/theme/styling/app_theme_data.dart';
 import 'package:newarch/core/utils/extensions.dart';
 import 'package:sizer/sizer.dart';
 
-class MyApp extends StatefulWidget {
+
+class MyApp extends StatelessWidget {
   const MyApp({
     super.key,
     this.themeMode,
@@ -21,37 +22,17 @@ class MyApp extends StatefulWidget {
   final String? initialRoute;
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  final Map<String, Widget Function(BuildContext)> routes = {};
-
-  @override
-  void initState() {
-    for (final route in AppState.routes) {
-      routes[route.name] = (context) => route.blocProvider;
-    }
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorKey: AppState.rootNavigatorKey,
-      initialRoute: widget.initialRoute ?? Routes.initialRoute,
-      routes: routes,
+      initialRoute: initialRoute ?? Routes.initialRoute,
+      routes: AppState.allRoutesForMaterialApp,
       navigatorObservers: [AppState.navigationObserver],
       theme: AppThemes.light(),
       darkTheme: AppThemes.dark(),
-      themeMode: widget.themeMode,
-      locale: widget.locale,
+      themeMode: themeMode,
+      locale: locale,
       supportedLocales: Translations.currentLocales,
       localeResolutionCallback: Translations.resolveLocale,
       localizationsDelegates: const [

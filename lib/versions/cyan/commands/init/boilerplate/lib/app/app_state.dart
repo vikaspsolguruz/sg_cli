@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newarch/app/app_routes/bottom_sheet_routes.dart';
 import 'package:newarch/app/app_routes/dialog_routes.dart';
+import 'package:newarch/app/app_routes/route_arguments.dart';
 import 'package:newarch/app/app_routes/screen_routes.dart';
 import 'package:newarch/app/navigation/app_route.dart';
 import 'package:newarch/core/theme/styling/app_colors.dart';
@@ -11,6 +12,7 @@ class AppState {
   AppState._();
 
   static List<AppRoute> routes = [];
+  static final Map<String, Widget Function(BuildContext)> allRoutesForMaterialApp = {};
 
   static final navigationObserver = _AppNavigatorObserver();
 
@@ -20,7 +22,13 @@ class AppState {
     _currentRouteSettings = ModalRoute.of(context)?.settings;
   }
 
-  static Map<String, dynamic> get currentRouteArguments => (_currentRouteSettings?.arguments as Map<String, dynamic>?) ?? {};
+  static RouteArguments get currentRouteArguments => (_currentRouteSettings?.arguments as RouteArguments?) ?? const EmptyArguments();
+
+  static T? currentTypedArguments<T extends RouteArguments>() {
+    final args = _currentRouteSettings?.arguments;
+    if (args is T) return args;
+    return null;
+  }
 
   static String? get currentRouteName => _currentRouteSettings?.name ?? '';
 
@@ -34,7 +42,10 @@ class AppState {
 
   /// Must required step before running the app
   static void initializeRoutes() {
-    routes = [...ScreenRoutes().routes(), ...BottomSheetRoutes().routes(), ...DialogRoutes().routes()];
+    routes = [...ScreenRoutes.instance.routes(), ...BottomSheetRoutes.instance.routes(), ...DialogRoutes.instance.routes()];
+    for (final route in routes) {
+      allRoutesForMaterialApp[route.name] = (context) => route.blocProvider;
+    }
   }
 }
 

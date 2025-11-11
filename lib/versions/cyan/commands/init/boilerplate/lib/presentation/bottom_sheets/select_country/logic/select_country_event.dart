@@ -1,6 +1,6 @@
 part of 'select_country_bloc.dart';
 
-abstract class SelectCountryEvent extends BlocEvent {
+abstract class SelectCountryEvent extends BaseEvent {
   const SelectCountryEvent();
 }
 

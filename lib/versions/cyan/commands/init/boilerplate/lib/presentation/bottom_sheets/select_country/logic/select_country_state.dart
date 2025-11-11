@@ -1,6 +1,6 @@
 part of 'select_country_bloc.dart';
 
-class SelectCountryState extends Equatable {
+class SelectCountryState extends BaseState {
   final List<CountryCode> countries;
   final CountryCode? selectedCountry;
 
@@ -9,10 +9,13 @@ class SelectCountryState extends Equatable {
     this.selectedCountry,
   });
 
-  factory SelectCountryState.initial() => SelectCountryState(
-    selectedCountry: AppState.currentRouteArguments[RouteArguments.selectedCountry],
-    countries: const FlCountryCodePicker().countryCodes,
-  );
+  factory SelectCountryState.initial() {
+    final args = SelectCountryArguments.get();
+    return SelectCountryState(
+      selectedCountry: args?.selectedCountry,
+      countries: const FlCountryCodePicker().countryCodes,
+    );
+  }
 
   SelectCountryState copyWith({
     List<CountryCode>? countries,

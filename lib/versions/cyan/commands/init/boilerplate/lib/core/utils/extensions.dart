@@ -4,6 +4,7 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:newarch/app/app_routes/route_arguments.dart';
 import 'package:newarch/app/app_state.dart';
 import 'package:newarch/core/localization/translations.dart';
 import 'package:newarch/core/theme/styling/app_colors.dart';

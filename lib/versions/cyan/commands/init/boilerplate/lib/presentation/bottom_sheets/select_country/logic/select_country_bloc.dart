@@ -1,12 +1,11 @@
-import 'package:equatable/equatable.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newarch/app/app_routes/route_arguments.dart';
-import 'package:newarch/app/app_state.dart';
 import 'package:newarch/app/navigation/navigator.dart';
 import 'package:newarch/core/utils/bloc/base_bloc.dart';
-import 'package:newarch/core/utils/bloc/bloc_event.dart';
+import 'package:newarch/core/utils/bloc/base_event.dart';
+import 'package:newarch/core/utils/bloc/base_state.dart';
 import 'package:newarch/presentation/widgets/text_field/common_text_field_controller.dart';
 
 part 'select_country_event.dart';

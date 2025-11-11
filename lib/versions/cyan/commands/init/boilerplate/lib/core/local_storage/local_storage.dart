@@ -38,4 +38,12 @@ class LocalStorage {
   static Future setLocale(String localeCode) async => await _prefManager.setString(PrefKeys.locale, localeCode);
 
   static String? getLocale() => _prefManager.getString(PrefKeys.locale, dataParser: (value) => value);
+
+  static void setFcmToken(String token) => _prefManager.setString(PrefKeys.fcmToken, token);
+
+  static String? getFcmToken() => _prefManager.getString(PrefKeys.fcmToken, dataParser: (value) => value);
+
+  static Future<void> setAuthToken(String s, String token) => _prefManager.setString(PrefKeys.authToken, token);
+
+  static String? getAuthToken() => _prefManager.getString(PrefKeys.authToken, dataParser: (value) => value);
 }

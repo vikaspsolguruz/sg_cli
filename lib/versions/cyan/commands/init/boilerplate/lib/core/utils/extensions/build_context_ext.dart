@@ -40,7 +40,7 @@ extension AppBuildContextExtensions on BuildContext {
 
   bool get isDarkMode => theme.brightness == Brightness.dark;
 
-  Map<String, dynamic>? get arguments => (ModalRoute.of(this)?.settings.arguments) as Map<String, dynamic>?;
+  RouteArguments? get arguments => (ModalRoute.of(this)?.settings.arguments) as RouteArguments?;
 }
 
 extension OnNullableContext on BuildContext? {

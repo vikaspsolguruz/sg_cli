@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-abstract class BlocEvent extends Equatable {
-  const BlocEvent();
+abstract class BaseEvent extends Equatable {
+  const BaseEvent();
 
   Map<String, dynamic> getAnalyticParameters();
 

@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide State;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newarch/app/app_routes/route_arguments.dart';
 import 'package:newarch/core/models/view_states/view_state.dart';
 import 'package:newarch/core/utils/extensions.dart';
 import 'package:rxdart/rxdart.dart';
@@ -21,7 +22,7 @@ abstract class BaseBloc<BlocEvent, State> extends Bloc<BlocEvent, State> {
   BuildContext get context => _context;
 
   @protected
-  Map<String, dynamic>? get arguments => _context.arguments;
+  RouteArguments? get arguments => _context.arguments;
 
   void attachContext(BuildContext context) {
     _context = context;
@@ -84,8 +85,8 @@ EventTransformer<E> smartDebounce<E>({
                   debounceTimer?.cancel();
                   debounceTimer = Timer(duration, () {
                     // Timer expired: execute the pending event and reset
-                    if (pendingEvent != null) {
-                      final eventToEmit = pendingEvent!;
+                    if (pendingEvent is E) {
+                      final eventToEmit = pendingEvent as E;
                       pendingEvent = null;
                       controller.add(eventToEmit);
                     }

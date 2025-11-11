@@ -6,4 +6,6 @@ class PrefKeys {
   static const deviceCountry = 'device_country';
   static const themeMode = 'theme_mode';
   static const locale = 'locale';
+  static const fcmToken = 'fcm_token';
+  static const authToken = 'auth_token';
 }

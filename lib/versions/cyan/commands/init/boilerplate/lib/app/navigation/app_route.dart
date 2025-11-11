@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:newarch/app/app_routes/app_route_config.dart';
+import 'package:newarch/app/app_routes/route_arguments.dart';
 import 'package:newarch/core/utils/bloc/bloc_route_provider.dart';
-import 'package:newarch/core/utils/extensions.dart';
 
 class AppRoute {
-  final String name;
+  final AppRouteConfig config;
   final BlocRouteProvider blocProvider;
   final List<AppRoute> subRoutes;
 
@@ -13,10 +14,12 @@ class AppRoute {
 
   BuildContext? get context => _navigatorKey?.currentContext;
 
-  Map<String, dynamic>? get arguments => _navigatorKey?.currentContext?.arguments;
+  RouteArguments? get arguments => config.arguments;
+
+  String get name => config.routeName;
 
   AppRoute({
-    required this.name,
+    required this.config,
     required this.blocProvider,
     this.subRoutes = const <AppRoute>[],
   }) {
