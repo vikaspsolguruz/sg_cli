@@ -40,9 +40,9 @@ dependencies:
   dropdown_button2: ^2.3.9
 
   # Media & File Handling
-  image_picker: ^1.2.0
+  image_picker: ^1.2.1
   flutter_svg: ^2.2.2
-  file_picker: ^10.3.3
+  file_picker: ^10.3.6
   croppy: ^1.4.1
 
   # Storage
