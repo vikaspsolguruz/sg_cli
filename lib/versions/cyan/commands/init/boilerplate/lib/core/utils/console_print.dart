@@ -63,7 +63,7 @@ void xErrorPrint(Object? error, {StackTrace? stackTrace}) {
 
   stackTrace ??= StackTrace.current;
   final allLines = stackTrace.toString().trimRight().split('\n');
-  final filteredLines = allLines.where((value) => value.contains('package:radon') && !value.contains('console_print.dart')).toList();
+  final filteredLines = allLines.where((value) => value.contains('package:newarch') && !value.contains('console_print.dart')).toList();
   if (filteredLines.isNotEmpty) {
     allLines.clear();
     allLines.addAll(filteredLines);

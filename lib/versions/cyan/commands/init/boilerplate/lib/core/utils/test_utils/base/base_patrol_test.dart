@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:newarch/_app_initializer.dart';
-import 'package:newarch/app/app_provider.dart';
+import 'package:newarch/app/app.dart';
 import 'package:newarch/core/utils/test_utils/base/test_logger.dart';
 import 'package:newarch/core/utils/test_utils/base/test_result.dart';
 import 'package:patrol/patrol.dart';
@@ -18,7 +18,7 @@ abstract class BasePatrolTest {
     await initializeApp();
 
     // Launch the app with proper settling
-    await $.pumpWidgetAndSettle(const AppProvider());
+    await $.pumpWidgetAndSettle(const MyApp());
   }
 
   /// Wait for processing with standard delay (useful for API calls)

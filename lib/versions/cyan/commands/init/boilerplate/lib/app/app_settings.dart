@@ -6,9 +6,13 @@ class AppSettings {
   static final ValueNotifier<ThemeMode> _themeMode = ValueNotifier(ThemeMode.system);
   static final ValueNotifier<Locale> _locale = ValueNotifier(Translations.currentLocales.first);
 
+  static final ValueNotifier<({ThemeMode themeMode, Locale locale})> _uiSettings = ValueNotifier((themeMode: _themeMode.value, locale: _locale.value));
+
   static ValueNotifier<ThemeMode> get themeMode => _themeMode;
 
   static ValueNotifier<Locale> get locale => _locale;
+
+  static ValueNotifier<({ThemeMode themeMode, Locale locale})> get uiSettings => _uiSettings;
 
   /// Initialize settings from LocalStorage (called after LocalStorage.initialize())
   static void init() {
@@ -18,12 +22,18 @@ class AppSettings {
     if (localeCode != null) {
       _locale.value = Locale(localeCode);
     }
+    _updateSettings();
+  }
+
+  static void _updateSettings() {
+    _uiSettings.value = (themeMode: _themeMode.value, locale: _locale.value);
   }
 
   /// Change theme mode
   static void changeTheme(ThemeMode mode) {
     _themeMode.value = mode;
     LocalStorage.setThemeMode(mode);
+    _updateSettings();
   }
 
   /// Change app locale
@@ -31,6 +41,7 @@ class AppSettings {
     if (newLocale == locale.value) return;
     _locale.value = newLocale;
     LocalStorage.setLocale(newLocale.languageCode);
+    _updateSettings();
   }
 
   /// Quick access methods

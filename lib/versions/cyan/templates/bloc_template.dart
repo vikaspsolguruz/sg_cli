@@ -6,17 +6,17 @@ String _generateBlocContent(String pageName) {
   String moduleName = getModuleName();
 
   return '''
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:$moduleName/core/utils/bloc/base_bloc.dart';
-import 'package:$moduleName/core/utils/bloc/bloc_event.dart';
+import 'package:$moduleName/core/utils/bloc/base_event.dart';
+import 'package:$moduleName/core/utils/bloc/base_state.dart';
 
 part '${pageName}_event.dart';
 part '${pageName}_state.dart';
 
 class ${className}Bloc extends BaseBloc<${className}Event, ${className}State> {
-  ${className}Bloc() : super(const ${className}State.initial());
+  ${className}Bloc() : super(${className}State.initial());
   
   @override
   void eventListeners() {}
@@ -33,7 +33,7 @@ String _generateEventContent(String pageName) {
   return '''
 part of '${pageName}_bloc.dart';
 
-abstract class ${className}Event extends BlocEvent {
+abstract class ${className}Event extends BaseEvent {
   const ${className}Event();
 }
 ''';
@@ -44,18 +44,15 @@ String _generateStateContent(String pageName) {
   return '''
 part of '${pageName}_bloc.dart';
 
-class ${className}State extends Equatable {
+class ${className}State extends BaseState {
   const ${className}State();
   
-  const ${className}State.initial();
+  factory ${className}State.initial() => const ${className}State();
   
-  ${className}State copyWith() => ${className}State();
+  ${className}State copyWith() => const ${className}State();
 
   @override
   List<Object?> get props => [];
-  
-  @visibleForTesting
-  const ${className}State.test();
 }
 ''';
 }

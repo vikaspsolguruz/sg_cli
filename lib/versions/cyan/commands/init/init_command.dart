@@ -47,11 +47,7 @@ void _initProject() {
     // Step 8: Copy other configuration files
     _generateConfigFiles();
 
-    // Step 9: Configure Android and iOS for notifications
-    _setupAndroidNotifications();
-    _setupIOSNotifications();
-
-    // Step 10: Run flutter pub get automatically
+    // Step 9: Run flutter pub get automatically
     _runPubGet();
 
     print('');
@@ -313,4 +309,12 @@ void _generateConfigFiles() {
   editorFile.createSync();
   editorFile.writeAsStringSync(boilerplateEditorConfig.readAsStringSync());
   print('${ConsoleSymbols.success}Generated editor configs');
+
+  final boilerplateDevtools = File('$boilerplatePath/devtools_options.yaml');
+  if (boilerplateDevtools.existsSync()) {
+    final devtoolsFile = File('devtools_options.yaml');
+    devtoolsFile.createSync();
+    devtoolsFile.writeAsStringSync(boilerplateDevtools.readAsStringSync());
+    print('${ConsoleSymbols.success}Generated DevTools configuration');
+  }
 }

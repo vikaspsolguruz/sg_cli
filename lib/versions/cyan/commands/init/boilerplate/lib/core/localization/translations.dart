@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:newarch/app/app_settings.dart';
 
 part 'locales/english.dart';
@@ -25,6 +26,12 @@ class Translations {
 
     return matched;
   }
+
+  static const delegates = [
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ];
 }
 
 final Map<String, Map<String, String>> _translationsData = {

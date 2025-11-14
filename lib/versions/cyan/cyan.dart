@@ -54,8 +54,6 @@ part 'utils/prepare_page_imports.dart';
 part 'utils/prepare_route_data.dart';
 part 'utils/pubspec_helpers.dart';
 part 'utils/run_pub_get.dart';
-part 'utils/setup_android_notifications.dart';
-part 'utils/setup_ios_notifications.dart';
 part 'utils/setup_patrol_native.dart';
 part 'utils/update_android_build_gradle_for_patrol.dart';
 part 'utils/update_ios_podfile_for_patrol.dart';

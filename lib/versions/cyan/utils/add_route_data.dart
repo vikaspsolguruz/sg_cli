@@ -12,14 +12,31 @@ void _addRouteData({bool isBottomSheet = false, bool isDialog = false}) {
   // getting index of last import
   final int lastImportIndex = routesLines.lastIndexWhere((line) => line.startsWith('import '));
 
-  // check if view import already exists
-  if (!routesLines.contains(_viewImport)) {
-    routesLines.insert(lastImportIndex + 1, _viewImport);
+  // Prepare all imports that need to be added
+  final String configImport = "import 'package:$_moduleName/app/app_routes/app_route_config.dart';";
+  final String blocProviderImport = "import 'package:$_moduleName/core/utils/bloc/bloc_route_provider.dart';";
+
+  // Add imports in order if they don't exist
+  int currentInsertIndex = lastImportIndex + 1;
+
+  if (!routesLines.contains(configImport)) {
+    routesLines.insert(currentInsertIndex, configImport);
+    currentInsertIndex++;
   }
 
-  // check if bloc import already exists
+  if (!routesLines.contains(blocProviderImport)) {
+    routesLines.insert(currentInsertIndex, blocProviderImport);
+    currentInsertIndex++;
+  }
+
   if (!routesLines.contains(_blocImport)) {
-    routesLines.insert(lastImportIndex + 1, _blocImport);
+    routesLines.insert(currentInsertIndex, _blocImport);
+    currentInsertIndex++;
+  }
+
+  if (!routesLines.contains(_viewImport)) {
+    routesLines.insert(currentInsertIndex, _viewImport);
+    currentInsertIndex++;
   }
 
   // getting index of closing bracket for appRoutes
@@ -31,10 +48,96 @@ void _addRouteData({bool isBottomSheet = false, bool isDialog = false}) {
     return;
   }
 
+  // Find the comment line for the route type (e.g., "// Screen Routes")
+  final String routeTypeComment = isBottomSheet
+      ? '      // Bottom Sheet Routes'
+      : isDialog
+      ? '      // Dialog Routes'
+      : '      // Screen Routes';
+
+  int insertIndex = closingBracketIndex;
+
+  // Look for the comment line to insert after it
+  for (int i = 0; i < routesLines.length; i++) {
+    if (routesLines[i].trim() == routeTypeComment.trim()) {
+      insertIndex = i + 1;
+      break;
+    }
+  }
+
   // adding route data in lines
-  routesLines.insert(closingBracketIndex, newRouteEntry);
+  routesLines.insert(insertIndex, newRouteEntry);
   // inserting lines into appRoutes file
   _routesFile.writeAsStringSync(routesLines.join('\n'));
+
+  // Add route config and arguments
+  _addRouteConfig();
+  _addRouteArguments();
+}
+
+void _addRouteConfig() {
+  final String configFilePath = 'lib/app/app_routes/app_route_config.dart';
+  final File configFile = File(configFilePath);
+
+  if (!configFile.existsSync()) {
+    print('${ConsoleSymbols.error}  Error: Route config file not found: $configFilePath');
+    return;
+  }
+
+  final String configContent = configFile.readAsStringSync();
+  final List<String> configLines = configContent.split('\n');
+
+  final String newConfigEntry = _generateRouteConfigEntry(_pageName);
+
+  // Check if config already exists
+  final String className = toPascalCase(_pageName);
+  if (configContent.contains('class ${className}Route extends')) {
+    return; // Already exists
+  }
+
+  // Ensure necessary imports are present
+  if (!configContent.contains("import 'package:$_moduleName/app/app_routes/_route_names.dart';")) {
+    final int lastImportIndex = configLines.lastIndexWhere((line) => line.startsWith('import '));
+    if (lastImportIndex != -1) {
+      configLines.insert(lastImportIndex + 1, "import 'package:$_moduleName/app/app_routes/_route_names.dart';");
+    }
+  }
+
+  if (!configContent.contains("import 'package:$_moduleName/app/app_routes/route_arguments.dart';")) {
+    final int lastImportIndex = configLines.lastIndexWhere((line) => line.startsWith('import '));
+    if (lastImportIndex != -1) {
+      configLines.insert(lastImportIndex + 1, "import 'package:$_moduleName/app/app_routes/route_arguments.dart';");
+    }
+  }
+
+  // Add at the end of the file
+  configLines.add(newConfigEntry);
+  configFile.writeAsStringSync(configLines.join('\n'));
+}
+
+void _addRouteArguments() {
+  final String argsFilePath = 'lib/app/app_routes/route_arguments.dart';
+  final File argsFile = File(argsFilePath);
+
+  if (!argsFile.existsSync()) {
+    print('${ConsoleSymbols.error}  Error: Route arguments file not found: $argsFilePath');
+    return;
+  }
+
+  final String argsContent = argsFile.readAsStringSync();
+  final List<String> argsLines = argsContent.split('\n');
+
+  final String newArgsEntry = _generateRouteArgumentsEntry(_pageName);
+
+  // Check if arguments class already exists
+  final String className = toPascalCase(_pageName);
+  if (argsContent.contains('class ${className}Arguments extends')) {
+    return; // Already exists
+  }
+
+  // Add at the end of the file
+  argsLines.add(newArgsEntry);
+  argsFile.writeAsStringSync(argsLines.join('\n'));
 }
 
 void _addSubRouteData({required String subPageName, required String parentPageName}) {
@@ -42,25 +145,45 @@ void _addSubRouteData({required String subPageName, required String parentPageNa
   final String routesContent = _routesFile.readAsStringSync();
   final List<String> routesLines = routesContent.split('\n');
 
+  // getting index of last import
   final int lastImportIndex = routesLines.lastIndexWhere((line) => line.startsWith('import '));
 
-  if (!routesLines.contains(_viewImport)) {
-    routesLines.insert(lastImportIndex + 1, _viewImport);
+  // Prepare all imports that need to be added
+  final String configImport = "import 'package:$_moduleName/app/app_routes/app_route_config.dart';";
+  final String blocProviderImport = "import 'package:$_moduleName/core/utils/bloc/bloc_route_provider.dart';";
+
+  // Add imports in order if they don't exist
+  int currentInsertIndex = lastImportIndex + 1;
+
+  if (!routesLines.contains(configImport)) {
+    routesLines.insert(currentInsertIndex, configImport);
+    currentInsertIndex++;
+  }
+
+  if (!routesLines.contains(blocProviderImport)) {
+    routesLines.insert(currentInsertIndex, blocProviderImport);
+    currentInsertIndex++;
   }
 
   if (!routesLines.contains(_blocImport)) {
-    routesLines.insert(lastImportIndex + 1, _blocImport);
+    routesLines.insert(currentInsertIndex, _blocImport);
+    currentInsertIndex++;
   }
 
-  // 1. Locate AppRoute with name: Routes.<parentPageName>
-  int nameIndex = routesLines.indexWhere((line) => line.contains('name: Routes.$parentPageName'));
-  if (nameIndex == -1) {
+  if (!routesLines.contains(_viewImport)) {
+    routesLines.insert(currentInsertIndex, _viewImport);
+    currentInsertIndex++;
+  }
+
+  // 1. Locate AppRoute with config: const <ParentPage>Route()
+  int configIndex = routesLines.indexWhere((line) => line.contains('config: const ${toPascalCase(parentPageName)}Route()'));
+  if (configIndex == -1) {
     print('${ConsoleSymbols.error} Could not find parent route: $parentPageName');
     return;
   }
 
   // 2. Walk upward to find AppRoute(...) line
-  int routeStartIndex = nameIndex;
+  int routeStartIndex = configIndex;
   while (!routesLines[routeStartIndex].contains('AppRoute(')) {
     routeStartIndex--;
     if (routeStartIndex < 0) {
@@ -134,6 +257,13 @@ $subRouteEntry
   }
 
   _routesFile.writeAsStringSync(routesLines.join('\n'));
+
+  // Add route config and arguments for sub-route
+  String originalPageName = _pageName;
+  _pageName = subPageName;
+  _addRouteConfig();
+  _addRouteArguments();
+  _pageName = originalPageName;
 }
 
 int _countChar(String line, String char) => line.split('').where((c) => c == char).length;
