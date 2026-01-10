@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:newarch/core/enums/process_state.dart';
 
+/// 🔥 VIEW STATE - Base class for all view states
 abstract class ViewState extends Equatable {
   void dispose();
 

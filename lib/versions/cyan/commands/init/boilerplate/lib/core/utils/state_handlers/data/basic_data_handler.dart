@@ -6,7 +6,9 @@ import 'package:newarch/core/models/wrapped_model.dart';
 import 'package:newarch/core/utils/bloc/base_bloc.dart';
 
 /// 🔥 BASIC DATA HANDLER (WITHOUT FILTER)
-class BasicDataHandler<T> {
+///
+/// < DataType >
+class BasicDataHandler<D> {
   BasicDataHandler({
     required this.bloc,
     required this.getViewState,
@@ -15,9 +17,9 @@ class BasicDataHandler<T> {
   });
 
   final BaseBloc bloc;
-  final DataState<T> Function() getViewState;
-  final void Function(DataState<T> newViewState) updateViewState;
-  final Future<ResponseData<T>> Function() repositoryCall;
+  final DataState<D> Function() getViewState;
+  final void Function(DataState<D> newViewState) updateViewState;
+  final Future<ResponseData<D>> Function() repositoryCall;
 
   Future<void> load({bool isRefresh = false, bool isSilent = false}) async {
     if (bloc.isClosed) return;

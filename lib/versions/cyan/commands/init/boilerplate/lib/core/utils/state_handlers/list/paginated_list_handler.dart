@@ -5,6 +5,8 @@ import 'package:newarch/core/models/view_states/list_state.dart';
 import 'package:newarch/core/utils/bloc/base_bloc.dart';
 
 /// 🔥 PAGINATED LIST HANDLER - List with pagination & search (no filter)
+///
+/// < ItemType >
 class PaginatedListHandler<T> {
   PaginatedListHandler({
     required this.bloc,

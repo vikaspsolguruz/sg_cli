@@ -3,6 +3,9 @@ import 'package:newarch/core/enums/process_state.dart';
 import 'package:newarch/core/models/view_states/view_state.dart';
 import 'package:newarch/core/models/wrapped_model.dart';
 
+/// 🔥 DATA STATE - Single data object with search support
+///
+/// < DataType >
 class DataState<T> extends ViewState {
   final T? data;
   @override

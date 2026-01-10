@@ -3,6 +3,9 @@ import 'package:newarch/core/enums/process_state.dart';
 import 'package:newarch/core/models/pagination_model.dart';
 import 'package:newarch/core/models/view_states/view_state.dart';
 
+/// 🔥 LIST STATE - List with pagination & search (no filter)
+///
+/// < ItemType >
 class ListState<T> extends ViewState {
   final List<T> items;
   final PaginationData? paginationData;

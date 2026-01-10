@@ -1,7 +1,8 @@
 part of 'general.dart';
 
 /// Universal ViewState widget
-/// < Bloc, State, ViewState, Data >
+///
+/// < Bloc, State, ViewState, DataType >
 class ViewStateWidget<B extends StateStreamable<S>, S, V extends ViewState, D> extends StatelessWidget {
   const ViewStateWidget({
     super.key,
@@ -42,25 +43,23 @@ class ViewStateWidget<B extends StateStreamable<S>, S, V extends ViewState, D> e
             ProcessState.error =>
               errorView ??
                   ErrorView(
-                    title: viewState.errorMessage ?? 'Something went wrong',
+                    title: viewState.errorMessage ?? AppStrings.somethingWentWrong,
                     onRetry: onRetryError,
                     svgPath: svgPath?.call(context.read<B>(), null),
                   ),
             ProcessState.success => BlocSelector<B, S, D>(
               selector: dataSelector,
               builder: (context, data) {
-                if (viewState.hasData) {
-                  return child(data);
-                } else {
-                  final bloc = context.read<B>();
-                  return emptyView ??
-                      EmptyView(
-                        title: emptyTitle?.call(bloc, data) ?? 'No data found',
-                        subtitle: emptySubtitle?.call(bloc, data),
-                        svgPath: svgPath?.call(bloc, data),
-                        onRetry: onRetryEmpty,
-                      );
-                }
+                if (viewState.hasData) return child(data);
+
+                final bloc = context.read<B>();
+                return emptyView ??
+                    EmptyView(
+                      title: emptyTitle?.call(bloc, data) ?? AppStrings.noDataFound,
+                      subtitle: emptySubtitle?.call(bloc, data),
+                      svgPath: svgPath?.call(bloc, data),
+                      onRetry: onRetryEmpty,
+                    );
               },
             ),
           },

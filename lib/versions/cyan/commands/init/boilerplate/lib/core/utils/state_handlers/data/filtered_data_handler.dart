@@ -7,7 +7,9 @@ import 'package:newarch/core/models/wrapped_model.dart';
 import 'package:newarch/core/utils/bloc/base_bloc.dart';
 
 /// 🔥 FILTERED DATA HANDLER - Single object with filter support
-class FilteredDataHandler<T, F extends FilterModel> {
+///
+/// < DataType, FilterType >
+class FilteredDataHandler<D, F extends FilterModel> {
   FilteredDataHandler({
     required this.bloc,
     required this.getViewState,
@@ -16,9 +18,9 @@ class FilteredDataHandler<T, F extends FilterModel> {
   });
 
   final BaseBloc bloc;
-  final DataStateWithFilter<T, F> Function() getViewState;
-  final void Function(DataStateWithFilter<T, F> newViewState) updateViewState;
-  final Future<ResponseData<T>> Function() repositoryCall;
+  final DataStateWithFilter<D, F> Function() getViewState;
+  final void Function(DataStateWithFilter<D, F> newViewState) updateViewState;
+  final Future<ResponseData<D>> Function() repositoryCall;
 
   Future<void> load({bool isRefresh = false, bool isSilent = false}) async {
     if (bloc.isClosed) return;

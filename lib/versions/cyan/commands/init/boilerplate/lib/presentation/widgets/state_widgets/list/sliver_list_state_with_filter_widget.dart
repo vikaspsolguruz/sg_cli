@@ -1,5 +1,6 @@
 part of 'list.dart';
 
+/// < Bloc, State, ItemType, FilterType >
 class SliverListStateWithFilterWidget<B extends StateStreamable<S>, S, T, F extends FilterModel> extends StatelessWidget {
   const SliverListStateWithFilterWidget({
     super.key,
@@ -93,7 +94,7 @@ class SliverListStateWithFilterWidget<B extends StateStreamable<S>, S, T, F exte
                             child:
                                 emptyView ??
                                 EmptyView(
-                                  title: emptyTitle?.call(context.read<B>(), listState.items) ?? 'No items found',
+                                  title: emptyTitle?.call(context.read<B>(), listState.items) ?? AppStrings.noDataFound,
                                   subtitle: emptySubtitle?.call(context.read<B>(), listState.items),
                                   svgPath: svgPath?.call(context.read<B>(), listState.items),
                                   onRetry: onRetryEmpty,
@@ -103,7 +104,7 @@ class SliverListStateWithFilterWidget<B extends StateStreamable<S>, S, T, F exte
                             child:
                                 emptyView ??
                                 EmptyView(
-                                  title: emptyTitle?.call(context.read<B>(), listState.items) ?? 'No items found',
+                                  title: emptyTitle?.call(context.read<B>(), listState.items) ?? AppStrings.noDataFound,
                                   subtitle: emptySubtitle?.call(context.read<B>(), listState.items),
                                   svgPath: svgPath?.call(context.read<B>(), listState.items),
                                   onRetry: onRetryEmpty,

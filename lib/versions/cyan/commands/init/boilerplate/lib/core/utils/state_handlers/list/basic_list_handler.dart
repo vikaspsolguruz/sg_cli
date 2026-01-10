@@ -4,6 +4,8 @@ import 'package:newarch/core/models/view_states/list_state.dart';
 import 'package:newarch/core/utils/bloc/base_bloc.dart';
 
 /// 🔥 BASIC LIST HANDLER - Simple list without pagination/search/filter
+///
+/// < ItemType >
 class BasicListHandler<T> {
   BasicListHandler({
     required this.bloc,

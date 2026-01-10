@@ -6,6 +6,8 @@ import 'package:newarch/core/models/view_states/list_state_with_filter.dart';
 import 'package:newarch/core/utils/bloc/base_bloc.dart';
 
 /// 🔥 FULL LIST HANDLER - List with all features (pagination, search, filter)
+///
+/// < ItemType, FilterType >
 class FullListHandler<T, F extends FilterModel> {
   FullListHandler({
     required this.bloc,

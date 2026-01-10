@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:newarch/core/theme/styling/app_colors.dart';
 import 'package:newarch/core/theme/text_style/app_text_styles.dart';
 import 'package:newarch/core/utils/extensions.dart';
 import 'package:newarch/presentation/bottom_sheets/select_country/logic/select_country_bloc.dart';

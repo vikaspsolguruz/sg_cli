@@ -1,6 +1,8 @@
 part of 'grid.dart';
 
 /// Helper widget to easily create SliverGrid with max cross axis extent for filter state
+///
+/// < Bloc, State, ItemType, FilterType >
 class SliverGridMaxExtentStateWithFilterWidget<B extends StateStreamable<S>, S, T, F extends FilterModel> extends StatelessWidget {
   const SliverGridMaxExtentStateWithFilterWidget({
     super.key,

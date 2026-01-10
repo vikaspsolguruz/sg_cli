@@ -4,6 +4,9 @@ import 'package:newarch/core/models/filter_model.dart';
 import 'package:newarch/core/models/pagination_model.dart';
 import 'package:newarch/core/models/view_states/view_state.dart';
 
+/// 🔥 LIST STATE WITH FILTER - List with pagination & search (with filter)
+///
+/// < ItemType, FilterType >
 class ListStateWithFilter<T, F extends FilterModel> extends ViewState {
   final List<T> items;
   final F filter;

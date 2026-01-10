@@ -1,7 +1,10 @@
 part of '../grid.dart';
 
 /// Enhanced SliverGrid widget for ListStateWithFilter
+///
 /// Use this inside a CustomScrollView for advanced scrolling effects
+///
+/// < Bloc, State, ItemType, Filter >
 class SliverGridStateWithFilterWidget<B extends StateStreamable<S>, S, T, F extends FilterModel> extends StatelessWidget {
   const SliverGridStateWithFilterWidget({
     super.key,
@@ -96,7 +99,7 @@ class SliverGridStateWithFilterWidget<B extends StateStreamable<S>, S, T, F exte
                             child:
                                 emptyView ??
                                 EmptyView(
-                                  title: emptyTitle?.call(context.read<B>(), listState.items) ?? 'No items found',
+                                  title: emptyTitle?.call(context.read<B>(), listState.items) ?? AppStrings.noDataFound,
                                   subtitle: emptySubtitle?.call(context.read<B>(), listState.items),
                                   svgPath: svgPath?.call(context.read<B>(), listState.items),
                                   onRetry: onRetryEmpty,
@@ -106,7 +109,7 @@ class SliverGridStateWithFilterWidget<B extends StateStreamable<S>, S, T, F exte
                             child:
                                 emptyView ??
                                 EmptyView(
-                                  title: emptyTitle?.call(context.read<B>(), listState.items) ?? 'No items found',
+                                  title: emptyTitle?.call(context.read<B>(), listState.items) ?? AppStrings.noDataFound,
                                   subtitle: emptySubtitle?.call(context.read<B>(), listState.items),
                                   svgPath: svgPath?.call(context.read<B>(), listState.items),
                                   onRetry: onRetryEmpty,

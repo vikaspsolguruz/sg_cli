@@ -4,6 +4,9 @@ import 'package:newarch/core/models/filter_model.dart';
 import 'package:newarch/core/models/view_states/view_state.dart';
 import 'package:newarch/core/models/wrapped_model.dart';
 
+/// 🔥 DATA STATE WITH FILTER - Single data object with search & filter support
+///
+/// < DataType, FilterType >
 class DataStateWithFilter<T, F extends FilterModel> extends ViewState {
   final T? data;
   final F filter;

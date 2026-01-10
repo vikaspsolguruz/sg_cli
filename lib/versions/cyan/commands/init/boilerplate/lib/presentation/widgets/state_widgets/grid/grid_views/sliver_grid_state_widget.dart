@@ -1,6 +1,8 @@
 part of '../grid.dart';
 
 /// SliverGrid widget for ListState with pagination support - use in CustomScrollView
+///
+/// < Bloc, State, ItemType >
 class SliverGridStateWidget<B extends StateStreamable<S>, S, T> extends StatelessWidget {
   const SliverGridStateWidget({
     super.key,
@@ -82,7 +84,7 @@ class SliverGridStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
                             child:
                                 emptyView ??
                                 EmptyView(
-                                  title: emptyTitle?.call(context.read<B>(), listState.items) ?? 'No items found',
+                                  title: emptyTitle?.call(context.read<B>(), listState.items) ?? AppStrings.noDataFound,
                                   subtitle: emptySubtitle?.call(context.read<B>(), listState.items),
                                   svgPath: svgPath?.call(context.read<B>(), listState.items),
                                   onRetry: onRetryEmpty,
@@ -92,7 +94,7 @@ class SliverGridStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
                             child:
                                 emptyView ??
                                 EmptyView(
-                                  title: emptyTitle?.call(context.read<B>(), listState.items) ?? 'No items found',
+                                  title: emptyTitle?.call(context.read<B>(), listState.items) ?? AppStrings.noDataFound,
                                   subtitle: emptySubtitle?.call(context.read<B>(), listState.items),
                                   svgPath: svgPath?.call(context.read<B>(), listState.items),
                                   onRetry: onRetryEmpty,

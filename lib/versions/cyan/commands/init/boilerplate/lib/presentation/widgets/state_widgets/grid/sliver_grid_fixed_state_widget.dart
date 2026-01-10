@@ -1,6 +1,8 @@
 part of 'grid.dart';
 
 /// Helper widget to easily create SliverGrid with fixed cross axis count
+///
+/// < Bloc, State, ItemType >
 class SliverGridFixedStateWidget<B extends StateStreamable<S>, S, T> extends StatelessWidget {
   const SliverGridFixedStateWidget({
     super.key,

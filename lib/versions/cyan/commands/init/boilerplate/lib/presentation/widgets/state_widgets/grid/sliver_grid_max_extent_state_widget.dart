@@ -1,6 +1,8 @@
 part of 'grid.dart';
 
 /// Helper widget to easily create SliverGrid with max cross axis extent
+///
+/// < Bloc, State, ItemType >
 class SliverGridMaxExtentStateWidget<B extends StateStreamable<S>, S, T> extends StatelessWidget {
   const SliverGridMaxExtentStateWidget({
     super.key,

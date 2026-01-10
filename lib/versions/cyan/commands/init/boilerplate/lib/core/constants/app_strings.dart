@@ -6,6 +6,7 @@ class AppStrings {
   static final asterisk = " *";
   static final failedToParse = "Failed to parse data";
   static final somethingWentWrong = "Something went wrong";
+  static final noDataFound = "No data found";
   static final fileTooLarge = "File too large";
   static final imageSizeShouldBeLessThan10MB = "Image size should be less than 10MB";
   static final field = "Field";
