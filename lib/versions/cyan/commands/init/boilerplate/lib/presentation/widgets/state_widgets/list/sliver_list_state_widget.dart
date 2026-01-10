@@ -16,6 +16,9 @@ class SliverListStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
     this.emptySubtitle,
     this.svgPath,
     this.separatorBuilder,
+    this.loaderView,
+    this.errorView,
+    this.emptyView,
     this.addAutomaticKeepAlives = true,
     this.addRepaintBoundaries = true,
     this.addSemanticIndexes = true,
@@ -25,7 +28,7 @@ class SliverListStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
 
   final ListState<T> Function(S state) listStateSelector;
   final Widget Function(BuildContext context, T item, int index) itemBuilder;
-  final VoidCallback? onLoadMore;
+  final void Function(S state)? onLoadMore;
   final VoidCallback? onRetryError;
   final VoidCallback? onRetryEmpty;
 
@@ -35,6 +38,10 @@ class SliverListStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
   final String Function(B bloc, List<T> data)? emptySubtitle;
   final String Function(B bloc, List<T> data)? svgPath;
   final Widget Function(BuildContext, int)? separatorBuilder;
+
+  final Widget? loaderView;
+  final Widget? errorView;
+  final Widget? emptyView;
 
   final bool addAutomaticKeepAlives;
   final bool addRepaintBoundaries;
@@ -76,42 +83,54 @@ class SliverListStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
         final filteredItems = _getFilteredItems(listState);
         final hasFilteredData = filteredItems.isNotEmpty;
 
-        return switch (listState.status) {
-          ProcessState.loading => isExpanded ? const SliverFillRemaining(child: CommonLoader()) : const SliverToBoxAdapter(child: CommonLoader()),
+        return SliverAnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          child: switch (listState.status) {
+            ProcessState.loading => isExpanded ? SliverFillRemaining(child: loaderView ?? const CommonLoader()) : SliverToBoxAdapter(child: loaderView ?? const CommonLoader()),
 
-          ProcessState.error =>
+            ProcessState.error =>
             isExpanded
                 ? SliverFillRemaining(
-                    child: ErrorView(
-                      title: listState.errorMessage ?? AppStrings.somethingWentWrong,
-                      onRetry: onRetryError,
-                    ),
+                    child:
+                        errorView ??
+                        ErrorView(
+                          title: listState.errorMessage ?? AppStrings.somethingWentWrong,
+                          onRetry: onRetryError,
+                          svgPath: svgPath?.call(context.read<B>(), listState.items),
+                        ),
                   )
                 : SliverToBoxAdapter(
-                    child: ErrorView(
-                      title: listState.errorMessage ?? AppStrings.somethingWentWrong,
-                      onRetry: onRetryError,
+                    child:
+                        errorView ??
+                        ErrorView(
+                          title: listState.errorMessage ?? AppStrings.somethingWentWrong,
+                          onRetry: onRetryError,
+                          svgPath: svgPath?.call(context.read<B>(), listState.items),
+                        ),
                     ),
-                  ),
 
-          ProcessState.success =>
+            ProcessState.success =>
             !hasFilteredData
                 ? isExpanded
                       ? SliverFillRemaining(
-                          child: EmptyView(
-                            title: emptyTitle?.call(context.read<B>(), filteredItems) ?? 'No items found',
-                            subtitle: emptySubtitle?.call(context.read<B>(), filteredItems),
-                            svgPath: svgPath?.call(context.read<B>(), filteredItems),
-                            onRetry: onRetryEmpty,
-                          ),
+                          child:
+                              emptyView ??
+                              EmptyView(
+                                title: emptyTitle?.call(context.read<B>(), filteredItems) ?? 'No items found',
+                                subtitle: emptySubtitle?.call(context.read<B>(), filteredItems),
+                                svgPath: svgPath?.call(context.read<B>(), filteredItems),
+                                onRetry: onRetryEmpty,
+                              ),
                         )
                       : SliverToBoxAdapter(
-                          child: EmptyView(
-                            title: emptyTitle?.call(context.read<B>(), filteredItems) ?? 'No items found',
-                            subtitle: emptySubtitle?.call(context.read<B>(), filteredItems),
-                            svgPath: svgPath?.call(context.read<B>(), filteredItems),
-                            onRetry: onRetryEmpty,
-                          ),
+                          child:
+                              emptyView ??
+                              EmptyView(
+                                title: emptyTitle?.call(context.read<B>(), filteredItems) ?? 'No items found',
+                                subtitle: emptySubtitle?.call(context.read<B>(), filteredItems),
+                                svgPath: svgPath?.call(context.read<B>(), filteredItems),
+                                onRetry: onRetryEmpty,
+                              ),
                         )
                 : separatorBuilder != null
                 ? _SliverListWithSeparators<T>(
@@ -119,23 +138,24 @@ class SliverListStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
                     listState: listState,
                     itemBuilder: itemBuilder,
                     separatorBuilder: separatorBuilder!,
-                    onLoadMore: onLoadMore,
+                    onLoadMore: () => onLoadMore?.call(context.read<B>().state),
                     addAutomaticKeepAlives: addAutomaticKeepAlives,
                     addRepaintBoundaries: addRepaintBoundaries,
                     addSemanticIndexes: addSemanticIndexes,
                     padding: padding,
                   )
-                : _SliverListContent<T>(
-                    items: filteredItems,
-                    listState: listState,
-                    itemBuilder: itemBuilder,
-                    onLoadMore: onLoadMore,
-                    addAutomaticKeepAlives: addAutomaticKeepAlives,
-                    addRepaintBoundaries: addRepaintBoundaries,
-                    addSemanticIndexes: addSemanticIndexes,
-                    padding: padding,
-                  ),
-        };
+                  : _SliverListContent<T>(
+                      items: filteredItems,
+                      listState: listState,
+                      itemBuilder: itemBuilder,
+                      onLoadMore: () => onLoadMore?.call(context.read<B>().state),
+                      addAutomaticKeepAlives: addAutomaticKeepAlives,
+                      addRepaintBoundaries: addRepaintBoundaries,
+                      addSemanticIndexes: addSemanticIndexes,
+                      padding: padding,
+                    ),
+          },
+        );
       },
     );
   }
@@ -226,11 +246,7 @@ class _SliverListWithSeparators<T> extends StatelessWidget {
         addSemanticIndexes: addSemanticIndexes,
         itemBuilder: (context, index) {
           // Loading more indicator
-          if (index == items.length) {
-            return CommonLoader(
-              onBuild: () => onLoadMore?.call(),
-            );
-          }
+          if (index == items.length) return CommonLoader(onBuild: () => onLoadMore?.call());
 
           final item = items[index];
           return itemBuilder(context, item, index);

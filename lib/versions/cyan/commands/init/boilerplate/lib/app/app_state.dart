@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newarch/app/app_routes/bottom_sheet_routes.dart';
 import 'package:newarch/app/app_routes/dialog_routes.dart';
 import 'package:newarch/app/app_routes/route_arguments.dart';
+import 'package:newarch/app/app_routes/route_arguments_provider.dart';
 import 'package:newarch/app/app_routes/screen_routes.dart';
 import 'package:newarch/app/navigation/app_route.dart';
 import 'package:newarch/core/theme/styling/app_colors.dart';
@@ -20,6 +21,7 @@ class AppState {
 
   static void applyNewSettingsFor(BuildContext context) {
     _currentRouteSettings = ModalRoute.of(context)?.settings;
+    RouteArgumentsProvider.set(_currentRouteSettings?.arguments as RouteArguments?);
   }
 
   static RouteArguments get currentRouteArguments => (_currentRouteSettings?.arguments as RouteArguments?) ?? const EmptyArguments();

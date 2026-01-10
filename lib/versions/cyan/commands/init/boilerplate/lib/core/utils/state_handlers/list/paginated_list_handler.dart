@@ -33,7 +33,7 @@ class PaginatedListHandler<T> {
         status: isSilent ? null : ProcessState.loading,
         paginationData: isRefresh ? PaginationData.initial(limit: isSilent ? backedUpState.items.length : backedUpState.paginationData?.limit) : null,
         isLoadingMore: false,
-        items: const [],
+        items: isSilent ? null : const [],
       ),
     );
 
@@ -114,8 +114,10 @@ class PaginatedListHandler<T> {
 
     updateViewState(
       currentState.copyWith(
-        status: ProcessState.loading,
-        paginationData: PaginationData.initial(search: query, limit: currentState.paginationData?.limit),
+        paginationData: PaginationData.initial(
+          search: query,
+          limit: currentState.paginationData?.limit,
+        ),
       ),
     );
 

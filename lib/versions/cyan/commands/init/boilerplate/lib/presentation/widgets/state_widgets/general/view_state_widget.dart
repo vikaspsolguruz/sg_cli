@@ -1,6 +1,7 @@
 part of 'general.dart';
 
 /// Universal ViewState widget
+/// < Bloc, State, ViewState, Data >
 class ViewStateWidget<B extends StateStreamable<S>, S, V extends ViewState, D> extends StatelessWidget {
   const ViewStateWidget({
     super.key,

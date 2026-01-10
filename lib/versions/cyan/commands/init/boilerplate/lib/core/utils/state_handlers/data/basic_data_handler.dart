@@ -2,6 +2,7 @@ import 'package:newarch/core/constants/app_strings.dart';
 import 'package:newarch/core/enums/process_state.dart';
 import 'package:newarch/core/models/response_data_model.dart';
 import 'package:newarch/core/models/view_states/data_state.dart';
+import 'package:newarch/core/models/wrapped_model.dart';
 import 'package:newarch/core/utils/bloc/base_bloc.dart';
 
 /// 🔥 BASIC DATA HANDLER (WITHOUT FILTER)
@@ -27,7 +28,7 @@ class BasicDataHandler<T> {
     updateViewState(
       backedUpState.copyWith(
         status: isSilent ? null : ProcessState.loading,
-        data: isSilent ? backedUpState.data : null,
+        data: isSilent ? null : Wrapped.value(null),
       ),
     );
 
@@ -40,7 +41,7 @@ class BasicDataHandler<T> {
         getViewState().copyWith(
           status: ProcessState.error,
           errorMessage: response.message,
-          data: null,
+          data: Wrapped.value(null),
         ),
       );
 
@@ -52,7 +53,7 @@ class BasicDataHandler<T> {
       updateViewState(
         getViewState().copyWith(
           status: ProcessState.success,
-          data: newData,
+          data: Wrapped.value(newData),
         ),
       );
     } else {
@@ -60,7 +61,7 @@ class BasicDataHandler<T> {
         getViewState().copyWith(
           status: ProcessState.error,
           errorMessage: response.message ?? AppStrings.somethingWentWrong,
-          data: null,
+          data: Wrapped.value(null),
         ),
       );
     }

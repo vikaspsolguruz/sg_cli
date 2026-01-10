@@ -17,18 +17,20 @@ class BasicListHandler<T> {
   final void Function(ListState<T> newViewState) updateViewState;
   final Future<ResponseData<List<T>>> Function() repositoryCall;
 
-  Future<void> load({bool isRefresh = false, bool isSilent = false}) async {
+  Future<void> load({bool isSilent = false}) async {
     if (bloc.isClosed) return;
 
-    // backup used if using silentRefresh
+    // backup the current state
     final backedUpState = getViewState();
 
-    updateViewState(
-      backedUpState.copyWith(
-        status: isSilent ? null : ProcessState.loading,
-        items: isSilent ? backedUpState.items : const [],
-      ),
-    );
+    if (!isSilent) {
+      updateViewState(
+        backedUpState.copyWith(
+          status: ProcessState.loading,
+          items: const [],
+        ),
+      );
+    }
 
     final response = await repositoryCall();
 
@@ -42,12 +44,12 @@ class BasicListHandler<T> {
           items: const [],
         ),
       );
-      
+
       return;
     }
 
     final newItems = response.data!;
-    
+
     updateViewState(
       getViewState().copyWith(
         status: ProcessState.success,
@@ -59,12 +61,11 @@ class BasicListHandler<T> {
   Future<void> refresh() async {
     if (bloc.isClosed) return;
 
-    await load(isRefresh: true);
+    await load();
   }
 
   Future<void> silentRefresh() async {
     if (bloc.isClosed) return;
-
-    await load(isRefresh: true, isSilent: true);
+    await load(isSilent: true);
   }
 }

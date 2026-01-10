@@ -13,6 +13,9 @@ class SliverGridStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
     this.emptyTitle,
     this.emptySubtitle,
     this.svgPath,
+    this.loaderView,
+    this.errorView,
+    this.emptyView,
     this.addAutomaticKeepAlives = true,
     this.addRepaintBoundaries = true,
     this.addSemanticIndexes = true,
@@ -29,6 +32,9 @@ class SliverGridStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
   final String Function(B bloc, List<T> data)? emptyTitle;
   final String Function(B bloc, List<T> data)? emptySubtitle;
   final String Function(B bloc, List<T> data)? svgPath;
+  final Widget? loaderView;
+  final Widget? errorView;
+  final Widget? emptyView;
   final bool addAutomaticKeepAlives;
   final bool addRepaintBoundaries;
   final bool addSemanticIndexes;
@@ -40,65 +46,78 @@ class SliverGridStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
     return BlocSelector<B, S, ListState<T>>(
       selector: listStateSelector,
       builder: (context, listState) {
-        return switch (listState.status) {
-          // 1. Loading state - show loader
-          ProcessState.loading => isExpanded ? const SliverFillRemaining(child: CommonLoader()) : const SliverToBoxAdapter(child: CommonLoader()),
+        return SliverAnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          child: switch (listState.status) {
+            // 1. Loading state - show loader
+            ProcessState.loading => isExpanded ? SliverFillRemaining(child: loaderView ?? const CommonLoader()) : SliverToBoxAdapter(child: loaderView ?? const CommonLoader()),
 
-          // 2. Error state - show error view
-          ProcessState.error =>
-            isExpanded
-                ? SliverFillRemaining(
-                    child: ErrorView(
-                      title: listState.errorMessage ?? 'Something went wrong',
-                      onRetry: onRetryError,
-                    ),
-                  )
-                : SliverToBoxAdapter(
-                    child: ErrorView(
-                      title: listState.errorMessage ?? 'Something went wrong',
-                      onRetry: onRetryError,
-                    ),
-                  ),
-
-          // 3. Success state - check if no data first, then show content
-          ProcessState.success =>
-            !listState.hasData
-                ? isExpanded
-                      ? SliverFillRemaining(
-                          child: EmptyView(
-                            title: emptyTitle?.call(context.read<B>(), listState.items) ?? 'No items found',
-                            subtitle: emptySubtitle?.call(context.read<B>(), listState.items),
+            // 2. Error state - show error view
+            ProcessState.error =>
+              isExpanded
+                  ? SliverFillRemaining(
+                      child:
+                          errorView ??
+                          ErrorView(
+                            title: listState.errorMessage ?? AppStrings.somethingWentWrong,
+                            onRetry: onRetryError,
                             svgPath: svgPath?.call(context.read<B>(), listState.items),
-                            onRetry: onRetryEmpty,
                           ),
-                        )
-                      : SliverToBoxAdapter(
-                          child: EmptyView(
-                            title: emptyTitle?.call(context.read<B>(), listState.items) ?? 'No items found',
-                            subtitle: emptySubtitle?.call(context.read<B>(), listState.items),
+                    )
+                  : SliverToBoxAdapter(
+                      child:
+                          errorView ??
+                          ErrorView(
+                            title: listState.errorMessage ?? AppStrings.somethingWentWrong,
+                            onRetry: onRetryError,
                             svgPath: svgPath?.call(context.read<B>(), listState.items),
-                            onRetry: onRetryEmpty,
                           ),
-                        )
-                : SliverPadding(
-                    padding: padding,
-                    sliver: SliverMainAxisGroup(
-                      slivers: [
-                        _SliverGridContent<T>(
-                          listState: listState,
-                          itemBuilder: itemBuilder,
-                          gridDelegate: gridDelegate,
-                          addAutomaticKeepAlives: addAutomaticKeepAlives,
-                          addRepaintBoundaries: addRepaintBoundaries,
-                          addSemanticIndexes: addSemanticIndexes,
-                          onLoadMore: () => onLoadMore?.call(context.read<B>().state),
-                        ),
-
-                        if (listState.canLoadMore) const SliverToBoxAdapter(child: CommonLoader()),
-                      ],
                     ),
-                  ),
-        };
+
+            // 3. Success state - check if no data first, then show content
+            ProcessState.success =>
+              !listState.hasData
+                  ? isExpanded
+                        ? SliverFillRemaining(
+                            child:
+                                emptyView ??
+                                EmptyView(
+                                  title: emptyTitle?.call(context.read<B>(), listState.items) ?? 'No items found',
+                                  subtitle: emptySubtitle?.call(context.read<B>(), listState.items),
+                                  svgPath: svgPath?.call(context.read<B>(), listState.items),
+                                  onRetry: onRetryEmpty,
+                                ),
+                          )
+                        : SliverToBoxAdapter(
+                            child:
+                                emptyView ??
+                                EmptyView(
+                                  title: emptyTitle?.call(context.read<B>(), listState.items) ?? 'No items found',
+                                  subtitle: emptySubtitle?.call(context.read<B>(), listState.items),
+                                  svgPath: svgPath?.call(context.read<B>(), listState.items),
+                                  onRetry: onRetryEmpty,
+                                ),
+                          )
+                  : SliverPadding(
+                      padding: padding,
+                      sliver: SliverMainAxisGroup(
+                        slivers: [
+                          _SliverGridContent<T>(
+                            listState: listState,
+                            itemBuilder: itemBuilder,
+                            gridDelegate: gridDelegate,
+                            addAutomaticKeepAlives: addAutomaticKeepAlives,
+                            addRepaintBoundaries: addRepaintBoundaries,
+                            addSemanticIndexes: addSemanticIndexes,
+                            onLoadMore: () => onLoadMore?.call(context.read<B>().state),
+                          ),
+
+                          if (listState.canLoadMore) const SliverToBoxAdapter(child: CommonLoader()),
+                        ],
+                      ),
+                    ),
+          },
+        );
       },
     );
   }

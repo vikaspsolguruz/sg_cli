@@ -13,6 +13,9 @@ class SliverGridFixedStateWidget<B extends StateStreamable<S>, S, T> extends Sta
     this.emptyTitle,
     this.emptySubtitle,
     this.svgPath,
+    this.loaderView,
+    this.errorView,
+    this.emptyView,
     this.crossAxisSpacing = 0.0,
     this.mainAxisSpacing = 0.0,
     this.childAspectRatio = 1.0,
@@ -32,6 +35,9 @@ class SliverGridFixedStateWidget<B extends StateStreamable<S>, S, T> extends Sta
   final String Function(B bloc, List<T> data)? emptyTitle;
   final String Function(B bloc, List<T> data)? emptySubtitle;
   final String Function(B bloc, List<T> data)? svgPath;
+  final Widget? loaderView;
+  final Widget? errorView;
+  final Widget? emptyView;
   final double crossAxisSpacing;
   final double mainAxisSpacing;
   final double childAspectRatio;
@@ -52,6 +58,9 @@ class SliverGridFixedStateWidget<B extends StateStreamable<S>, S, T> extends Sta
       emptyTitle: emptyTitle,
       emptySubtitle: emptySubtitle,
       svgPath: svgPath,
+      loaderView: loaderView,
+      errorView: errorView,
+      emptyView: emptyView,
       addAutomaticKeepAlives: addAutomaticKeepAlives,
       addRepaintBoundaries: addRepaintBoundaries,
       addSemanticIndexes: addSemanticIndexes,

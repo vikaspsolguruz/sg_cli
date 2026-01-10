@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newarch/core/enums/process_state.dart';
 import 'package:newarch/core/models/view_states/view_state.dart';
+import 'package:newarch/core/models/wrapped_model.dart';
 
 class DataState<T> extends ViewState {
   final T? data;
@@ -44,7 +45,7 @@ class DataState<T> extends ViewState {
   String? get currentSearch => hasSearch && searchController!.text.trim().isNotEmpty ? searchController!.text.trim() : null;
 
   DataState<T> copyWith({
-    T? data,
+    Wrapped<T?>? data,
     ProcessState? status,
     String? errorMessage,
     bool? isSearching,
@@ -52,7 +53,7 @@ class DataState<T> extends ViewState {
     bool Function(DataState<T> state)? hasDataOverride,
   }) {
     return DataState._(
-      data: data ?? this.data,
+      data: data != null ? data.value : this.data,
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,
       isSearching: isSearching ?? this.isSearching,

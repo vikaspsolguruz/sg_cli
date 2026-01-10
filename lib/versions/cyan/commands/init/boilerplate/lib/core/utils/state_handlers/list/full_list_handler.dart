@@ -120,7 +120,7 @@ class FullListHandler<T, F extends FilterModel> {
     if (bloc.isClosed) return;
     final currentState = getViewState();
 
-    updateViewState(currentState.copyWith(filter: currentState.filter..clear()));
+    updateViewState(currentState.copyWith(filter: currentState.filter.clear() as F));
     await load();
   }
 

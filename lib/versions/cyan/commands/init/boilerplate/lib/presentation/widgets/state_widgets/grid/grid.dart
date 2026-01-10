@@ -6,6 +6,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newarch/core/constants/app_strings.dart';
 import 'package:newarch/core/enums/process_state.dart';
 import 'package:newarch/core/models/filter_model.dart';
 import 'package:newarch/core/models/view_states/list_state.dart';

@@ -3,6 +3,7 @@ import 'package:newarch/core/enums/process_state.dart';
 import 'package:newarch/core/models/filter_model.dart';
 import 'package:newarch/core/models/response_data_model.dart';
 import 'package:newarch/core/models/view_states/data_state_with_filter.dart';
+import 'package:newarch/core/models/wrapped_model.dart';
 import 'package:newarch/core/utils/bloc/base_bloc.dart';
 
 /// 🔥 FILTERED DATA HANDLER - Single object with filter support
@@ -28,7 +29,7 @@ class FilteredDataHandler<T, F extends FilterModel> {
     updateViewState(
       backedUpState.copyWith(
         status: isSilent ? null : ProcessState.loading, // null keeps current status
-        data: isSilent ? backedUpState.data : null,
+        data: isSilent ? null : Wrapped.value(null),
       ),
     );
 
@@ -41,7 +42,7 @@ class FilteredDataHandler<T, F extends FilterModel> {
         getViewState().copyWith(
           status: ProcessState.error,
           errorMessage: response.message,
-          data: null,
+          data: Wrapped.value(null),
         ),
       );
 
@@ -53,7 +54,7 @@ class FilteredDataHandler<T, F extends FilterModel> {
       updateViewState(
         getViewState().copyWith(
           status: ProcessState.success,
-          data: newData,
+          data: Wrapped.value(newData),
         ),
       );
     } else {
@@ -61,7 +62,7 @@ class FilteredDataHandler<T, F extends FilterModel> {
         getViewState().copyWith(
           status: ProcessState.error,
           errorMessage: response.message ?? AppStrings.somethingWentWrong,
-          data: null,
+          data: Wrapped.value(null),
         ),
       );
     }
@@ -91,7 +92,7 @@ class FilteredDataHandler<T, F extends FilterModel> {
     if (bloc.isClosed) return;
     final currentState = getViewState();
 
-    updateViewState(currentState.copyWith(filter: currentState.filter..clear()));
+    updateViewState(currentState.copyWith(filter: currentState.filter.clear() as F));
     await load();
   }
 

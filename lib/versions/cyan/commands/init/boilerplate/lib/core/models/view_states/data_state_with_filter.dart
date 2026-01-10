@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newarch/core/enums/process_state.dart';
 import 'package:newarch/core/models/filter_model.dart';
 import 'package:newarch/core/models/view_states/view_state.dart';
+import 'package:newarch/core/models/wrapped_model.dart';
 
 class DataStateWithFilter<T, F extends FilterModel> extends ViewState {
   final T? data;
@@ -49,7 +50,7 @@ class DataStateWithFilter<T, F extends FilterModel> extends ViewState {
   String? get currentSearch => hasSearch && searchController!.text.trim().isNotEmpty ? searchController!.text.trim() : null;
 
   DataStateWithFilter<T, F> copyWith({
-    T? data,
+    Wrapped<T?>? data,
     F? filter,
     ProcessState? status,
     String? errorMessage,
@@ -58,7 +59,7 @@ class DataStateWithFilter<T, F extends FilterModel> extends ViewState {
     bool Function(DataStateWithFilter<T, F> state)? hasDataOverride,
   }) {
     return DataStateWithFilter._(
-      data: data ?? this.data,
+      data: data != null ? data.value : this.data,
       filter: filter ?? this.filter,
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,

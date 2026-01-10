@@ -74,7 +74,7 @@ class SliverGridStateWithFilterWidget<B extends StateStreamable<S>, S, T, F exte
                       child:
                           errorView ??
                           ErrorView(
-                            title: listState.errorMessage ?? 'Something went wrong',
+                            title: listState.errorMessage ?? AppStrings.somethingWentWrong,
                             onRetry: onRetryError,
                             svgPath: svgPath?.call(context.read<B>(), null),
                           ),
@@ -83,7 +83,7 @@ class SliverGridStateWithFilterWidget<B extends StateStreamable<S>, S, T, F exte
                       child:
                           errorView ??
                           ErrorView(
-                            title: listState.errorMessage ?? 'Something went wrong',
+                            title: listState.errorMessage ?? AppStrings.somethingWentWrong,
                             onRetry: onRetryError,
                             svgPath: svgPath?.call(context.read<B>(), null),
                           ),

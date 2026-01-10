@@ -61,7 +61,7 @@ class ListStateWithFilter<T, F extends FilterModel> extends ViewState {
 
   String? get currentSearch => hasSearch && searchController!.text.trim().isNotEmpty ? searchController!.text.trim() : null;
 
-  bool get canLoadMore => isPaginated && paginationData!.canLoadMore;
+  bool get canLoadMore => isPaginated && paginationData!.canLoadMore && !isLoading;
 
   ListStateWithFilter<T, F> copyWith({
     List<T>? items,
