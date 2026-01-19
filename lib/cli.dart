@@ -4,18 +4,18 @@ import 'package:sg_cli/models/sg_config.dart';
 import 'package:sg_cli/utils/config_helper.dart';
 import 'package:sg_cli/versions/amber/amber.dart';
 import 'package:sg_cli/versions/bronze/bronze.dart';
-import 'package:sg_cli/versions/cyan/cyan.dart';
+import 'package:sg_cli/versions/max/max.dart';
 
 void runCLI(List<String> args) {
   arguments = args;
   final config = getConfig();
   if (config == null) {
     if (args.length == 1 && args.first == 'init') {
-      sgConfig = SgConfig(version: kCyan, routePaths: []);
-      Cyan.runCommand();
+      sgConfig = SgConfig(version: kMax, routePaths: []);
+      Max.runCommand();
     } else if (args.length == 1 && (args.first == 'help' || args.first == '--help' || args.first == '-h')) {
-      sgConfig = SgConfig(version: kCyan, routePaths: []);
-      Cyan.runCommand();
+      sgConfig = SgConfig(version: kMax, routePaths: []);
+      Max.runCommand();
     } else {
       print("❌ Error: Invalid config file sg_cli.yaml");
     }
@@ -26,7 +26,7 @@ void runCLI(List<String> args) {
   final cliVersions = {
     kAmber: Amber.runCommand,
     kBronze: Bronze.runCommand,
-    kCyan: Cyan.runCommand,
+    kMax: Max.runCommand,
   };
 
   final command = cliVersions[config.version];

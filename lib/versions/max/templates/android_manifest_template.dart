@@ -1,0 +1,23 @@
+part of '../max.dart';
+
+String _deeplinkAndroidManifestTemplate(String domain) {
+  return '''<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity android:name=".MainActivity">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="$domain"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
+''';
+}

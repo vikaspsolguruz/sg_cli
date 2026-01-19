@@ -1,0 +1,4 @@
+version: max
+route_paths: lib/presentation/screens
+  lib/presentation/bottom_sheets
+  lib/presentation/dialogs

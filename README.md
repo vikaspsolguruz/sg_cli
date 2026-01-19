@@ -3,7 +3,7 @@
 A powerful CLI tool for generating scalable Flutter applications with BLoC pattern, clean
 architecture, and production-ready features.
 
-[![Version](https://img.shields.io/badge/version-cyan-blue)](https://github.com/vikaspsolguruz/sg_cli)
+[![Version](https://img.shields.io/badge/version-max-blue)](https://github.com/vikaspsolguruz/sg_cli)
 [![Flutter](https://img.shields.io/badge/Flutter-3.5.0+-02569B?logo=flutter)](https://flutter.dev)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
@@ -26,7 +26,7 @@ architecture, and production-ready features.
 
 ### Complete Architecture Setup
 
-- **Cyan Architecture** - Production-ready folder structure
+- **Max Architecture** - Production-ready folder structure
 - **BLoC Pattern** - State management with bloc pattern
 - **Clean Architecture** - Separation of concerns (presentation, core, data)
 - **Route Management** - Automatic route generation and management
@@ -77,7 +77,7 @@ sg -h
 
 ## Quick Start
 
-### 1. Initialize Cyan Architecture
+### 1. Initialize Max Architecture
 
 Into the project root directory run:
 
@@ -128,7 +128,7 @@ lib/presentation/screens/login/
 
 #### `sg init`
 
-Initialize Cyan architecture in your Flutter project.
+Initialize Max architecture in your Flutter project.
 
 ```bash
 sg init

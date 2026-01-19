@@ -1,7 +1,7 @@
 # Console Output Rule
 
-When generating or writing print() statements with emojis/symbols in the cyan version:
-- ALWAYS use ConsoleSymbols class from lib/versions/cyan/constants/console_symbols.dart
+When generating or writing print() statements with emojis/symbols in the max version:
+- ALWAYS use ConsoleSymbols class from lib/versions/max/constants/console_symbols.dart
 - NEVER hardcode emojis like '✅', '❌', '💡', '🚀', etc.
 - Use${ConsoleSymbols.success},${ConsoleSymbols.error},${ConsoleSymbols.bulb}, etc.
 

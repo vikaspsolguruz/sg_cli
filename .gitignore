@@ -2,7 +2,7 @@
 /.idea/
 /.dart_tool/
 /.idea
-/lib/versions/cyan/commands/init/boilerplate/.dart_tool/
-/lib/versions/cyan/commands/init/boilerplate/pubspec.lock
-/lib/versions/cyan/commands/init/boilerplate/.flutter-plugins-dependencies
-/lib/versions/cyan/commands/init/boilerplate/macos/
+/lib/versions/max/commands/init/boilerplate/.dart_tool/
+/lib/versions/max/commands/init/boilerplate/pubspec.lock
+/lib/versions/max/commands/init/boilerplate/.flutter-plugins-dependencies
+/lib/versions/max/commands/init/boilerplate/macos/

@@ -1,0 +1,100 @@
+name: max_arch
+description: "A new Flutter project."
+
+publish_to: 'none'
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+  flutter: ^3.35.5
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_bloc: ^9.1.1
+  equatable: ^2.0.8
+  rxdart: ^0.28.0
+
+  # Networking
+  dio: ^5.9.0
+
+  # Localization & Formatting
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+
+  # UI & Styling
+  animations: ^2.1.1
+  flutter_tabler_icons: ^1.43.0
+  cupertino_icons: ^1.0.8
+  sizer: ^3.1.3
+  blur: ^4.0.2
+  sliver_tools: ^0.2.12
+  dotted_border: ^3.1.0
+
+  # UI Components
+  dropdown_button2: ^2.3.9
+
+  # Media & File Handling
+  image_picker: ^1.2.1
+  flutter_svg: ^2.2.3
+  file_picker: ^10.3.8
+  croppy: ^1.4.1
+
+  # Storage
+  shared_preferences: ^2.5.4
+
+  # Firebase
+  firebase_core: ^4.3.0
+
+  # Authentication
+  google_sign_in: ^7.2.0
+  sign_in_with_apple: ^7.0.1
+
+  # Device Features & Permissions
+  device_info_plus: ^12.3.0
+  device_region: ^1.4.0
+  fl_country_code_picker: ^0.1.9+1
+  sms_autodetect: ^1.1.0
+  permission_handler: ^12.0.1
+
+  # Sharing & External Actions
+  share_plus: ^12.0.1
+  url_launcher: ^6.3.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  patrol: ^4.1.0
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+  assets:
+    - assets/images/svg/
+    - assets/images/svg/empty/
+    - assets/fonts/inter/
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/inter/Inter-Variable.ttf
+          weight: 400
+        - asset: assets/fonts/inter/Inter-Italic-Variable.ttf
+          weight: 400
+          style: italic
+
+patrol:
+  app_name: NewArch
+  android:
+    package_name: com.example.max_arch
+  ios:
+    bundle_id: com.example.max_arch
