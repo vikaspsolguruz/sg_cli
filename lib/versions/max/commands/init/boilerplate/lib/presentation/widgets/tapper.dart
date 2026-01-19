@@ -3,21 +3,41 @@ import 'package:flutter/material.dart';
 class Tapper extends StatelessWidget {
   const Tapper({
     super.key,
-    required this.child,
     this.onTap,
+    this.decoration,
+    this.padding = EdgeInsets.zero,
+    required this.child,
   });
 
-  final Widget child;
   final void Function()? onTap;
+  final BoxDecoration? decoration;
+  final EdgeInsetsGeometry padding;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      splashFactory: NoSplash.splashFactory,
-      highlightColor: Colors.transparent,
-      focusColor: Colors.transparent,
+    final tapArea = InkWell(
+      splashFactory: decoration == null ? NoSplash.splashFactory : null,
+      highlightColor: decoration == null ? Colors.transparent : null,
+      focusColor: decoration == null ? Colors.transparent : null,
+      borderRadius: decoration?.borderRadius?.resolve(null),
       onTap: onTap,
-      child: child,
+      child: Padding(padding: padding, child: child),
     );
+    return decoration != null
+        ? Material(
+            color: decoration?.color,
+            shape: RoundedRectangleBorder(
+              borderRadius: decoration?.borderRadius ?? BorderRadius.zero,
+              side: decoration?.border == null
+                  ? BorderSide.none
+                  : BorderSide(
+                      color: decoration?.border?.top.color ?? Colors.transparent,
+                      width: decoration?.border?.top.width ?? 0,
+                    ),
+            ),
+            child: tapArea,
+          )
+        : tapArea;
   }
 }

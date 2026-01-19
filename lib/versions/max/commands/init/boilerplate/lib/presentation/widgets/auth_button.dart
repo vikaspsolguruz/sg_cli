@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:max_arch/gen/assets.gen.dart';
 import 'package:max_arch/presentation/widgets/app_button/app_button.dart';
 
-class AuthGoogleButton extends StatelessWidget {
+class AuthButton extends StatelessWidget {
   final String label;
-  final AppButtonController? authButtonController;
+  final AppButtonController? controller;
   final dynamic Function()? onTap;
+  final String leftIcon;
 
-  const AuthGoogleButton({
+  const AuthButton({
     super.key,
     required this.label,
     required this.onTap,
-    this.authButtonController,
+    required this.leftIcon,
+    this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppButton(
-      controller: authButtonController,
-      size: AppButtonSize.xl,
+      controller: controller,
+      size: ButtonSize.xl,
       fillWidth: true,
       label: label,
-      leftSvgIcon: Assets.images.svg.google,
-      style: AppButtonStyle.outline,
+      leftIcon: leftIcon,
+      variant: ButtonVariant.outline,
       onPressed: onTap,
-      isExpandLabel: true,
+      expandLabel: true,
       elevation: 4,
     );
   }

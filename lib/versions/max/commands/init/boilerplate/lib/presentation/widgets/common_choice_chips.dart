@@ -13,7 +13,7 @@ class CommonChoiceChips<T> extends StatelessWidget {
   final bool isRequired;
   final double? height;
   final double? switchRadius;
-  final AppButtonSize appButtonSize;
+  final ButtonSize appButtonSize;
   final bool isScrollable;
   final double spacing;
   final EdgeInsetsGeometry? padding;
@@ -31,7 +31,7 @@ class CommonChoiceChips<T> extends StatelessWidget {
     this.label,
     this.isRequired = false,
     this.height = 44,
-    this.appButtonSize = AppButtonSize.s,
+    this.appButtonSize = ButtonSize.s,
     this.switchRadius = 22,
     this.isScrollable = false,
     this.spacing = 16,
@@ -51,7 +51,7 @@ class CommonChoiceChips<T> extends StatelessWidget {
     this.label,
     this.isRequired = false,
     this.height,
-    this.appButtonSize = AppButtonSize.m,
+    this.appButtonSize = ButtonSize.m,
     this.switchRadius = 48,
     this.isScrollable = false,
     required this.spacing,
@@ -71,7 +71,7 @@ class CommonChoiceChips<T> extends StatelessWidget {
     this.label,
     this.isRequired = false,
     this.height = 36,
-    this.appButtonSize = AppButtonSize.m,
+    this.appButtonSize = ButtonSize.m,
     this.switchRadius = 48,
     this.isScrollable = false,
     required this.spacing,
@@ -134,7 +134,7 @@ class _SwitchButton extends StatelessWidget {
   final String text;
   final bool isSelected;
   final void Function() onPressed;
-  final AppButtonSize appButtonSize;
+  final ButtonSize appButtonSize;
   final double? switchRadius;
   final double? heightOverride;
   final Color selectedBorderColor;
@@ -169,14 +169,14 @@ class _SwitchButton extends StatelessWidget {
         : context.colors.shadesWhite;
     return AppButton(
       onPressed: onPressed,
-      heightOverride: heightOverride,
-      style: AppButtonStyle.outline,
-      bgColorOverride: bgColor,
-      radiusOverride: switchRadius,
+      height: heightOverride,
+      variant: ButtonVariant.outline,
+      bgColor: bgColor,
+      radius: switchRadius,
       size: appButtonSize,
       label: text,
-      iconOrTextColorOverride: isSelected || (!readOnly) ? context.colors.textNeutralPrimary : context.colors.textNeutralSecondary,
-      borderColorOverride: borderColor,
+      foregroundColor: isSelected || (!readOnly) ? context.colors.textNeutralPrimary : context.colors.textNeutralSecondary,
+      borderColor: borderColor,
       padding: padding,
     );
   }

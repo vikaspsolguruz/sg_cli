@@ -50,4 +50,6 @@ class AppStrings {
   static final chooseAFile = "Choose a file";
   static final appleLoginError = "Failed to sign in with Apple";
   static final googleLoginError = "Failed to sign in with Google";
+  static final resendCode = "Resend code";
+  static const resendCodeIn = "Resend code in";
 }

@@ -1,472 +1,686 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:max_arch/app/app_state.dart';
 import 'package:max_arch/core/constants/constants.dart';
-import 'package:max_arch/core/theme/styling/app_colors.dart';
 import 'package:max_arch/core/theme/text_style/app_text_styles.dart';
-import 'package:max_arch/core/utils/console_print.dart';
-import 'package:max_arch/core/utils/extensions.dart';
-import 'package:max_arch/presentation/widgets/app_button/icon_size.dart';
+import 'package:max_arch/presentation/widgets/app_button/app_button_controller.dart';
 import 'package:max_arch/presentation/widgets/app_icons/app_icon.dart';
+import 'package:max_arch/presentation/widgets/loader.dart';
 
-part 'app_button_size.dart';
-part 'app_button_state.dart';
-part 'app_button_style.dart';
+export 'app_button_controller.dart';
 
-class AppButton extends StatefulWidget {
-  final AppButtonStyle style;
-  final AppButtonSize size;
-  final AppButtonState state;
-  final bool isDestructive;
-  final Color? textDecorationColor;
+enum ButtonSize { xs, s, m, l, xl }
 
-  final String? label;
+enum ButtonVariant { primary, secondary, outline, ghost, link }
 
-  final EdgeInsets? padding;
+/// Backward compatibility typedefs
+typedef AppButtonSize = ButtonSize;
+typedef AppButtonStyle = ButtonVariant;
 
-  final bool isIconButton;
-  final bool isExpandLabel;
-
-  final AppButtonController? controller;
-
-  /// use the values from [AppIcons]
-  final String? appIcon;
-
-  /// use the values from [TablerIcons]
-  final IconData? iconData;
-
-  /// use the values from [AppIcons]
-  final String? leftSvgIcon;
-
-  /// use the values from [AppColors]
-  final Color? leftIconColor;
-
-  /// use the values from [TablerIcons]
-  final IconData? leftIconData;
-
-  /// use the values from [AppIcons]
-  final String? rightAppIcon;
-
-  /// use the values from [TablerIcons]
-  final IconData? rightIconData;
-
-  /// Overrides
-  final Color? iconOrTextColorOverride;
-  final Color? bgColorOverride;
-  final Color? borderColorOverride;
-  final double? radiusOverride;
-  final double? heightOverride;
-
-  /// `onPanDown` is faster than `onTap`
-  /// because it is triggered when the user touches the screen.
-  /// Avoid the usage if the button is part of a scrollable widget
-  final bool shouldUseOnPanDown;
-  final VoidCallback? onPressed;
-
-  /// Adds vertical and horizontal padding to the button
-  /// Otherwise the widget tends to take
-  /// the full height of the AppBar for some reason
-  final bool isAppBarAction;
-
-  final double? appBarActionVerticalPadding;
-  final double? appBarActionRightPadding;
-  final double? appBarActionLeftPadding;
-
-  final bool fillWidth;
-  final double? width;
-  final double elevation;
-
+class AppButton extends StatelessWidget {
   const AppButton({
     super.key,
-    this.style = AppButtonStyle.primary,
-    this.size = AppButtonSize.s,
-    this.state = AppButtonState.d_efault,
-    this.isDestructive = false,
-    this.isIconButton = false,
-    this.onPressed,
-    this.shouldUseOnPanDown = false,
+    required this.label,
+    required this.onPressed,
+    this.variant = ButtonVariant.primary,
+    this.size = ButtonSize.m,
     this.controller,
-    this.appIcon,
-    this.iconData,
-    this.label,
-    this.leftSvgIcon,
+    this.leftIcon,
     this.leftIconData,
-    this.leftIconColor,
-    this.rightAppIcon,
+    this.rightIcon,
     this.rightIconData,
-    this.isExpandLabel = false,
-    this.padding,
-    this.iconOrTextColorOverride,
-    this.bgColorOverride,
-    this.borderColorOverride,
-    this.isAppBarAction = false,
-    this.appBarActionVerticalPadding,
-    this.appBarActionRightPadding,
-    this.appBarActionLeftPadding,
+    this.isDestructive = false,
+    this.isDisabled = false,
+    this.expandLabel = false,
     this.fillWidth = false,
     this.width,
-    this.heightOverride,
-    this.radiusOverride,
-    this.textDecorationColor,
+    this.height,
+    this.radius,
+    this.padding,
     this.elevation = 0,
-  }) : assert(
-         (isIconButton && (appIcon != null || iconData != null)) || (!isIconButton && (appIcon == null && iconData == null)),
-         'icons or iconData should not be null and isIcon should be true',
-       ),
-       // assert(
-       //   (!isIconButton) && label != null,
-       //   'label should not be null.',
-       // ),
-       assert(
-         (leftSvgIcon == null && leftIconData == null && rightIconData == null && rightAppIcon == null) || label != null,
-         'The assert statement ensures that if any of the '
-         'leftIcon, leftIconData, rightIcon, or rightIconData properties '
-         'are not null, then the `label` property must also be not null',
-       );
+    this.bgColor,
+    this.foregroundColor,
+    this.borderColor,
+  });
 
-  factory AppButton.icon({
-    String? appIcon,
-    IconData? iconData,
-    AppButtonSize? size,
-    AppButtonState? state,
-    required VoidCallback onPressed,
-    bool shouldUseOnPanDown = false,
-    Color? iconOrTextColorOverride,
-    bool isAppBarAction = false,
-    double? appBarActionRightPadding,
-  }) {
-    assert(
-      appIcon != null || iconData != null,
-      'icons or iconData should not be null',
-    );
-    return AppButton(
-      style: AppButtonStyle.textOrIcon,
-      size: size ?? AppButtonSize.s,
-      state: state ?? AppButtonState.d_efault,
-      iconData: iconData,
-      isIconButton: true,
-      appIcon: appIcon,
-      onPressed: onPressed,
-      shouldUseOnPanDown: shouldUseOnPanDown,
-      iconOrTextColorOverride: iconOrTextColorOverride ?? AppState.colors.shadesWhite,
-      isAppBarAction: isAppBarAction,
-      appBarActionRightPadding: appBarActionRightPadding,
-    );
-  }
+  final String label;
+  final VoidCallback? onPressed;
+  final ButtonVariant variant;
+  final ButtonSize size;
+  final AppButtonController? controller;
+
+  final String? leftIcon;
+  final IconData? leftIconData;
+  final String? rightIcon;
+  final IconData? rightIconData;
+
+  final bool isDestructive;
+  final bool isDisabled;
+  final bool expandLabel;
+  final bool fillWidth;
+
+  final double? width;
+  final double? height;
+  final double? radius;
+  final EdgeInsets? padding;
+  final double elevation;
+
+  final Color? bgColor;
+  final Color? foregroundColor;
+  final Color? borderColor;
 
   factory AppButton.primary({
     required String label,
-    AppButtonSize? size,
-    AppButtonState? state,
-    required VoidCallback onPressed,
-    bool shouldUseOnPanDown = false,
-    Color? iconOrTextColorOverride,
-    bool isAppBarAction = false,
-    bool? showLoader,
-    double? radiusOverride,
-    double? heightOverride,
+    required VoidCallback? onPressed,
+    ButtonSize size = ButtonSize.m,
+    AppButtonController? controller,
+    bool isDestructive = false,
+    bool isDisabled = false,
+    bool fillWidth = false,
+    double? width,
+    double? height,
+    double? radius,
   }) {
     return AppButton(
-      size: size ?? AppButtonSize.s,
-      state: state ?? AppButtonState.d_efault,
       label: label,
       onPressed: onPressed,
-      shouldUseOnPanDown: shouldUseOnPanDown,
-      iconOrTextColorOverride: iconOrTextColorOverride,
-      isAppBarAction: isAppBarAction,
-      radiusOverride: radiusOverride,
-      heightOverride: heightOverride,
+      size: size,
+      controller: controller,
+      isDestructive: isDestructive,
+      isDisabled: isDisabled,
+      fillWidth: fillWidth,
+      width: width,
+      height: height,
+      radius: radius,
     );
   }
 
-  @override
-  State<AppButton> createState() => _AppButtonState();
-}
-
-class _AppButtonState extends State<AppButton> {
-  bool isLoading = false;
-
-  @override
-  void initState() {
-    widget.controller?.addCallbacks(
-      startLoading: _startLoading,
-      stopLoading: _stopLoading,
-      state: this,
+  factory AppButton.secondary({
+    required String label,
+    required VoidCallback? onPressed,
+    ButtonSize size = ButtonSize.m,
+    AppButtonController? controller,
+    bool isDestructive = false,
+    bool isDisabled = false,
+    bool fillWidth = false,
+    double? width,
+    double? height,
+    double? radius,
+  }) {
+    return AppButton(
+      label: label,
+      onPressed: onPressed,
+      variant: ButtonVariant.secondary,
+      size: size,
+      controller: controller,
+      isDestructive: isDestructive,
+      isDisabled: isDisabled,
+      fillWidth: fillWidth,
+      width: width,
+      height: height,
+      radius: radius,
     );
-    super.initState();
   }
 
-  @override
-  void didUpdateWidget(covariant AppButton oldWidget) {
-    widget.controller?.addCallbacks(
-      startLoading: _startLoading,
-      stopLoading: _stopLoading,
-      state: this,
+  factory AppButton.outline({
+    required String label,
+    required VoidCallback? onPressed,
+    ButtonSize size = ButtonSize.m,
+    AppButtonController? controller,
+    bool isDestructive = false,
+    bool isDisabled = false,
+    bool fillWidth = false,
+    double? width,
+    double? height,
+    double? radius,
+  }) {
+    return AppButton(
+      label: label,
+      onPressed: onPressed,
+      variant: ButtonVariant.outline,
+      size: size,
+      controller: controller,
+      isDestructive: isDestructive,
+      isDisabled: isDisabled,
+      fillWidth: fillWidth,
+      width: width,
+      height: height,
+      radius: radius,
     );
-    super.didUpdateWidget(oldWidget);
   }
 
-  @override
-  void dispose() {
-    widget.controller?.addCallbacks(
-      state: null,
+  factory AppButton.ghost({
+    required String label,
+    required VoidCallback? onPressed,
+    ButtonSize size = ButtonSize.m,
+    AppButtonController? controller,
+    bool isDestructive = false,
+    bool isDisabled = false,
+  }) {
+    return AppButton(
+      label: label,
+      onPressed: onPressed,
+      variant: ButtonVariant.ghost,
+      size: size,
+      controller: controller,
+      isDestructive: isDestructive,
+      isDisabled: isDisabled,
     );
-    super.dispose();
   }
 
-  void _startLoading() => WidgetsBinding.instance.addPostFrameCallback(
-    (timeStamp) => setState(() {
-      if (!mounted) return;
-      isLoading = true;
-    }),
-  );
+  factory AppButton.link({
+    required String label,
+    required VoidCallback? onPressed,
+    ButtonSize size = ButtonSize.m,
+    AppButtonController? controller,
+    bool isDestructive = false,
+    bool isDisabled = false,
+  }) {
+    return AppButton(
+      label: label,
+      onPressed: onPressed,
+      variant: ButtonVariant.link,
+      size: size,
+      controller: controller,
+      isDestructive: isDestructive,
+      isDisabled: isDisabled,
+    );
+  }
 
-  void _stopLoading() => WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    if (!mounted) return;
-    setState(() => isLoading = false);
-  });
+  factory AppButton.withLeftIcon({
+    required String label,
+    required VoidCallback? onPressed,
+    String? icon,
+    IconData? iconData,
+    ButtonVariant variant = ButtonVariant.primary,
+    ButtonSize size = ButtonSize.m,
+    AppButtonController? controller,
+    bool isDestructive = false,
+    bool isDisabled = false,
+    bool fillWidth = false,
+    bool expandLabel = false,
+  }) {
+    return AppButton(
+      label: label,
+      onPressed: onPressed,
+      variant: variant,
+      size: size,
+      controller: controller,
+      leftIcon: icon,
+      leftIconData: iconData,
+      isDestructive: isDestructive,
+      isDisabled: isDisabled,
+      fillWidth: fillWidth,
+      expandLabel: expandLabel,
+    );
+  }
+
+  factory AppButton.withRightIcon({
+    required String label,
+    required VoidCallback? onPressed,
+    String? icon,
+    IconData? iconData,
+    ButtonVariant variant = ButtonVariant.primary,
+    ButtonSize size = ButtonSize.m,
+    AppButtonController? controller,
+    bool isDestructive = false,
+    bool isDisabled = false,
+    bool fillWidth = false,
+    bool expandLabel = false,
+  }) {
+    return AppButton(
+      label: label,
+      onPressed: onPressed,
+      variant: variant,
+      size: size,
+      controller: controller,
+      rightIcon: icon,
+      rightIconData: iconData,
+      isDestructive: isDestructive,
+      isDisabled: isDisabled,
+      fillWidth: fillWidth,
+      expandLabel: expandLabel,
+    );
+  }
+
+  factory AppButton.icon({
+    String? icon,
+    IconData? iconData,
+    required VoidCallback? onPressed,
+    ButtonVariant variant = ButtonVariant.ghost,
+    ButtonSize size = ButtonSize.m,
+    AppButtonController? controller,
+    bool isDestructive = false,
+    bool isDisabled = false,
+    double? dimension,
+    double? iconSize,
+    Color? bgColor,
+    Color? iconColor,
+    double? radius,
+  }) {
+    return AppIconButton(
+      icon: icon,
+      iconData: iconData,
+      onPressed: onPressed,
+      variant: variant,
+      size: size,
+      controller: controller,
+      isDestructive: isDestructive,
+      isDisabled: isDisabled,
+      dimension: dimension,
+      iconSize: iconSize,
+      bgColor: bgColor,
+      iconColor: iconColor,
+      radius: radius,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    Widget child;
-    if (widget.isIconButton) {
-      child = _icon(svgIconPath: widget.appIcon, iconData: widget.iconData, color: widget.iconOrTextColorOverride);
-    } else if ((widget.leftSvgIcon != null || widget.leftIconData != null) && (widget.rightAppIcon != null || widget.rightIconData != null)) {
-      child = _buttonWithLeftAndRightIcon();
-    } else if (widget.leftSvgIcon != null || widget.leftIconData != null) {
-      child = _buildWithLeftIcon();
-    } else if (widget.rightAppIcon != null || widget.rightIconData != null) {
-      child = _buildWithRightIcon();
+    if (controller != null) {
+      return ListenableBuilder(
+        listenable: controller!,
+        builder: (context, _) => _buildButton(
+          isLoading: controller!.isLoading,
+          isDisabled: isDisabled || controller!.isDisabled,
+        ),
+      );
+    }
+    return _buildButton(isLoading: false, isDisabled: isDisabled);
+  }
+
+  Widget _buildButton({required bool isLoading, required bool isDisabled}) {
+    final effectiveHeight = height ?? size._height;
+    final effectiveRadius = radius ?? kBorderRadius;
+    final effectivePadding = padding ?? size._padding;
+
+    final bg = bgColor ?? _backgroundColor(isDisabled);
+    final fg = foregroundColor ?? _foregroundColor(isDisabled);
+    final border = borderColor ?? _borderColor(isDisabled);
+
+    final borderRadius = BorderRadius.circular(effectiveRadius);
+
+    Widget content;
+    if (isLoading) {
+      content = CommonLoader(size: size._height);
     } else {
-      child = _buildTextButton();
+      content = _ContentRow(
+        label: _Label(
+          text: label,
+          style: size._textStyle.copyWith(color: fg),
+          isUnderlined: variant == ButtonVariant.link,
+        ),
+        leftIcon: _buildIcon(leftIcon, leftIconData, fg),
+        rightIcon: _buildIcon(rightIcon, rightIconData, fg),
+        gap: size._gap,
+        expandLabel: expandLabel,
+      );
     }
 
-    // Avoid using `Center` because it will take unlimited space
-    final Widget centeredChild = Stack(
-      alignment: Alignment.center,
-      children: [
-        isLoading ? _loader() : child,
-      ],
-    );
-
-    final decoration = widget.style.decoration(
-      widget.state,
-      isDestructive: widget.isDestructive,
-      bgColorOverride: widget.bgColorOverride,
-      borderColorOverride: widget.borderColorOverride,
-      radiusOverride: widget.radiusOverride,
-      size: widget.size,
-    );
-
-    final borderRadius = BorderRadius.circular(widget.radiusOverride ?? kBorderRadius);
-
-    final Widget view = SizedBox(
-      height: widget.heightOverride ?? widget.size.height,
-      width: widget.isIconButton
-          ? widget.heightOverride ?? widget.size.height
-          : widget.fillWidth
-          ? double.infinity
-          : widget.width,
+    return SizedBox(
+      height: effectiveHeight,
+      width: fillWidth ? double.infinity : width,
       child: Material(
-        elevation: widget.elevation,
-        color: decoration?.color,
-        shadowColor: const Color(0xFF181B25).withValues(alpha: 0.04),
-
+        elevation: elevation,
+        color: bg,
+        shadowColor: AppState.colors.shadesBlack.withValues(alpha: 0.35),
         shape: RoundedRectangleBorder(
           borderRadius: borderRadius,
-          side: widget.style == AppButtonStyle.outline
-              ? BorderSide(
-                  color: widget.borderColorOverride ?? widget.style._getOutlineStateBorderColor(widget.state, widget.isDestructive),
-                )
-              : BorderSide.none,
+          side: border != null ? BorderSide(color: border) : BorderSide.none,
         ),
         child: InkWell(
-          onTapDown: widget.shouldUseOnPanDown ? (_) => widget.onPressed?.call() : null,
-          onTap: !widget.shouldUseOnPanDown && widget.state != AppButtonState.disabled
-              ? () {
-                  if (isLoading) return;
-                  widget.onPressed?.call();
-                }
-              : null,
-
+          onTap: isDisabled || isLoading ? null : onPressed,
           borderRadius: borderRadius,
           child: Padding(
-            padding: widget.padding ?? _padding() ?? EdgeInsets.zero,
-            child: centeredChild,
+            padding: effectivePadding,
+            child: Center(child: content),
           ),
         ),
       ),
     );
-
-    return view;
   }
 
-  Widget _loader() {
-    if (Platform.isAndroid) {
-      final size = widget.size.height * 0.4;
-      return SizedBox(
-        height: size,
-        width: size,
-        child: CircularProgressIndicator(
-          color: widget.iconOrTextColorOverride ?? widget.style.getTextColor(widget.state, isDestructive: widget.isDestructive),
-          strokeWidth: size * 0.1,
-        ),
-      );
+  Widget? _buildIcon(String? svgPath, IconData? iconData, Color color) {
+    if (svgPath == null && iconData == null) return null;
+    if (svgPath != null) {
+      return AppIcon(svgPath, color: color, size: size._iconSize);
     }
-    return CupertinoActivityIndicator(
-      color: widget.iconOrTextColorOverride ?? widget.style.getTextColor(widget.state, isDestructive: widget.isDestructive),
-      radius: (widget.size.textStyle.fontSize ?? 10) * 0.6,
-    );
+    return Icon(iconData, color: color, size: size._iconSize);
   }
 
-  Widget _buttonWithLeftAndRightIcon() {
-    return Row(
-      children: [
-        _icon(svgIconPath: widget.leftSvgIcon, iconData: widget.leftIconData),
-        const Spacer(),
-        _getText(),
-        const Spacer(),
-        _icon(svgIconPath: widget.rightAppIcon, iconData: widget.rightIconData),
-      ],
-    );
+  Color _backgroundColor(bool disabled) {
+    if (disabled) return AppState.colors.bgNeutralDisabled;
+
+    return switch (variant) {
+      ButtonVariant.primary => isDestructive ? AppState.colors.bgErrorDefault : AppState.colors.bgBrandDefault,
+      ButtonVariant.secondary => isDestructive ? AppState.colors.bgErrorLight50 : AppState.colors.bgBrandLight50,
+      ButtonVariant.outline => AppState.colors.bgShadesWhite,
+      ButtonVariant.ghost => Colors.transparent,
+      ButtonVariant.link => Colors.transparent,
+    };
   }
 
-  Widget _buildWithLeftIcon() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _icon(
-          svgIconPath: widget.leftSvgIcon,
-          iconData: widget.leftIconData,
-          color: widget.state == AppButtonState.disabled ? context.colors.textNeutralDisable : widget.leftIconColor,
-        ),
-        widget.isExpandLabel ? const Spacer() : const SizedBox(width: 13),
-        _getText(),
-        widget.isExpandLabel ? const Spacer() : const SizedBox(),
-      ],
-    );
+  Color _foregroundColor(bool disabled) {
+    if (disabled) return AppState.colors.textNeutralDisable;
+
+    return switch (variant) {
+      ButtonVariant.primary => AppState.colors.textNeutralWhite,
+      ButtonVariant.secondary => isDestructive ? AppState.colors.textErrorSecondary : AppState.colors.textBrandSecondary,
+      ButtonVariant.outline => isDestructive ? AppState.colors.textErrorSecondary : AppState.colors.textNeutralPrimary,
+      ButtonVariant.ghost => isDestructive ? AppState.colors.textErrorSecondary : AppState.colors.textBrandSecondary,
+      ButtonVariant.link => isDestructive ? AppState.colors.textErrorSecondary : AppState.colors.textBrandSecondary,
+    };
   }
 
-  Widget _buildWithRightIcon() {
-    return Row(
-      children: [
-        const Spacer(),
-        _getText(),
-        const Spacer(),
-        _icon(svgIconPath: widget.rightAppIcon, iconData: widget.rightIconData),
-      ],
-    );
-  }
-
-  /*  Widget _wrapIt(List<Widget> children) {
-    return Wrap(
-      spacing: size.gap,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      children: children,
-    );
-  }*/
-  Widget _buildTextButton() {
-    return _getText();
-  }
-
-  // Common
-  Text _getText() {
-    return Text(
-      widget.label!,
-      textAlign: TextAlign.center,
-      style: widget.size.textStyle.copyWith(
-        color: _getTextColor(),
-        fontWeight: _getFontWeight(),
-        decorationColor: widget.textDecorationColor,
-        height: 0,
-        decoration: widget.style == AppButtonStyle.link ? TextDecoration.underline : null,
-      ),
-      maxLines: 1,
-    );
-  }
-
-  Widget _icon({String? svgIconPath, IconData? iconData, Color? color}) {
-    if (svgIconPath != null) {
-      return AppIcon(
-        svgIconPath,
-        color: color,
-        size: widget.size.iconSize,
-        shouldIgnoreColorFilter: widget.leftIconColor == null,
-      );
-    } else if (iconData != null) {
-      return SizedBox(
-        height: widget.heightOverride,
-        width: widget.width,
-        child: Icon(
-          iconData,
-          color: color,
-          size: widget.size.iconSize,
-        ),
-      );
-    } else {
-      return const SizedBox.shrink();
-    }
-  }
-
-  Color _getTextColor() {
-    if (widget.iconOrTextColorOverride != null) {
-      return widget.iconOrTextColorOverride!;
-    }
-    if (isLoading) {
-      return Colors.transparent;
-    } else {
-      return widget.style.getTextColor(widget.state, isDestructive: widget.isDestructive);
-    }
-  }
-
-  FontWeight? _getFontWeight() {
-    return widget.size.textStyle.fontWeight;
-  }
-
-  EdgeInsets? _padding() {
-    if (widget.isIconButton) {
-      return EdgeInsets.zero;
-    }
-    switch (widget.style) {
-      case AppButtonStyle.primary:
-      case AppButtonStyle.secondary:
-      case AppButtonStyle.outline:
-        return widget.size.padding;
-      case AppButtonStyle.link:
-      case AppButtonStyle.textOrIcon:
-        return EdgeInsets.zero;
-    }
+  Color? _borderColor(bool disabled) {
+    if (variant != ButtonVariant.outline) return null;
+    if (disabled) return Colors.transparent;
+    return isDestructive ? AppState.colors.strokeErrorDisabled : AppState.colors.strokeNeutralLight200;
   }
 }
 
-class AppButtonController {
-  void Function()? _startLoading;
-  void Function()? _stopLoading;
-  _AppButtonState? _state;
+class AppIconButton extends AppButton {
+  const AppIconButton({
+    super.key,
+    this.icon,
+    this.iconData,
+    required super.onPressed,
+    super.variant = ButtonVariant.ghost,
+    super.size,
+    super.controller,
+    super.isDestructive,
+    super.isDisabled,
+    this.dimension,
+    this.iconSize,
+    super.bgColor,
+    this.iconColor,
+    super.radius,
+  }) : assert(icon != null || iconData != null),
+       super(label: '');
 
-  void addCallbacks({void Function()? startLoading, void Function()? stopLoading, required _AppButtonState? state}) {
-    _startLoading = startLoading;
-    _stopLoading = stopLoading;
-    _state = state;
+  final String? icon;
+  final IconData? iconData;
+  final double? dimension;
+  final double? iconSize;
+  final Color? iconColor;
+
+  factory AppIconButton.primary({
+    String? icon,
+    IconData? iconData,
+    required VoidCallback? onPressed,
+    ButtonSize size = ButtonSize.m,
+    AppButtonController? controller,
+    bool isDestructive = false,
+    bool isDisabled = false,
+    double? dimension,
+  }) {
+    return AppIconButton(
+      icon: icon,
+      iconData: iconData,
+      onPressed: onPressed,
+      variant: ButtonVariant.primary,
+      size: size,
+      controller: controller,
+      isDestructive: isDestructive,
+      isDisabled: isDisabled,
+      dimension: dimension,
+    );
   }
 
-  bool get isLoading => _state?.isLoading ?? false;
-
-  void startLoading() {
-    if (_startLoading == null) {
-      xPrint("Button controller is not bound", title: "AppButtonController");
-      return;
-    }
-    _startLoading!.call();
+  factory AppIconButton.outline({
+    String? icon,
+    IconData? iconData,
+    required VoidCallback? onPressed,
+    ButtonSize size = ButtonSize.m,
+    AppButtonController? controller,
+    bool isDestructive = false,
+    bool isDisabled = false,
+    double? dimension,
+  }) {
+    return AppIconButton(
+      icon: icon,
+      iconData: iconData,
+      onPressed: onPressed,
+      variant: ButtonVariant.outline,
+      size: size,
+      controller: controller,
+      isDestructive: isDestructive,
+      isDisabled: isDisabled,
+      dimension: dimension,
+    );
   }
 
-  void stopLoading() {
-    if (_startLoading == null) {
-      xPrint("Button controller is not bound", title: "AppButtonController");
-      return;
+  factory AppIconButton.ghost({
+    String? icon,
+    IconData? iconData,
+    required VoidCallback? onPressed,
+    ButtonSize size = ButtonSize.m,
+    AppButtonController? controller,
+    bool isDestructive = false,
+    bool isDisabled = false,
+    double? dimension,
+    Color? iconColor,
+  }) {
+    return AppIconButton(
+      icon: icon,
+      iconData: iconData,
+      onPressed: onPressed,
+      size: size,
+      controller: controller,
+      isDestructive: isDestructive,
+      isDisabled: isDisabled,
+      dimension: dimension,
+      iconColor: iconColor,
+    );
+  }
+
+  factory AppIconButton.secondary({
+    String? icon,
+    IconData? iconData,
+    required VoidCallback? onPressed,
+    ButtonSize size = ButtonSize.m,
+    AppButtonController? controller,
+    bool isDestructive = false,
+    bool isDisabled = false,
+    double? dimension,
+  }) {
+    return AppIconButton(
+      icon: icon,
+      iconData: iconData,
+      onPressed: onPressed,
+      variant: ButtonVariant.secondary,
+      size: size,
+      controller: controller,
+      isDestructive: isDestructive,
+      isDisabled: isDisabled,
+      dimension: dimension,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (controller != null) {
+      return ListenableBuilder(
+        listenable: controller!,
+        builder: (context, _) => _buildButton(
+          isLoading: controller!.isLoading,
+          isDisabled: isDisabled || controller!.isDisabled,
+        ),
+      );
     }
-    _stopLoading!.call();
+    return _buildButton(isLoading: false, isDisabled: isDisabled);
+  }
+
+  @override
+  Widget _buildButton({required bool isLoading, required bool isDisabled}) {
+    final effectiveDimension = dimension ?? size._height;
+    final effectiveIconSize = iconSize ?? size._iconSize;
+    final effectiveRadius = radius ?? effectiveDimension / 2;
+
+    final bg = bgColor ?? _backgroundColor(isDisabled);
+    final fg = iconColor ?? _foregroundColor(isDisabled);
+    final border = _borderColor(isDisabled);
+
+    final borderRadius = BorderRadius.circular(effectiveRadius);
+
+    Widget content;
+    if (isLoading) {
+      content = CommonLoader(size: size._height);
+    } else {
+      if (icon != null) {
+        content = AppIcon(icon!, color: fg, size: effectiveIconSize);
+      } else {
+        content = Icon(iconData, color: fg, size: effectiveIconSize);
+      }
+    }
+
+    return SizedBox(
+      height: effectiveDimension,
+      width: effectiveDimension,
+      child: Material(
+        color: bg,
+        shape: RoundedRectangleBorder(
+          borderRadius: borderRadius,
+          side: border != null ? BorderSide(color: border) : BorderSide.none,
+        ),
+        child: InkWell(
+          onTap: isDisabled || isLoading ? null : onPressed,
+          borderRadius: borderRadius,
+          child: Center(child: content),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Color _backgroundColor(bool disabled) {
+    if (disabled) return AppState.colors.bgNeutralDisabled;
+
+    return switch (variant) {
+      ButtonVariant.primary => isDestructive ? AppState.colors.bgErrorDefault : AppState.colors.bgBrandDefault,
+      ButtonVariant.secondary => isDestructive ? AppState.colors.bgErrorLight50 : AppState.colors.bgBrandLight50,
+      ButtonVariant.outline => AppState.colors.bgShadesWhite,
+      ButtonVariant.ghost => Colors.transparent,
+      ButtonVariant.link => Colors.transparent,
+    };
+  }
+
+  @override
+  Color _foregroundColor(bool disabled) {
+    if (disabled) return AppState.colors.textNeutralDisable;
+
+    return switch (variant) {
+      ButtonVariant.primary => AppState.colors.textNeutralWhite,
+      ButtonVariant.secondary => isDestructive ? AppState.colors.textErrorSecondary : AppState.colors.textBrandSecondary,
+      ButtonVariant.outline => isDestructive ? AppState.colors.textErrorSecondary : AppState.colors.textNeutralPrimary,
+      ButtonVariant.ghost => isDestructive ? AppState.colors.textErrorSecondary : AppState.colors.textBrandSecondary,
+      ButtonVariant.link => isDestructive ? AppState.colors.textErrorSecondary : AppState.colors.textBrandSecondary,
+    };
+  }
+
+  @override
+  Color? _borderColor(bool disabled) {
+    if (variant != ButtonVariant.outline) return null;
+    if (disabled) return Colors.transparent;
+    return isDestructive ? AppState.colors.strokeErrorDisabled : AppState.colors.strokeNeutralLight200;
+  }
+}
+
+extension on ButtonSize {
+  double get _height => switch (this) {
+    ButtonSize.xs => 30,
+    ButtonSize.s => 36,
+    ButtonSize.m => 40,
+    ButtonSize.l => 46,
+    ButtonSize.xl => 56,
+  };
+
+  TextStyle get _textStyle => switch (this) {
+    ButtonSize.xs => AppTextStyles.p4Medium,
+    ButtonSize.s => AppTextStyles.p3Medium,
+    ButtonSize.m => AppTextStyles.p3Medium,
+    ButtonSize.l => AppTextStyles.p3Bold,
+    ButtonSize.xl => AppTextStyles.p2SemiBold,
+  };
+
+  EdgeInsets get _padding => switch (this) {
+    ButtonSize.xs => const EdgeInsets.symmetric(horizontal: 14),
+    ButtonSize.s => const EdgeInsets.symmetric(horizontal: 18),
+    ButtonSize.m => const EdgeInsets.symmetric(horizontal: 20),
+    ButtonSize.l => const EdgeInsets.symmetric(horizontal: 22),
+    ButtonSize.xl => const EdgeInsets.symmetric(horizontal: 24),
+  };
+
+  double get _iconSize => switch (this) {
+    ButtonSize.xs => 16,
+    ButtonSize.s => 20,
+    ButtonSize.m => 20,
+    ButtonSize.l => 22,
+    ButtonSize.xl => 24,
+  };
+
+  double get _gap => switch (this) {
+    ButtonSize.xs => 6,
+    ButtonSize.s => 8,
+    ButtonSize.m => 10,
+    ButtonSize.l => 10,
+    ButtonSize.xl => 12,
+  };
+}
+
+class _Label extends StatelessWidget {
+  const _Label({required this.text, required this.style, this.isUnderlined = false});
+
+  final String text;
+  final TextStyle style;
+  final bool isUnderlined;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      textAlign: TextAlign.center,
+      maxLines: 1,
+      style: style.copyWith(
+        height: 0,
+        decoration: isUnderlined ? TextDecoration.underline : null,
+      ),
+    );
+  }
+}
+
+class _ContentRow extends StatelessWidget {
+  const _ContentRow({
+    required this.label,
+    this.leftIcon,
+    this.rightIcon,
+    required this.gap,
+    this.expandLabel = false,
+  });
+
+  final Widget label;
+  final Widget? leftIcon;
+  final Widget? rightIcon;
+  final double gap;
+  final bool expandLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    if (leftIcon == null && rightIcon == null) return label;
+
+    return Row(
+      mainAxisSize: expandLabel ? MainAxisSize.max : MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        if (leftIcon != null) ...[
+          leftIcon!,
+          if (expandLabel) const Spacer() else SizedBox(width: gap),
+        ],
+        label,
+        if (rightIcon != null) ...[
+          if (expandLabel) const Spacer() else SizedBox(width: gap),
+          rightIcon!,
+        ],
+      ],
+    );
   }
 }
