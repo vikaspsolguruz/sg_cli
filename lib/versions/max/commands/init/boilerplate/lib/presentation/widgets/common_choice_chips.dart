@@ -100,8 +100,8 @@ class CommonChoiceChips<T> extends StatelessWidget {
               isSelected: item == selectedItem,
               text: getLabel(item),
               onPressed: () => onChanged(item),
-              selectedBorderColor: selectedBorderColor ?? greenSecondary.shade700,
-              selectedBgColor: selectedBgColor ?? greenSecondary.shade50,
+              selectedBorderColor: selectedBorderColor ?? secondary.shade700,
+              selectedBgColor: selectedBgColor ?? secondary.shade50,
               readOnly: readOnly,
             ),
           );

@@ -26,13 +26,13 @@ class AppColors {
   Color get textBrandLight => isDarkMode ? brand.shade800 : brand.shade100;
 
   // Green(Secondary)
-  Color get textSecondaryPrimary => isDarkMode ? greenSecondary.shade50 : greenSecondary.shade900;
+  Color get textSecondaryPrimary => isDarkMode ? secondary.shade50 : secondary.shade900;
 
-  Color get textSecondarySecondary => isDarkMode ? greenSecondary.shade400 : greenSecondary.shade600;
+  Color get textSecondarySecondary => isDarkMode ? secondary.shade400 : secondary.shade600;
 
-  Color get textSecondaryDisable => isDarkMode ? greenSecondary.shade600 : greenSecondary.shade400;
+  Color get textSecondaryDisable => isDarkMode ? secondary.shade600 : secondary.shade400;
 
-  Color get textSecondaryLight => isDarkMode ? greenSecondary.shade800 : greenSecondary.shade100;
+  Color get textSecondaryLight => isDarkMode ? secondary.shade800 : secondary.shade100;
 
   // Yellow (Warning)
   Color get textWarningPrimary => isDarkMode ? yellow.shade50 : yellow.shade900;
@@ -89,19 +89,19 @@ class AppColors {
   Color get bgBrandLight200 => isDarkMode ? brand.shade600.withValues(alpha: 0.15) : brand.shade200;
 
   // Green (Secondary)
-  Color get bgSecondaryDefault => isDarkMode ? greenSecondary.shade400 : greenSecondary.shade900;
+  Color get bgSecondaryDefault => isDarkMode ? secondary.shade400 : secondary.shade900;
 
-  Color get bgSecondaryHover => isDarkMode ? greenSecondary.shade300 : greenSecondary.shade500;
+  Color get bgSecondaryHover => isDarkMode ? secondary.shade300 : secondary.shade500;
 
-  Color get bgSecondaryPressed => isDarkMode ? greenSecondary.shade500 : greenSecondary.shade700;
+  Color get bgSecondaryPressed => isDarkMode ? secondary.shade500 : secondary.shade700;
 
-  Color get bgSecondaryDisabled => isDarkMode ? greenSecondary.shade200 : greenSecondary.shade300;
+  Color get bgSecondaryDisabled => isDarkMode ? secondary.shade200 : secondary.shade300;
 
-  Color get bgSecondaryLight50 => isDarkMode ? greenSecondary.shade600.withValues(alpha: 0.30) : greenSecondary.shade50;
+  Color get bgSecondaryLight50 => isDarkMode ? secondary.shade600.withValues(alpha: 0.30) : secondary.shade50;
 
-  Color get bgSecondaryLight100 => isDarkMode ? greenSecondary.shade600.withValues(alpha: 0.50) : greenSecondary.shade100;
+  Color get bgSecondaryLight100 => isDarkMode ? secondary.shade600.withValues(alpha: 0.50) : secondary.shade100;
 
-  Color get bgSecondaryLight200 => isDarkMode ? greenSecondary.shade600.withValues(alpha: 0.15) : greenSecondary.shade200;
+  Color get bgSecondaryLight200 => isDarkMode ? secondary.shade600.withValues(alpha: 0.15) : secondary.shade200;
 
   // Yellow (Warning)
   Color get bgWarningDefault => isDarkMode ? yellow.shade400 : yellow.shade600;
@@ -180,19 +180,19 @@ class AppColors {
   Color get iconBrandDisabled => isDarkMode ? brand.shade600 : brand.shade300;
 
   // Secondary
-  Color get iconSecondaryDefault => isDarkMode ? greenSecondary.shade200 : greenSecondary.shade900;
+  Color get iconSecondaryDefault => isDarkMode ? secondary.shade200 : secondary.shade900;
 
-  Color get iconSecondaryHover => isDarkMode ? greenSecondary.shade300 : greenSecondary.shade500;
+  Color get iconSecondaryHover => isDarkMode ? secondary.shade300 : secondary.shade500;
 
-  Color get iconSecondaryPressed => isDarkMode ? greenSecondary.shade400 : greenSecondary.shade400;
+  Color get iconSecondaryPressed => isDarkMode ? secondary.shade400 : secondary.shade400;
 
-  Color get iconSecondaryDisabled => isDarkMode ? greenSecondary.shade500 : greenSecondary.shade300;
+  Color get iconSecondaryDisabled => isDarkMode ? secondary.shade500 : secondary.shade300;
 
-  Color get iconSecondaryLight50 => isDarkMode ? greenSecondary.shade600.withValues(alpha: 0.30) : greenSecondary.shade50;
+  Color get iconSecondaryLight50 => isDarkMode ? secondary.shade600.withValues(alpha: 0.30) : secondary.shade50;
 
-  Color get iconSecondaryLight100 => isDarkMode ? greenSecondary.shade600.withValues(alpha: 0.50) : greenSecondary.shade100;
+  Color get iconSecondaryLight100 => isDarkMode ? secondary.shade600.withValues(alpha: 0.50) : secondary.shade100;
 
-  Color get iconSecondaryLight200 => isDarkMode ? greenSecondary.shade600.withValues(alpha: 0.15) : greenSecondary.shade200;
+  Color get iconSecondaryLight200 => isDarkMode ? secondary.shade600.withValues(alpha: 0.15) : secondary.shade200;
 
   // Yellow (Warning)
   Color get iconWarningDefault => isDarkMode ? yellow.shade200 : yellow.shade900;
@@ -299,39 +299,25 @@ const MaterialColor brand = MaterialColor(0xFFE36B14, <int, Color>{
   300: Color(0xFFF8C479),
   400: Color(0xFFF4A143),
   500: Color(0xFFF1841E),
-  600: Color(0xFFE36B14), // This is typically your primary color
+  600: Color(0xFFE36B14), // default color
   700: Color(0xFFBC5112),
   800: Color(0xFF954017),
   900: Color(0xFF783716),
   950: Color(0xFF411E0C),
 });
 
-const MaterialColor greenSecondary = MaterialColor(0xFF3DB688, <int, Color>{
+const MaterialColor secondary = MaterialColor(0xFF3DB688, <int, Color>{
   50: Color(0xFFF1FAF7),
   100: Color(0xFFDEF4EC),
   200: Color(0xFFBFEAD9),
   300: Color(0xFF8ED9BC),
   400: Color(0xFF58C79D),
-  500: Color(0xFF3DB688), // This is typically your primary color
+  500: Color(0xFF3DB688), // default color
   600: Color(0xFF339871),
   700: Color(0xFF287758),
   800: Color(0xFF1F5C45),
   900: Color(0xFF194A37),
   950: Color(0xFF0F2C20),
-});
-
-const MaterialColor indigo = MaterialColor(0xFF6366F1, <int, Color>{
-  50: Color(0xFFEEF2FF),
-  100: Color(0xFFE0E7FF),
-  200: Color(0xFFC7D2FE),
-  300: Color(0xFFA5B4FC),
-  400: Color(0xFF818CF8),
-  500: Color(0xFF6366F1), // This is typically your primary color
-  600: Color(0xFF4F46E5),
-  700: Color(0xFF4338CA),
-  800: Color(0xFF3730A3),
-  900: Color(0xFF312E81),
-  950: Color(0xFF122368),
 });
 
 const MaterialColor yellow = MaterialColor(0xFFF59E0B, <int, Color>{
@@ -340,7 +326,7 @@ const MaterialColor yellow = MaterialColor(0xFFF59E0B, <int, Color>{
   200: Color(0xFFFDE68A),
   300: Color(0xFFFDE047),
   400: Color(0xFFFBBF24),
-  500: Color(0xFFF59E0B), // This is typically your primary color
+  500: Color(0xFFF59E0B), // default color
   600: Color(0xFFD97706),
   700: Color(0xFFB45309),
   800: Color(0xFF92400E),
@@ -354,7 +340,7 @@ const MaterialColor red = MaterialColor(0xFFDC2626, <int, Color>{
   200: Color(0xFFFECACA),
   300: Color(0xFFFCA5A5),
   400: Color(0xFFF87171),
-  500: Color(0xFFDC2626), // This is typically your primary color
+  500: Color(0xFFDC2626), // default color
   600: Color(0xFFDC2626),
   700: Color(0xFFB91C1C),
   800: Color(0xFF991B1B),
@@ -368,7 +354,7 @@ const MaterialColor green = MaterialColor(0xFF22C55E, <int, Color>{
   200: Color(0xFFBBF7D0),
   300: Color(0xFF86EFAC),
   400: Color(0xFF4ADE80),
-  500: Color(0xFF22C55E), // This is typically your primary color
+  500: Color(0xFF22C55E), // default color
   600: Color(0xFF16A34A),
   700: Color(0xFF15803D),
   800: Color(0xFF166534),
@@ -376,61 +362,6 @@ const MaterialColor green = MaterialColor(0xFF22C55E, <int, Color>{
   950: Color(0xFF052E16),
 });
 
-const MaterialColor lime = MaterialColor(0xFF84CC16, <int, Color>{
-  50: Color(0xFFF7FEE7),
-  100: Color(0xFFECFCCB),
-  200: Color(0xFFD9F99D),
-  300: Color(0xFFBEF264),
-  400: Color(0xFFA3E635),
-  500: Color(0xFF84CC16), // This is typically your primary color
-  600: Color(0xFF65A30D),
-  700: Color(0xFF4D7C0F),
-  800: Color(0xFF3F6212),
-  900: Color(0xFF365314),
-  950: Color(0xFF1B290A),
-});
-
-const MaterialColor purple = MaterialColor(0xFFA855F7, <int, Color>{
-  50: Color(0xFFFAF5FF),
-  100: Color(0xFFF3E8FF),
-  200: Color(0xFFE9D5FF),
-  300: Color(0xFFD8B4FE),
-  400: Color(0xFFC084FC),
-  500: Color(0xFFA855F7), // This is typically your primary color
-  600: Color(0xFF9333EA),
-  700: Color(0xFF7E22CE),
-  800: Color(0xFF6B21A8),
-  900: Color(0xFF581C87),
-  950: Color(0xFF32104C),
-});
-
-const MaterialColor fuchsia = MaterialColor(0xFFD946EF, <int, Color>{
-  50: Color(0xFFFDF4FF),
-  100: Color(0xFFFAE8FF),
-  200: Color(0xFFF5D0FE),
-  300: Color(0xFFF0ABFC),
-  400: Color(0xFFE879F9),
-  500: Color(0xFFD946EF), // This is typically your primary color
-  600: Color(0xFFC026D3),
-  700: Color(0xFFA21CAF),
-  800: Color(0xFF86198F),
-  900: Color(0xFF701A75),
-  950: Color(0xFF4A044E),
-});
-
-const MaterialColor pink = MaterialColor(0xFFEC4899, <int, Color>{
-  50: Color(0xFFFDF2F8),
-  100: Color(0xFFFCE7F3),
-  200: Color(0xFFFBCFE8),
-  300: Color(0xFFF9A8D4),
-  400: Color(0xFFF472B6),
-  500: Color(0xFFEC4899), // This is typically your primary color
-  600: Color(0xFFDB2777),
-  700: Color(0xFFBE185D),
-  800: Color(0xFF9D174D),
-  900: Color(0xFF831843),
-  950: Color(0xFF500724),
-});
 
 const MaterialColor neutral = MaterialColor(0xFF7C7C7C, <int, Color>{
   50: Color(0xFFF8F8F8),
@@ -438,24 +369,10 @@ const MaterialColor neutral = MaterialColor(0xFF7C7C7C, <int, Color>{
   200: Color(0xFFDCDCDC),
   300: Color(0xFFBDBDBD),
   400: Color(0xFF989898),
-  500: Color(0xFF7C7C7C), // This is typically your primary color
+  500: Color(0xFF7C7C7C), // default color
   600: Color(0xFF656565),
   700: Color(0xFF525252),
   800: Color(0xFF464646),
   900: Color(0xFF262626),
   950: Color(0xFF1F1F1F),
-});
-
-const MaterialColor dark = MaterialColor(0xFF2C2D31, <int, Color>{
-  50: Color(0xFF3D3D41),
-  100: Color(0xFF38393C),
-  200: Color(0xFF36363A),
-  300: Color(0xFF333437),
-  400: Color(0xFF2E2F33),
-  500: Color(0xFF2C2D31), // This is typically your primary color
-  600: Color(0xFF272820),
-  700: Color(0xFF25262A),
-  800: Color(0xFF232427),
-  900: Color(0xFF1E1F23),
-  950: Color(0xFF121317),
 });

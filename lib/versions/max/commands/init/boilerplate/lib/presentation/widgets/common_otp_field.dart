@@ -50,7 +50,6 @@ class _CommonOtpFieldState extends State<CommonOtpField> {
       ],
       animationType: AnimationType.fade,
 
-      // focusNode: bloc.focusNode,
       textStyle: AppTextStyles.h4Medium.copyWith(color: context.colors.shadesBlack, height: 36 / 28),
       controller: widget.controller,
       pinTheme: PinTheme(
@@ -75,7 +74,6 @@ class _CommonOtpFieldState extends State<CommonOtpField> {
       keyboardType: TextInputType.number,
       mainAxisAlignment: MainAxisAlignment.center,
       onCompleted: widget.onCompleted,
-      onTap: () {},
       onChanged: (value) {
         if (value.isEmpty) {
           FocusManager.instance.primaryFocus?.unfocus();
