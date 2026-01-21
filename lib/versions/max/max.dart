@@ -63,7 +63,9 @@ class Max {
   Max._();
 
   static void runCommand() {
-    bool isHelpCommand = arguments.isEmpty || (arguments.length == 1 && (arguments[0] == 'help' || arguments[0] == '--help' || arguments[0] == '-h'));
+    bool isHelpCommand =
+        arguments.isEmpty ||
+        (arguments.length == 1 && (arguments[0] == 'help' || arguments[0] == '--help' || arguments[0] == '-help' || arguments[0] == '-h' || arguments[0] == 'h'));
     bool isInitCommand = arguments.length == 1 && arguments[0] == 'init';
     bool isSetupFlavorsCommand = arguments.length == 1 && arguments[0] == 'setup_flavors';
     bool isSetupDeeplinkCommand = arguments.length == 1 && arguments[0] == 'setup_deeplink';

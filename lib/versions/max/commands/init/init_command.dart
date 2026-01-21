@@ -4,6 +4,12 @@ void _initProject() {
   // Get current project name from pubspec.yaml
   _moduleName = getModuleName();
 
+  final pubspecFile = File('pubspec.yaml');
+  if (!pubspecFile.existsSync()) {
+    ConsoleLogger.error("Sorry, This is not a flutter project");
+    return;
+  }
+
   ConsoleLogger.warning('This will replace your current project structure with max architecture.');
   ConsoleLogger.raw(' ❒  lib/ folder will be regenerated');
   ConsoleLogger.info('Dependencies will be updated');
@@ -165,7 +171,7 @@ void _updatePubspecDependencies() {
   final currentLines = currentContent.split('\n');
   final projectName = _extractProjectName(currentLines);
   final projectDescription = _extractProjectDescription(currentLines);
-  
+
   // Extract app label and package ID for patrol configuration
   final appLabel = _getAppLabel();
   final packageId = _getBasePackageId();
@@ -173,7 +179,7 @@ void _updatePubspecDependencies() {
   // Read boilerplate and replace name/description/patrol config
   final boilerplateLines = boilerplateContent.split('\n');
   final updatedLines = <String>[];
-  
+
   bool inPatrolSection = false;
 
   for (final line in boilerplateLines) {
@@ -250,7 +256,7 @@ void _copyTests() {
 
 void _copyIntegrationTests() {
   ConsoleLogger.raw('🧪  Copying integration tests...');
-  
+
   final integrationTestsSource = Directory('${_getBoilerplatePath()}/integration_test');
   final integrationTestsTarget = Directory('integration_test');
 
