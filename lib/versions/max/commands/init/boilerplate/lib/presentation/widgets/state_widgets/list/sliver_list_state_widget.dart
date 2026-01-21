@@ -30,6 +30,8 @@ class SliverListStateWidget<B extends StateStreamable<S>, S, I> extends Stateles
 
   final ListState<I> Function(S state) listStateSelector;
   final Widget Function(BuildContext context, I item, int index) itemBuilder;
+  final Widget Function(BuildContext, int)? separatorBuilder;
+
   final void Function(S state)? onLoadMore;
   final VoidCallback? onRetryError;
   final VoidCallback? onRetryEmpty;
@@ -39,7 +41,6 @@ class SliverListStateWidget<B extends StateStreamable<S>, S, I> extends Stateles
   final String Function(B bloc, List<I> items)? emptyTitle;
   final String Function(B bloc, List<I> items)? emptySubtitle;
   final String Function(B bloc, List<I> items)? svgPath;
-  final Widget Function(BuildContext, int)? separatorBuilder;
 
   final Widget? loaderView;
   final Widget? errorView;
@@ -48,6 +49,7 @@ class SliverListStateWidget<B extends StateStreamable<S>, S, I> extends Stateles
   final bool addAutomaticKeepAlives;
   final bool addRepaintBoundaries;
   final bool addSemanticIndexes;
+
   final bool isExpanded;
   final EdgeInsetsGeometry padding;
 

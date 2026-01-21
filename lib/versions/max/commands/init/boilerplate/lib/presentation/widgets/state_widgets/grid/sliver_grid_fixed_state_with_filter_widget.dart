@@ -28,10 +28,7 @@ class SliverGridFixedStateWithFilterWidget<B extends StateStreamable<S>, S, I, F
     this.padding = EdgeInsets.zero,
   });
 
-  final bool isExpanded;
-
   final ListStateWithFilter<I, F> Function(S state) stateSelector;
-
   final Widget Function(BuildContext context, I item, int index) itemBuilder;
 
   final int crossAxisCount;
@@ -46,6 +43,7 @@ class SliverGridFixedStateWithFilterWidget<B extends StateStreamable<S>, S, I, F
   final String Function(B bloc, List<I> items)? emptyTitle;
   final String? Function(B bloc, List<I> items)? emptySubtitle;
   final String? Function(B bloc, List<I>? items)? svgPath;
+
   final Widget? loaderView;
   final Widget? errorView;
   final Widget? emptyView;
@@ -53,11 +51,13 @@ class SliverGridFixedStateWithFilterWidget<B extends StateStreamable<S>, S, I, F
   final bool addAutomaticKeepAlives;
   final bool addRepaintBoundaries;
   final bool addSemanticIndexes;
+
+  final bool isExpanded;
   final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
-    return SliverGridStateWithFilterWidget<B, S, I, F>(
+    return _SliverGridStateWithFilterWidget<B, S, I, F>(
       padding: padding,
       isExpanded: isExpanded,
       stateSelector: stateSelector,

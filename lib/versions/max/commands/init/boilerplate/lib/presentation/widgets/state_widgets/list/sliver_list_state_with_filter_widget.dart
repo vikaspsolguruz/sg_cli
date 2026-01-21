@@ -24,9 +24,7 @@ class SliverListStateWithFilterWidget<B extends StateStreamable<S>, S, I, F exte
   });
 
   final ListStateWithFilter<I, F> Function(S state) stateSelector;
-
   final Widget Function(BuildContext context, I item, int index) itemBuilder;
-
   final Widget Function(BuildContext, int)? separatorBuilder;
 
   final VoidCallback? onRetryError;

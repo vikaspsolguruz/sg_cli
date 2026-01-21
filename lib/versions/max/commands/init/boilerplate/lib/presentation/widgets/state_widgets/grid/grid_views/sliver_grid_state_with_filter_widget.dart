@@ -5,8 +5,8 @@ part of '../grid.dart';
 /// Use this inside a CustomScrollView for advanced scrolling effects
 ///
 /// < Bloc, State, ItemType, Filter >
-class SliverGridStateWithFilterWidget<B extends StateStreamable<S>, S, T, F extends FilterModel> extends StatelessWidget {
-  const SliverGridStateWithFilterWidget({
+class _SliverGridStateWithFilterWidget<B extends StateStreamable<S>, S, I, F extends FilterModel> extends StatelessWidget {
+  const _SliverGridStateWithFilterWidget({
     super.key,
     required this.stateSelector,
     required this.itemBuilder,
@@ -27,9 +27,9 @@ class SliverGridStateWithFilterWidget<B extends StateStreamable<S>, S, T, F exte
     required this.padding,
   });
 
-  final ListStateWithFilter<T, F> Function(S state) stateSelector;
+  final ListStateWithFilter<I, F> Function(S state) stateSelector;
 
-  final Widget Function(BuildContext context, T item, int index) itemBuilder;
+  final Widget Function(BuildContext context, I item, int index) itemBuilder;
 
   final SliverGridDelegate gridDelegate;
 
@@ -37,9 +37,9 @@ class SliverGridStateWithFilterWidget<B extends StateStreamable<S>, S, T, F exte
   final VoidCallback? onRetryEmpty;
   final void Function(S state)? onLoadMore;
 
-  final String Function(B bloc, List<T> data)? emptyTitle;
-  final String? Function(B bloc, List<T> data)? emptySubtitle;
-  final String? Function(B bloc, List<T>? data)? svgPath;
+  final String Function(B bloc, List<I> items)? emptyTitle;
+  final String? Function(B bloc, List<I> items)? emptySubtitle;
+  final String? Function(B bloc, List<I>? items)? svgPath;
 
   final Widget? loaderView;
   final Widget? errorView;
@@ -55,7 +55,7 @@ class SliverGridStateWithFilterWidget<B extends StateStreamable<S>, S, T, F exte
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<B, S, ListStateWithFilter<T, F>>(
+    return BlocSelector<B, S, ListStateWithFilter<I, F>>(
       selector: stateSelector,
       builder: (context, listState) {
         return SliverAnimatedSwitcher(
@@ -120,7 +120,7 @@ class SliverGridStateWithFilterWidget<B extends StateStreamable<S>, S, T, F exte
                       sliver: SliverMainAxisGroup(
                         slivers: [
                           // Grid content
-                          _SliverGridFilterContent<T, F>(
+                          _SliverGridFilterContent<I, F>(
                             listState: listState,
                             itemBuilder: itemBuilder,
                             gridDelegate: gridDelegate,

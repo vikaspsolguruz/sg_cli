@@ -3,8 +3,8 @@ part of '../grid.dart';
 /// SliverGrid widget for ListState with pagination support - use in CustomScrollView
 ///
 /// < Bloc, State, ItemType >
-class SliverGridStateWidget<B extends StateStreamable<S>, S, T> extends StatelessWidget {
-  const SliverGridStateWidget({
+class _SliverGridStateWidget<B extends StateStreamable<S>, S, I> extends StatelessWidget {
+  const _SliverGridStateWidget({
     super.key,
     required this.listStateSelector,
     required this.itemBuilder,
@@ -25,15 +25,15 @@ class SliverGridStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
     required this.padding,
   });
 
-  final ListState<T> Function(S state) listStateSelector;
-  final Widget Function(BuildContext context, T item, int index) itemBuilder;
+  final ListState<I> Function(S state) listStateSelector;
+  final Widget Function(BuildContext context, I item, int index) itemBuilder;
   final SliverGridDelegate gridDelegate;
   final void Function(S state)? onLoadMore;
   final VoidCallback? onRetryError;
   final VoidCallback? onRetryEmpty;
-  final String Function(B bloc, List<T> data)? emptyTitle;
-  final String Function(B bloc, List<T> data)? emptySubtitle;
-  final String Function(B bloc, List<T> data)? svgPath;
+  final String Function(B bloc, List<I> items)? emptyTitle;
+  final String Function(B bloc, List<I> items)? emptySubtitle;
+  final String Function(B bloc, List<I> items)? svgPath;
   final Widget? loaderView;
   final Widget? errorView;
   final Widget? emptyView;
@@ -45,7 +45,7 @@ class SliverGridStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<B, S, ListState<T>>(
+    return BlocSelector<B, S, ListState<I>>(
       selector: listStateSelector,
       builder: (context, listState) {
         return SliverAnimatedSwitcher(
@@ -104,7 +104,7 @@ class SliverGridStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
                       padding: padding,
                       sliver: SliverMainAxisGroup(
                         slivers: [
-                          _SliverGridContent<T>(
+                          _SliverGridContent<I>(
                             listState: listState,
                             itemBuilder: itemBuilder,
                             gridDelegate: gridDelegate,

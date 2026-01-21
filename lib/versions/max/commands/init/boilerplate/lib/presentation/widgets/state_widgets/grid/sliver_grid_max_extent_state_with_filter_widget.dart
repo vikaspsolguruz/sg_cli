@@ -28,10 +28,7 @@ class SliverGridMaxExtentStateWithFilterWidget<B extends StateStreamable<S>, S, 
     this.padding = EdgeInsets.zero,
   });
 
-  final bool isExpanded;
-
   final ListStateWithFilter<I, F> Function(S state) stateSelector;
-
   final Widget Function(BuildContext context, I item, int index) itemBuilder;
 
   final double maxCrossAxisExtent;
@@ -54,11 +51,12 @@ class SliverGridMaxExtentStateWithFilterWidget<B extends StateStreamable<S>, S, 
   final bool addRepaintBoundaries;
   final bool addSemanticIndexes;
 
+  final bool isExpanded;
   final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
-    return SliverGridStateWithFilterWidget<B, S, I, F>(
+    return _SliverGridStateWithFilterWidget<B, S, I, F>(
       isExpanded: isExpanded,
       stateSelector: stateSelector,
       itemBuilder: itemBuilder,

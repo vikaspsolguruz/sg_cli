@@ -30,28 +30,33 @@ class SliverGridMaxExtentStateWidget<B extends StateStreamable<S>, S, I> extends
 
   final ListState<I> Function(S state) listStateSelector;
   final Widget Function(BuildContext context, I item, int index) itemBuilder;
+
   final double maxCrossAxisExtent;
   final void Function(S state)? onLoadMore;
   final VoidCallback? onRetryError;
   final VoidCallback? onRetryEmpty;
+
   final String Function(B bloc, List<I> items)? emptyTitle;
   final String Function(B bloc, List<I> items)? emptySubtitle;
   final String Function(B bloc, List<I> items)? svgPath;
   final Widget? loaderView;
   final Widget? errorView;
   final Widget? emptyView;
+
   final double crossAxisSpacing;
   final double mainAxisSpacing;
   final double childAspectRatio;
+
   final bool addAutomaticKeepAlives;
   final bool addRepaintBoundaries;
   final bool addSemanticIndexes;
+
   final bool isExpanded;
   final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
-    return SliverGridStateWidget<B, S, I>(
+    return _SliverGridStateWidget<B, S, I>(
       listStateSelector: listStateSelector,
       itemBuilder: itemBuilder,
       onLoadMore: onLoadMore,
