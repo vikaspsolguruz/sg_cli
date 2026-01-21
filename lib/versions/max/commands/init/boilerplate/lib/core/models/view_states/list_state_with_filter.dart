@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:max_arch/core/enums/process_state.dart';
 import 'package:max_arch/core/models/filter_model.dart';
-import 'package:max_arch/core/models/pagination_model.dart';
+import 'package:max_arch/core/models/pagination_data_model.dart';
 import 'package:max_arch/core/models/view_states/view_state.dart';
 
 /// 🔥 LIST STATE WITH FILTER - List with pagination & search (with filter)

@@ -6,7 +6,6 @@ class ApiLinks {
   static final baseUrl = apiBaseUrls[currentEnvironment] ?? 'http://localhost:3000';
 
   // Upload
-  static final uploadFile = '$baseUrl/upload';
   static final uploadImage = '$baseUrl/upload/image';
   static final uploadImages = '$baseUrl/upload/photos';
 
@@ -15,8 +14,6 @@ class ApiLinks {
   static final login = '$baseUrl/auth/login-email';
   static final logInGoogle = '$baseUrl/auth/google';
   static final logInApple = '$baseUrl/auth/apple';
-  static final sendLinkToResetPassword = '$baseUrl/auth/forgot-password';
-  static final sendLinkToResetPasswordProfile = '$baseUrl/auth/profile/forgot-password';
   static final verifyEmailForSignUp = '$baseUrl/auth/signup/verify-email';
   static final resetPassword = '$baseUrl/auth/reset-password';
   static final resetPassWordWithProfile = '$baseUrl/auth/profile/reset-password';

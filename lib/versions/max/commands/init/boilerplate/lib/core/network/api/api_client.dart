@@ -5,11 +5,11 @@ import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mime/mime.dart';
 import 'package:max_arch/core/constants/constants.dart';
-import 'package:max_arch/core/models/api_data_model.dart';
+import 'package:max_arch/core/models/response/raw_response_model.dart';
 import 'package:max_arch/core/network/api/api_interceptor.dart';
 import 'package:max_arch/core/network/api/api_urls.dart';
+import 'package:mime/mime.dart';
 
 class ApiClient {
   static ApiClient? _apiClient;
@@ -62,7 +62,7 @@ class ApiClient {
     _dio.options.headers.addAll({"Authorization": "Bearer $kStaticToken"});
   }
 
-  Future<ApiData> get(String url, {Map<String, dynamic>? queryParameters}) async {
+  Future<RawResponse> get(String url, {Map<String, dynamic>? queryParameters}) async {
     Response? response;
     Object? error;
     StackTrace? stackTrace;
@@ -75,10 +75,10 @@ class ApiClient {
       error = e;
       stackTrace = s;
     }
-    return ApiData.from(response: response, error: error, stackTrace: stackTrace);
+    return RawResponse.from(response: response, error: error, stackTrace: stackTrace);
   }
 
-  Future<ApiData> post(String url, {required Map<String, dynamic> body, Map<String, dynamic>? queryParameters}) async {
+  Future<RawResponse> post(String url, {required Map<String, dynamic> body, Map<String, dynamic>? queryParameters}) async {
     Response? response;
     Object? error;
     StackTrace? stackTrace;
@@ -91,10 +91,10 @@ class ApiClient {
       error = e;
       stackTrace = s;
     }
-    return ApiData.from(response: response, error: error, stackTrace: stackTrace);
+    return RawResponse.from(response: response, error: error, stackTrace: stackTrace);
   }
 
-  Future<ApiData> patch(String url, {Map<String, dynamic>? body, Map<String, dynamic>? queryParameters}) async {
+  Future<RawResponse> patch(String url, {Map<String, dynamic>? body, Map<String, dynamic>? queryParameters}) async {
     Response? response;
     Object? error;
     StackTrace? stackTrace;
@@ -107,10 +107,10 @@ class ApiClient {
       error = e;
       stackTrace = s;
     }
-    return ApiData.from(response: response, error: error, stackTrace: stackTrace);
+    return RawResponse.from(response: response, error: error, stackTrace: stackTrace);
   }
 
-  Future<ApiData> put(String url, {required Map<String, dynamic> body, Map<String, dynamic>? headers, dynamic param}) async {
+  Future<RawResponse> put(String url, {required Map<String, dynamic> body, Map<String, dynamic>? headers, Map<String, dynamic>? queryParams}) async {
     Response? response;
     Object? error;
     StackTrace? stackTrace;
@@ -121,18 +121,18 @@ class ApiClient {
       response = await _dio.put(
         url,
         data: body,
-        options: headers != null ? Options(headers: headers) : null,
-        queryParameters: param,
+        options: headers != null ? Options(headers: _dio.options.headers..addAll(headers)) : null,
+        queryParameters: queryParams,
         cancelToken: _cancelToken,
       );
     } catch (e, s) {
       error = e;
       stackTrace = s;
     }
-    return ApiData.from(response: response, error: error, stackTrace: stackTrace);
+    return RawResponse.from(response: response, error: error, stackTrace: stackTrace);
   }
 
-  Future<ApiData> delete(String url, {Map<String, dynamic>? body, dynamic param}) async {
+  Future<RawResponse> delete(String url, {Map<String, dynamic>? body, Map<String, dynamic>? queryParams}) async {
     Response? response;
     Object? error;
     StackTrace? stackTrace;
@@ -140,15 +140,15 @@ class ApiClient {
       await Future.delayed(const Duration(milliseconds: 800));
     }
     try {
-      response = await _dio.delete(url, data: body, queryParameters: param, cancelToken: _cancelToken);
+      response = await _dio.delete(url, data: body, queryParameters: queryParams, cancelToken: _cancelToken);
     } catch (e, s) {
       error = e;
       stackTrace = s;
     }
-    return ApiData.from(response: response, error: error, stackTrace: stackTrace);
+    return RawResponse.from(response: response, error: error, stackTrace: stackTrace);
   }
 
-  Future<ApiData> uploadImage({required XFile file, Function(int progress)? onProgressChange, required String folder}) async {
+  Future<RawResponse> uploadImage({required XFile file, Function(int progress)? onProgressChange, required String folder}) async {
     String fileName = file.name;
 
     // Get MIME type
@@ -196,10 +196,10 @@ class ApiClient {
       error = e;
       stackTrace = s;
     }
-    return ApiData.from(response: response, error: error, stackTrace: stackTrace);
+    return RawResponse.from(response: response, error: error, stackTrace: stackTrace);
   }
 
-  Future<ApiData> uploadMultipleFiles({required List<XFile> files, Function(int progress)? onProgressChange, required String folder}) async {
+  Future<RawResponse> uploadMultipleFiles({required List<XFile> files, Function(int progress)? onProgressChange, required String folder}) async {
     List<MultipartFile> multipartFiles = [];
 
     for (var file in files) {
@@ -248,6 +248,6 @@ class ApiClient {
       error = e;
       stackTrace = s;
     }
-    return ApiData.from(response: response, error: error, stackTrace: stackTrace);
+    return RawResponse.from(response: response, error: error, stackTrace: stackTrace);
   }
 }

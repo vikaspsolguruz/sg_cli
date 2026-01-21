@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:max_arch/core/local_storage/local_storage.dart';
 import 'package:max_arch/core/localization/translations.dart';
+import 'package:max_arch/core/utils/console_print.dart';
 
 class AppSettings {
   static final ValueNotifier<ThemeMode> _themeMode = ValueNotifier(ThemeMode.system);
@@ -38,7 +39,11 @@ class AppSettings {
 
   /// Change app locale
   static void changeLocale(Locale newLocale) {
-    if (newLocale == locale.value) return;
+    if (newLocale.languageCode == locale.value.languageCode || Translations.currentLocales.every((loc) => loc.languageCode != newLocale.languageCode)) {
+      xErrorPrint('Failed to change locale. its either already exist or not supported');
+      return;
+    }
+
     _locale.value = newLocale;
     LocalStorage.setLocale(newLocale.languageCode);
     _updateSettings();

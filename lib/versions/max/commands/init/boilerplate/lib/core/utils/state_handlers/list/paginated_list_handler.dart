@@ -1,6 +1,6 @@
 import 'package:max_arch/core/enums/process_state.dart';
-import 'package:max_arch/core/models/pagination_model.dart';
-import 'package:max_arch/core/models/response_data_model.dart';
+import 'package:max_arch/core/models/pagination_data_model.dart';
+import 'package:max_arch/core/models/response/normal_response_model.dart';
 import 'package:max_arch/core/models/view_states/list_state.dart';
 import 'package:max_arch/core/utils/bloc/base_bloc.dart';
 
@@ -19,7 +19,7 @@ class PaginatedListHandler<T> {
   final BaseBloc bloc;
   final ListState<T> Function() getViewState;
   final void Function(ListState<T> newViewState) updateViewState;
-  final Future<ResponseData<PaginationData<List<T>>>> Function() repositoryCall;
+  final Future<NormalResponse<PaginationData<T>>> Function() repositoryCall;
   final dynamic Function() loadMoreEvent;
 
   Future<void> load({bool isRefresh = false, bool isSilent = false}) async {

@@ -4,7 +4,7 @@ class AppStrings {
 
   // Common Strings
   static final asterisk = " *";
-  static final failedToParse = "Failed to parse data";
+  static final failedToParse = "Failed to parse data, check console logs.";
   static final somethingWentWrong = "Something went wrong";
   static final noDataFound = "No data found";
   static final fileTooLarge = "File too large";

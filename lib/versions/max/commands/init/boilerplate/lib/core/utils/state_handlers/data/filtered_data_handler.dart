@@ -1,7 +1,7 @@
 import 'package:max_arch/core/constants/app_strings.dart';
 import 'package:max_arch/core/enums/process_state.dart';
 import 'package:max_arch/core/models/filter_model.dart';
-import 'package:max_arch/core/models/response_data_model.dart';
+import 'package:max_arch/core/models/response/normal_response_model.dart';
 import 'package:max_arch/core/models/view_states/data_state_with_filter.dart';
 import 'package:max_arch/core/models/wrapped_model.dart';
 import 'package:max_arch/core/utils/bloc/base_bloc.dart';
@@ -20,7 +20,7 @@ class FilteredDataHandler<D, F extends FilterModel> {
   final BaseBloc bloc;
   final DataStateWithFilter<D, F> Function() getViewState;
   final void Function(DataStateWithFilter<D, F> newViewState) updateViewState;
-  final Future<ResponseData<D>> Function() repositoryCall;
+  final Future<NormalResponse<D>> Function() repositoryCall;
 
   Future<void> load({bool isRefresh = false, bool isSilent = false}) async {
     if (bloc.isClosed) return;

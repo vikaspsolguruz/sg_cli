@@ -1,6 +1,6 @@
 import 'package:max_arch/core/constants/app_strings.dart';
 import 'package:max_arch/core/enums/process_state.dart';
-import 'package:max_arch/core/models/response_data_model.dart';
+import 'package:max_arch/core/models/response/normal_response_model.dart';
 import 'package:max_arch/core/models/view_states/data_state.dart';
 import 'package:max_arch/core/models/wrapped_model.dart';
 import 'package:max_arch/core/utils/bloc/base_bloc.dart';
@@ -19,7 +19,7 @@ class BasicDataHandler<D> {
   final BaseBloc bloc;
   final DataState<D> Function() getViewState;
   final void Function(DataState<D> newViewState) updateViewState;
-  final Future<ResponseData<D>> Function() repositoryCall;
+  final Future<NormalResponse<D>> Function() repositoryCall;
 
   Future<void> load({bool isRefresh = false, bool isSilent = false}) async {
     if (bloc.isClosed) return;

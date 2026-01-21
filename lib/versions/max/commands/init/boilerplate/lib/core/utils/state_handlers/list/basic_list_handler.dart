@@ -1,5 +1,5 @@
 import 'package:max_arch/core/enums/process_state.dart';
-import 'package:max_arch/core/models/response_data_model.dart';
+import 'package:max_arch/core/models/response/normal_response_model.dart';
 import 'package:max_arch/core/models/view_states/list_state.dart';
 import 'package:max_arch/core/utils/bloc/base_bloc.dart';
 
@@ -17,7 +17,7 @@ class BasicListHandler<T> {
   final BaseBloc bloc;
   final ListState<T> Function() getViewState;
   final void Function(ListState<T> newViewState) updateViewState;
-  final Future<ResponseData<List<T>>> Function() repositoryCall;
+  final Future<NormalResponse<List<T>>> Function() repositoryCall;
 
   Future<void> load({bool isSilent = false}) async {
     if (bloc.isClosed) return;

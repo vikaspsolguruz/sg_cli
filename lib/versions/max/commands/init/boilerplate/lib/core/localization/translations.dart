@@ -7,7 +7,7 @@ part 'locales/english.dart';
 class Translations {
   Translations._();
 
-  static Iterable<Locale> get currentLocales => _translationsData.keys.map((e) => Locale(e)).toList();
+  static List<Locale> get currentLocales => _translationsData.keys.map((e) => Locale(e)).toList();
 
   static final Map<String, Map<String, String>> _localizedValues = _translationsData;
 

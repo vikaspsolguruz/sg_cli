@@ -6,7 +6,7 @@ class PaginationData<T> {
   int? total;
   String? search;
   DateTime? date;
-  T? list;
+  List<T>? list;
 
   PaginationData({
     this.limit,
@@ -59,10 +59,10 @@ class PaginationData<T> {
 
   Map<String, dynamic> toJson() {
     return {
-      "limit": this.limit,
-      "offset": (this.offset ?? 0) + (this.limit ?? 0),
-      if (search != null) "search": this.search,
-      if (this.date != null) "date": DateFormat("yyyy-MM-dd").format(this.date!),
+      "limit": limit,
+      "offset": (offset ?? 0) + (limit ?? 0),
+      if (search != null) "search": search,
+      if (date != null) "date": DateFormat("yyyy-MM-dd").format(date!),
     };
   }
 

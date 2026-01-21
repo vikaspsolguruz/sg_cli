@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+export 'package:max_arch/core/utils/extensions.dart';
+
 class AppColors {
   static final AppColors _darkInstance = AppColors._internal(true);
   static final AppColors _lightInstance = AppColors._internal(false);
@@ -361,7 +363,6 @@ const MaterialColor green = MaterialColor(0xFF22C55E, <int, Color>{
   900: Color(0xFF14532D),
   950: Color(0xFF052E16),
 });
-
 
 const MaterialColor neutral = MaterialColor(0xFF7C7C7C, <int, Color>{
   50: Color(0xFFF8F8F8),

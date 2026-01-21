@@ -1,30 +1,32 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:max_arch/core/constants/app_strings.dart';
-import 'package:max_arch/core/models/pagination_model.dart';
-import 'package:max_arch/core/models/response_data_model.dart';
+import 'package:max_arch/core/models/pagination_data_model.dart';
+import 'package:max_arch/core/models/response/normal_response_model.dart';
+import 'package:max_arch/core/models/response/pagination_response_model.dart';
 import 'package:max_arch/core/utils/console_print.dart';
 import 'package:max_arch/environments/environments.dart';
 
-class ApiData {
+class RawResponse {
   int? statusCode;
   String? message;
   bool? _isSuccess;
-  dynamic data;
+  dynamic rawData;
 
   bool get hasError => !isSuccess;
 
   bool get isSuccess => _isSuccess ?? false;
 
-  ApiData({
+  RawResponse({
     required bool isSuccess,
-    this.data,
+    this.rawData,
     this.statusCode,
     this.message,
   }) {
     _isSuccess = isSuccess;
   }
 
-  ApiData.from({required Response? response, required Object? error, required StackTrace? stackTrace}) {
+  RawResponse.from({required Response? response, required Object? error, required StackTrace? stackTrace}) {
     bool isSuccess = error == null && response?.data is Map<String, dynamic> && response!.data['status'] == 1;
     dynamic data = response?.data;
     int? statusCode;
@@ -55,39 +57,42 @@ class ApiData {
       xErrorPrint(message, stackTrace: stackTrace);
     }
     _isSuccess = isSuccess;
-    this.data = data;
+    rawData = data;
     this.statusCode = statusCode;
     this.message = message;
   }
 
-  ResponseData<T> getResponseData<T>({T Function(dynamic data)? dataParser, bool Function(dynamic data)? verifySuccess}) {
+  NormalResponse<T> getNormalResponse<T>({
+    T Function(dynamic rawData)? dataParser,
+    bool Function(T data)? verifySuccess,
+  }) {
     bool isSuccess = this.isSuccess;
     String? errorMessage;
     T? data;
 
     if (isSuccess) {
+      // Trying data parser if exists
       try {
-        data = dataParser?.call(this.data);
+        data = dataParser?.call(rawData);
       } catch (e, s) {
         xErrorPrint(e, stackTrace: s);
-        errorMessage = AppStrings.failedToParse;
         isSuccess = false;
-        if (currentEnvironment == Environments.prod) {
-          errorMessage = AppStrings.somethingWentWrong;
-        }
+        errorMessage = _parsingErrorMessage();
       }
 
-      try {
-        isSuccess = verifySuccess?.call(this.data) ?? isSuccess;
-      } catch (e) {
-        isSuccess = false;
-        if (currentEnvironment == Environments.prod) {
-          errorMessage = AppStrings.somethingWentWrong;
+      // Trying custom success verifier if exists
+      if (isSuccess) {
+        try {
+          isSuccess = verifySuccess?.call(data as T) ?? isSuccess;
+        } catch (e, s) {
+          xErrorPrint(e, stackTrace: s);
+          isSuccess = false;
+          errorMessage = _parsingErrorMessage();
         }
       }
     }
 
-    return ResponseData<T>(
+    return NormalResponse<T>(
       isSuccess: isSuccess,
       message: errorMessage ?? message,
       data: data,
@@ -95,50 +100,58 @@ class ApiData {
     );
   }
 
-  ResponseData<PaginationData<T>> getPaginationData<T>({T Function(dynamic data)? dataParser, bool Function(dynamic data)? verifySuccess}) {
+  PaginationResponse<T> getPaginationResponse<T>({
+    List<T> Function(dynamic rawData)? dataParser,
+    bool Function(List<T> data)? verifySuccess,
+  }) {
     bool isSuccess = this.isSuccess;
     String? errorMessage;
     PaginationData<T>? paginationData;
-    T? data;
+    List<T>? data;
 
     if (isSuccess) {
-      // Trying to parse for data
+      // Trying data parser if exists
       try {
-        data = dataParser?.call(this.data);
+        data = dataParser?.call(rawData);
       } catch (e, s) {
         xErrorPrint(e, stackTrace: s);
-        errorMessage = AppStrings.failedToParse;
+        errorMessage = _parsingErrorMessage();
         isSuccess = false;
       }
-      try {
-        isSuccess = verifySuccess?.call(this.data) ?? isSuccess;
-      } catch (e) {
-        isSuccess = false;
-        if (currentEnvironment == Environments.prod) {
-          errorMessage = AppStrings.somethingWentWrong;
+
+      // Trying custom success verifier if exists
+      if (isSuccess) {
+        try {
+          isSuccess = verifySuccess?.call(data as List<T>) ?? isSuccess;
+        } catch (e, s) {
+          xErrorPrint(e, stackTrace: s);
+          isSuccess = false;
+          errorMessage = _parsingErrorMessage();
         }
       }
     }
 
     if (isSuccess) {
-      // Trying to parse for pagination data
+      // Trying to parse for pagination data if data been parsed successfully
       try {
-        paginationData = PaginationData.fromJson(this.data);
+        paginationData = PaginationData.fromJson(rawData);
         paginationData.list = data;
       } catch (e, s) {
         xErrorPrint(e, stackTrace: s);
-        errorMessage = AppStrings.failedToParse;
         isSuccess = false;
-        if (currentEnvironment == Environments.prod) {
-          errorMessage = AppStrings.somethingWentWrong;
-        }
+        errorMessage = _parsingErrorMessage();
       }
     }
-    return ResponseData<PaginationData<T>>(
+    return PaginationResponse<T>(
       isSuccess: isSuccess,
       message: errorMessage ?? message,
-      data: paginationData,
+      paginationData: paginationData,
       statusCode: statusCode,
     );
   }
+}
+
+String _parsingErrorMessage() {
+  if (currentEnvironment == Environments.prod && kReleaseMode) return AppStrings.somethingWentWrong;
+  return AppStrings.failedToParse;
 }
