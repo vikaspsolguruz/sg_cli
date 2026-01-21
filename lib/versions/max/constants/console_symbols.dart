@@ -4,8 +4,8 @@ part of '../max.dart';
 /// Each symbol has 2 spaces on the left and right for better readability
 class ConsoleSymbols {
   // Success and Status
-  static const String success = ' ✅  ';
-  static const String error = ' ❌  ';
+  static const String success = ' ✓  ';
+  static const String error = ' x  ';
   static const String warning = ' ⚠️   ';
   static const String info = ' ℹ️   ';
   static const String checkmark = ' ✓  ';

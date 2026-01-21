@@ -5,7 +5,7 @@ void _initProject() {
   _moduleName = getModuleName();
 
   ConsoleLogger.warning('This will replace your current project structure with max architecture.');
-  ConsoleLogger.raw(' 📁  lib/ folder will be regenerated');
+  ConsoleLogger.raw(' ❒  lib/ folder will be regenerated');
   ConsoleLogger.info('Dependencies will be updated');
   ConsoleLogger.blank();
   stdout.write('${ConsoleSymbols.rocket} Continue with initialization? (yes/no): ');
@@ -52,11 +52,11 @@ void _initProject() {
     _runPubGet();
 
     ConsoleLogger.blank();
-    ConsoleLogger.banner('                    Max architecture                     ', subtitle: '                  initialized with a BANG!                ');
+    ConsoleLogger.banner('                    Max architecture                      ', subtitle: '                  initialized with a BANG!                ');
     ConsoleLogger.blank();
     ConsoleLogger.banner('                      Ready to use:                       ', subtitle: '   Start creating screens with: sg create screen <name>.  ');
     ConsoleLogger.blank();
-    ConsoleLogger.banner('                  🔥 🔥 🔥 🔥 🔥 🔥 🔥                   ');
+    ConsoleLogger.banner('                  🔥 🔥 🔥 🔥 🔥 🔥 🔥                           ');
     ConsoleLogger.blank();
   } catch (e) {
     ConsoleLogger.error('Initialization failed: $e');

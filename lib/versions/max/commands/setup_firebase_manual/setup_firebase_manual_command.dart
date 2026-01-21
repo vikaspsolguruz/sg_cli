@@ -136,7 +136,7 @@ void _setupFlavoredFirebase(String packageName, String projectName) {
   print('${ConsoleSymbols.bulb} Note: Your _app_initializer.dart already has Firebase initialization code!');
   print('   We automatically added it after WidgetsFlutterBinding.ensureInitialized()');
   print('');
-  print('❓ Need Help?');
+  ConsoleLogger.info('Need Help?');
   print('   • Firebase Setup Guide: https://firebase.google.com/docs/flutter/setup');
   print('   • FlutterFire CLI: https://firebase.flutter.dev/docs/cli');
   print('');
@@ -224,7 +224,7 @@ void _setupSingleFirebase(String packageName, String projectName) {
   print('${ConsoleSymbols.bulb} Note: Your _app_initializer.dart already has Firebase initialization code!');
   print('   We automatically added it after WidgetsFlutterBinding.ensureInitialized()');
   print('');
-  print('❓ Need Help?');
+  ConsoleLogger.info('Need Help?');
   print('   • Firebase Setup Guide: https://firebase.google.com/docs/flutter/setup');
   print('   • FlutterFire CLI: https://firebase.flutter.dev/docs/cli');
   print('');
