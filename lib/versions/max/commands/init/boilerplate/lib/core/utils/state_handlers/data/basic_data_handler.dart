@@ -29,7 +29,7 @@ class BasicDataHandler<D> {
 
     updateViewState(
       backedUpState.copyWith(
-        status: isSilent ? null : ProcessState.loading,
+        state: isSilent ? null : ProcessState.loading,
         data: isSilent ? null : Wrapped.value(null),
       ),
     );
@@ -41,7 +41,7 @@ class BasicDataHandler<D> {
     if (response.hasError) {
       updateViewState(
         getViewState().copyWith(
-          status: ProcessState.error,
+          state: ProcessState.error,
           errorMessage: response.message,
           data: Wrapped.value(null),
         ),
@@ -54,14 +54,14 @@ class BasicDataHandler<D> {
     if (newData != null) {
       updateViewState(
         getViewState().copyWith(
-          status: ProcessState.success,
+          state: ProcessState.success,
           data: Wrapped.value(newData),
         ),
       );
     } else {
       updateViewState(
         getViewState().copyWith(
-          status: ProcessState.error,
+          state: ProcessState.error,
           errorMessage: response.message ?? AppStrings.somethingWentWrong,
           data: Wrapped.value(null),
         ),

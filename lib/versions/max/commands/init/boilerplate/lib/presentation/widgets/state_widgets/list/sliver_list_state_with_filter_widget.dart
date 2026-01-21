@@ -1,7 +1,7 @@
 part of 'list.dart';
 
 /// < Bloc, State, ItemType, FilterType >
-class SliverListStateWithFilterWidget<B extends StateStreamable<S>, S, T, F extends FilterModel> extends StatelessWidget {
+class SliverListStateWithFilterWidget<B extends StateStreamable<S>, S, I, F extends FilterModel> extends StatelessWidget {
   const SliverListStateWithFilterWidget({
     super.key,
     required this.stateSelector,
@@ -23,9 +23,9 @@ class SliverListStateWithFilterWidget<B extends StateStreamable<S>, S, T, F exte
     this.padding = EdgeInsets.zero,
   });
 
-  final ListStateWithFilter<T, F> Function(S state) stateSelector;
+  final ListStateWithFilter<I, F> Function(S state) stateSelector;
 
-  final Widget Function(BuildContext context, T item, int index) itemBuilder;
+  final Widget Function(BuildContext context, I item, int index) itemBuilder;
 
   final Widget Function(BuildContext, int)? separatorBuilder;
 
@@ -33,9 +33,9 @@ class SliverListStateWithFilterWidget<B extends StateStreamable<S>, S, T, F exte
   final VoidCallback? onRetryEmpty;
   final void Function(S state)? onLoadMore;
 
-  final String Function(B bloc, List<T> data)? emptyTitle;
-  final String? Function(B bloc, List<T> data)? emptySubtitle;
-  final String? Function(B bloc, List<T>? data)? svgPath;
+  final String Function(B bloc, List<I> items)? emptyTitle;
+  final String? Function(B bloc, List<I> items)? emptySubtitle;
+  final String? Function(B bloc, List<I>? items)? svgPath;
 
   final Widget? loaderView;
   final Widget? errorView;
@@ -50,12 +50,12 @@ class SliverListStateWithFilterWidget<B extends StateStreamable<S>, S, T, F exte
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<B, S, ListStateWithFilter<T, F>>(
+    return BlocSelector<B, S, ListStateWithFilter<I, F>>(
       selector: stateSelector,
       builder: (context, listState) {
         return SliverAnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
-          child: switch (listState.status) {
+          child: switch (listState.state) {
             // 1. Loading state - show loader
             ProcessState.loading =>
               isExpanded
@@ -111,7 +111,7 @@ class SliverListStateWithFilterWidget<B extends StateStreamable<S>, S, T, F exte
                                 ),
                           )
                   : separatorBuilder != null
-                  ? _SliverListFilterWithSeparators<T, F>(
+                  ? _SliverListFilterWithSeparators<I, F>(
                       listState: listState,
                       itemBuilder: itemBuilder,
                       separatorBuilder: separatorBuilder!,
@@ -121,7 +121,7 @@ class SliverListStateWithFilterWidget<B extends StateStreamable<S>, S, T, F exte
                       addSemanticIndexes: addSemanticIndexes,
                       padding: padding,
                     )
-                  : _SliverListFilterContent<T, F>(
+                  : _SliverListFilterContent<I, F>(
                       listState: listState,
                       itemBuilder: itemBuilder,
                       onLoadMore: () => onLoadMore?.call(context.read<B>().state),

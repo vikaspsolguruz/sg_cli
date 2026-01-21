@@ -50,7 +50,7 @@ class SliverGridStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
       builder: (context, listState) {
         return SliverAnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
-          child: switch (listState.status) {
+          child: switch (listState.state) {
             // 1. Loading state - show loader
             ProcessState.loading => isExpanded ? SliverFillRemaining(child: loaderView ?? const CommonLoader()) : SliverToBoxAdapter(child: loaderView ?? const CommonLoader()),
 

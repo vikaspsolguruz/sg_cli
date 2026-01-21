@@ -8,7 +8,7 @@ import 'package:max_arch/core/utils/bloc/base_bloc.dart';
 /// 🔥 FULL LIST HANDLER - List with all features (pagination, search, filter)
 ///
 /// < ItemType, FilterType >
-class FullListHandler<T, F extends FilterModel> {
+class FullListHandler<I, F extends FilterModel> {
   FullListHandler({
     required this.bloc,
     required this.getViewState,
@@ -18,9 +18,9 @@ class FullListHandler<T, F extends FilterModel> {
   });
 
   final BaseBloc bloc;
-  final ListStateWithFilter<T, F> Function() getViewState;
-  final void Function(ListStateWithFilter<T, F> newViewState) updateViewState;
-  final Future<NormalResponse<PaginationData<T>>> Function() repositoryCall;
+  final ListStateWithFilter<I, F> Function() getViewState;
+  final void Function(ListStateWithFilter<I, F> newViewState) updateViewState;
+  final Future<NormalResponse<PaginationData<I>>> Function() repositoryCall;
   final dynamic Function() loadMoreEvent;
 
   Future<void> load({bool isRefresh = false, bool isSilent = false}) async {
@@ -33,7 +33,7 @@ class FullListHandler<T, F extends FilterModel> {
 
     updateViewState(
       backedUpState.copyWith(
-        status: isSilent ? null : ProcessState.loading,
+        state: isSilent ? null : ProcessState.loading,
         paginationData: isRefresh ? PaginationData.initial(limit: isSilent ? backedUpState.items.length : backedUpState.paginationData?.limit) : null,
         isLoadingMore: false,
         items: const [],
@@ -47,7 +47,7 @@ class FullListHandler<T, F extends FilterModel> {
     if (response.hasError) {
       updateViewState(
         getViewState().copyWith(
-          status: ProcessState.error,
+          state: ProcessState.error,
           items: const [],
           errorMessage: response.message,
         ),
@@ -62,7 +62,7 @@ class FullListHandler<T, F extends FilterModel> {
 
     updateViewState(
       getViewState().copyWith(
-        status: ProcessState.success,
+        state: ProcessState.success,
         items: newItems,
         isLoadingMore: false,
         paginationData: paginationData.copyWith(limit: isSilent ? backedUpState.paginationData?.limit : null),
@@ -90,7 +90,7 @@ class FullListHandler<T, F extends FilterModel> {
 
     updateViewState(
       getViewState().copyWith(
-        status: ProcessState.success,
+        state: ProcessState.success,
         isLoadingMore: false,
         items: newItems,
         paginationData: paginationData,
@@ -134,7 +134,7 @@ class FullListHandler<T, F extends FilterModel> {
 
     updateViewState(
       currentState.copyWith(
-        status: ProcessState.loading,
+        state: ProcessState.loading,
         paginationData: PaginationData.initial(search: query, limit: currentState.paginationData?.limit),
       ),
     );

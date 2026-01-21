@@ -6,7 +6,7 @@ import 'package:max_arch/core/utils/bloc/base_bloc.dart';
 /// 🔥 BASIC LIST HANDLER - Simple list without pagination/search/filter
 ///
 /// < ItemType >
-class BasicListHandler<T> {
+class BasicListHandler<I> {
   BasicListHandler({
     required this.bloc,
     required this.getViewState,
@@ -15,9 +15,9 @@ class BasicListHandler<T> {
   });
 
   final BaseBloc bloc;
-  final ListState<T> Function() getViewState;
-  final void Function(ListState<T> newViewState) updateViewState;
-  final Future<NormalResponse<List<T>>> Function() repositoryCall;
+  final ListState<I> Function() getViewState;
+  final void Function(ListState<I> newViewState) updateViewState;
+  final Future<NormalResponse<List<I>>> Function() repositoryCall;
 
   Future<void> load({bool isSilent = false}) async {
     if (bloc.isClosed) return;
@@ -28,7 +28,7 @@ class BasicListHandler<T> {
     if (!isSilent) {
       updateViewState(
         backedUpState.copyWith(
-          status: ProcessState.loading,
+          state: ProcessState.loading,
           items: const [],
         ),
       );
@@ -41,7 +41,7 @@ class BasicListHandler<T> {
     if (response.hasError) {
       updateViewState(
         getViewState().copyWith(
-          status: ProcessState.error,
+          state: ProcessState.error,
           errorMessage: response.message,
           items: const [],
         ),
@@ -54,7 +54,7 @@ class BasicListHandler<T> {
 
     updateViewState(
       getViewState().copyWith(
-        status: ProcessState.success,
+        state: ProcessState.success,
         items: newItems,
       ),
     );

@@ -3,7 +3,7 @@ part of 'grid.dart';
 /// Helper widget to easily create SliverGrid with max cross axis extent for filter state
 ///
 /// < Bloc, State, ItemType, FilterType >
-class SliverGridMaxExtentStateWithFilterWidget<B extends StateStreamable<S>, S, T, F extends FilterModel> extends StatelessWidget {
+class SliverGridMaxExtentStateWithFilterWidget<B extends StateStreamable<S>, S, I, F extends FilterModel> extends StatelessWidget {
   const SliverGridMaxExtentStateWithFilterWidget({
     super.key,
     this.isExpanded = false,
@@ -30,9 +30,9 @@ class SliverGridMaxExtentStateWithFilterWidget<B extends StateStreamable<S>, S, 
 
   final bool isExpanded;
 
-  final ListStateWithFilter<T, F> Function(S state) stateSelector;
+  final ListStateWithFilter<I, F> Function(S state) stateSelector;
 
-  final Widget Function(BuildContext context, T item, int index) itemBuilder;
+  final Widget Function(BuildContext context, I item, int index) itemBuilder;
 
   final double maxCrossAxisExtent;
   final double crossAxisSpacing;
@@ -43,9 +43,9 @@ class SliverGridMaxExtentStateWithFilterWidget<B extends StateStreamable<S>, S, 
   final VoidCallback? onRetryEmpty;
   final void Function(S state)? onLoadMore;
 
-  final String Function(B bloc, List<T> data)? emptyTitle;
-  final String? Function(B bloc, List<T> data)? emptySubtitle;
-  final String? Function(B bloc, List<T>? data)? svgPath;
+  final String Function(B bloc, List<I> items)? emptyTitle;
+  final String? Function(B bloc, List<I> items)? emptySubtitle;
+  final String? Function(B bloc, List<I>? items)? svgPath;
   final Widget? loaderView;
   final Widget? errorView;
   final Widget? emptyView;
@@ -58,7 +58,7 @@ class SliverGridMaxExtentStateWithFilterWidget<B extends StateStreamable<S>, S, 
 
   @override
   Widget build(BuildContext context) {
-    return SliverGridStateWithFilterWidget<B, S, T, F>(
+    return SliverGridStateWithFilterWidget<B, S, I, F>(
       isExpanded: isExpanded,
       stateSelector: stateSelector,
       itemBuilder: itemBuilder,

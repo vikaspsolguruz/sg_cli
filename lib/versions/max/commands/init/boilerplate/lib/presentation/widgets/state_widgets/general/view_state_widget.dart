@@ -38,7 +38,7 @@ class ViewStateWidget<B extends StateStreamable<S>, S, V extends ViewState, D> e
       builder: (context, viewState) {
         return AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
-          child: switch (viewState.status) {
+          child: switch (viewState.state) {
             ProcessState.loading => loaderView ?? const CommonLoader(),
             ProcessState.error =>
               errorView ??

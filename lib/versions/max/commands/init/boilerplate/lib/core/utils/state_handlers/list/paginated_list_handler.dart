@@ -7,7 +7,7 @@ import 'package:max_arch/core/utils/bloc/base_bloc.dart';
 /// 🔥 PAGINATED LIST HANDLER - List with pagination & search (no filter)
 ///
 /// < ItemType >
-class PaginatedListHandler<T> {
+class PaginatedListHandler<I> {
   PaginatedListHandler({
     required this.bloc,
     required this.getViewState,
@@ -17,9 +17,9 @@ class PaginatedListHandler<T> {
   });
 
   final BaseBloc bloc;
-  final ListState<T> Function() getViewState;
-  final void Function(ListState<T> newViewState) updateViewState;
-  final Future<NormalResponse<PaginationData<T>>> Function() repositoryCall;
+  final ListState<I> Function() getViewState;
+  final void Function(ListState<I> newViewState) updateViewState;
+  final Future<NormalResponse<PaginationData<I>>> Function() repositoryCall;
   final dynamic Function() loadMoreEvent;
 
   Future<void> load({bool isRefresh = false, bool isSilent = false}) async {
@@ -32,7 +32,7 @@ class PaginatedListHandler<T> {
 
     updateViewState(
       backedUpState.copyWith(
-        status: isSilent ? null : ProcessState.loading,
+        state: isSilent ? null : ProcessState.loading,
         paginationData: isRefresh ? PaginationData.initial(limit: isSilent ? backedUpState.items.length : backedUpState.paginationData?.limit) : null,
         isLoadingMore: false,
         items: isSilent ? null : const [],
@@ -45,7 +45,7 @@ class PaginatedListHandler<T> {
     if (response.hasError) {
       updateViewState(
         getViewState().copyWith(
-          status: ProcessState.error,
+          state: ProcessState.error,
           items: const [],
           errorMessage: response.message,
         ),
@@ -60,7 +60,7 @@ class PaginatedListHandler<T> {
 
     updateViewState(
       getViewState().copyWith(
-        status: ProcessState.success,
+        state: ProcessState.success,
         items: newItems,
         isLoadingMore: false,
         paginationData: paginationData.copyWith(limit: isSilent ? backedUpState.paginationData?.limit : null),
@@ -88,7 +88,7 @@ class PaginatedListHandler<T> {
 
     updateViewState(
       getViewState().copyWith(
-        status: ProcessState.success,
+        state: ProcessState.success,
         isLoadingMore: false,
         items: newItems,
         paginationData: paginationData,

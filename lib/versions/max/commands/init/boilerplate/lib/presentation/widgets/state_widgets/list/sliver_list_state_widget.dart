@@ -5,7 +5,7 @@ part of 'list.dart';
 /// SliverList widget for ListState with pagination support - use in CustomScrollView
 ///
 /// < Bloc, State, ItemType >
-class SliverListStateWidget<B extends StateStreamable<S>, S, T> extends StatelessWidget {
+class SliverListStateWidget<B extends StateStreamable<S>, S, I> extends StatelessWidget {
   const SliverListStateWidget({
     super.key,
     required this.listStateSelector,
@@ -28,17 +28,17 @@ class SliverListStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
     required this.padding,
   });
 
-  final ListState<T> Function(S state) listStateSelector;
-  final Widget Function(BuildContext context, T item, int index) itemBuilder;
+  final ListState<I> Function(S state) listStateSelector;
+  final Widget Function(BuildContext context, I item, int index) itemBuilder;
   final void Function(S state)? onLoadMore;
   final VoidCallback? onRetryError;
   final VoidCallback? onRetryEmpty;
 
-  final bool Function(T item, String searchText)? localSearch;
+  final bool Function(I item, String searchText)? localSearch;
 
-  final String Function(B bloc, List<T> data)? emptyTitle;
-  final String Function(B bloc, List<T> data)? emptySubtitle;
-  final String Function(B bloc, List<T> data)? svgPath;
+  final String Function(B bloc, List<I> items)? emptyTitle;
+  final String Function(B bloc, List<I> items)? emptySubtitle;
+  final String Function(B bloc, List<I> items)? svgPath;
   final Widget Function(BuildContext, int)? separatorBuilder;
 
   final Widget? loaderView;
@@ -52,7 +52,7 @@ class SliverListStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
   final EdgeInsetsGeometry padding;
 
   /// Helper method to get filtered items based on local filtering
-  List<T> _getFilteredItems(ListState<T> listState) {
+  List<I> _getFilteredItems(ListState<I> listState) {
     // Only apply local filtering if:
     // 1. localSearch function is provided
     // 2. Pagination is disabled (no paginationData)
@@ -78,7 +78,7 @@ class SliverListStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<B, S, ListState<T>>(
+    return BlocSelector<B, S, ListState<I>>(
       selector: listStateSelector,
       builder: (context, listState) {
         // Apply local filtering if applicable
@@ -87,7 +87,7 @@ class SliverListStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
 
         return SliverAnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
-          child: switch (listState.status) {
+          child: switch (listState.state) {
             ProcessState.loading => isExpanded ? SliverFillRemaining(child: loaderView ?? const CommonLoader()) : SliverToBoxAdapter(child: loaderView ?? const CommonLoader()),
 
             ProcessState.error =>
@@ -135,7 +135,7 @@ class SliverListStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
                                 ),
                           )
                   : separatorBuilder != null
-                  ? _SliverListWithSeparators<T>(
+                  ? _SliverListWithSeparators<I>(
                       items: filteredItems,
                       listState: listState,
                       itemBuilder: itemBuilder,
@@ -146,7 +146,7 @@ class SliverListStateWidget<B extends StateStreamable<S>, S, T> extends Stateles
                       addSemanticIndexes: addSemanticIndexes,
                       padding: padding,
                     )
-                  : _SliverListContent<T>(
+                  : _SliverListContent<I>(
                       items: filteredItems,
                       listState: listState,
                       itemBuilder: itemBuilder,

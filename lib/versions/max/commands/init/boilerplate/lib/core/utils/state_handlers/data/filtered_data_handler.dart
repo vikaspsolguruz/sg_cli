@@ -30,7 +30,7 @@ class FilteredDataHandler<D, F extends FilterModel> {
 
     updateViewState(
       backedUpState.copyWith(
-        status: isSilent ? null : ProcessState.loading, // null keeps current status
+        state: isSilent ? null : ProcessState.loading, // null keeps current status
         data: isSilent ? null : Wrapped.value(null),
       ),
     );
@@ -42,7 +42,7 @@ class FilteredDataHandler<D, F extends FilterModel> {
     if (response.hasError) {
       updateViewState(
         getViewState().copyWith(
-          status: ProcessState.error,
+          state: ProcessState.error,
           errorMessage: response.message,
           data: Wrapped.value(null),
         ),
@@ -55,14 +55,14 @@ class FilteredDataHandler<D, F extends FilterModel> {
     if (newData != null) {
       updateViewState(
         getViewState().copyWith(
-          status: ProcessState.success,
+          state: ProcessState.success,
           data: Wrapped.value(newData),
         ),
       );
     } else {
       updateViewState(
         getViewState().copyWith(
-          status: ProcessState.error,
+          state: ProcessState.error,
           errorMessage: response.message ?? AppStrings.somethingWentWrong,
           data: Wrapped.value(null),
         ),
@@ -103,7 +103,7 @@ class FilteredDataHandler<D, F extends FilterModel> {
 
     updateViewState(
       getViewState().copyWith(
-        status: ProcessState.loading,
+        state: ProcessState.loading,
       ),
     );
 

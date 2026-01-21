@@ -7,21 +7,21 @@ import 'package:max_arch/core/models/wrapped_model.dart';
 /// 🔥 DATA STATE WITH FILTER - Single data object with search & filter support
 ///
 /// < DataType, FilterType >
-class DataStateWithFilter<T, F extends FilterModel> extends ViewState {
-  final T? data;
+class DataStateWithFilter<D, F extends FilterModel> extends ViewState {
+  final D? data;
   final F filter;
   @override
-  final ProcessState status;
+  final ProcessState state;
   @override
   final String? errorMessage;
   final bool isSearching;
   final TextEditingController? searchController;
-  final bool Function(DataStateWithFilter<T, F> state)? hasDataOverride;
+  final bool Function(DataStateWithFilter<D, F> state)? hasDataOverride;
 
   DataStateWithFilter._({
     this.data,
     required this.filter,
-    required this.status,
+    required this.state,
     this.errorMessage,
     required this.isSearching,
     this.searchController,
@@ -31,11 +31,11 @@ class DataStateWithFilter<T, F extends FilterModel> extends ViewState {
   factory DataStateWithFilter.initial({
     required F Function() createInitialFilter,
     bool hasSearch = false,
-    bool Function(DataStateWithFilter<T, F> state)? hasDataOverride,
+    bool Function(DataStateWithFilter<D, F> state)? hasDataOverride,
   }) {
     return DataStateWithFilter._(
       filter: createInitialFilter(),
-      status: ProcessState.loading,
+      state: ProcessState.loading,
       isSearching: false,
       searchController: hasSearch ? TextEditingController() : null,
       hasDataOverride: hasDataOverride,
@@ -43,28 +43,28 @@ class DataStateWithFilter<T, F extends FilterModel> extends ViewState {
   }
 
   @override
-  bool get hasData => hasDataOverride?.call(this) ?? (data != null && status == ProcessState.success);
+  bool get hasData => hasDataOverride?.call(this) ?? (data != null && state == ProcessState.success);
 
   @override
-  bool get isEmpty => data == null && status == ProcessState.success;
+  bool get isEmpty => data == null && state == ProcessState.success;
 
   bool get hasSearch => searchController != null;
 
   String? get currentSearch => hasSearch && searchController!.text.trim().isNotEmpty ? searchController!.text.trim() : null;
 
-  DataStateWithFilter<T, F> copyWith({
-    Wrapped<T?>? data,
+  DataStateWithFilter<D, F> copyWith({
+    Wrapped<D?>? data,
     F? filter,
-    ProcessState? status,
+    ProcessState? state,
     String? errorMessage,
     bool? isSearching,
     TextEditingController? searchController,
-    bool Function(DataStateWithFilter<T, F> state)? hasDataOverride,
+    bool Function(DataStateWithFilter<D, F> state)? hasDataOverride,
   }) {
     return DataStateWithFilter._(
       data: data != null ? data.value : this.data,
       filter: filter ?? this.filter,
-      status: status ?? this.status,
+      state: state ?? this.state,
       errorMessage: errorMessage ?? this.errorMessage,
       isSearching: isSearching ?? this.isSearching,
       searchController: searchController ?? this.searchController,
@@ -78,5 +78,5 @@ class DataStateWithFilter<T, F extends FilterModel> extends ViewState {
   }
 
   @override
-  List<Object?> get props => [data, filter, status, errorMessage, isSearching];
+  List<Object?> get props => [data, filter, state, errorMessage, isSearching];
 }

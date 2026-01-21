@@ -5,15 +5,15 @@ import 'package:max_arch/core/enums/process_state.dart';
 abstract class ViewState extends Equatable {
   void dispose();
 
-  ProcessState get status;
+  ProcessState get state;
 
   String? get errorMessage;
 
-  bool get isLoading => status == ProcessState.loading;
+  bool get isLoading => state == ProcessState.loading;
 
-  bool get hasError => status == ProcessState.error;
+  bool get hasError => state == ProcessState.error;
 
-  bool get isSuccess => status == ProcessState.success;
+  bool get isSuccess => state == ProcessState.success;
 
   bool get hasData;
 

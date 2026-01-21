@@ -6,22 +6,22 @@ import 'package:max_arch/core/models/view_states/view_state.dart';
 /// 🔥 LIST STATE - List with pagination & search (no filter)
 ///
 /// < ItemType >
-class ListState<T> extends ViewState {
-  final List<T> items;
+class ListState<I> extends ViewState {
+  final List<I> items;
   final PaginationData? paginationData;
   @override
-  final ProcessState status;
+  final ProcessState state;
   @override
   final String? errorMessage;
   final bool isSearching;
   final bool isLoadingMore;
   final TextEditingController? searchController;
-  final bool Function(ListState<T> state)? hasDataOverride;
+  final bool Function(ListState<I> state)? hasDataOverride;
 
   ListState._({
     required this.items,
     this.paginationData,
-    required this.status,
+    required this.state,
     this.errorMessage,
     required this.isSearching,
     required this.isLoadingMore,
@@ -36,7 +36,7 @@ class ListState<T> extends ViewState {
     this.hasDataOverride,
   }) : items = const [],
        paginationData = isPaginated ? PaginationData.initial(limit: pageLimit) : null,
-       status = ProcessState.loading,
+       state = ProcessState.loading,
        errorMessage = null,
        isSearching = false,
        isLoadingMore = false,
@@ -47,7 +47,7 @@ class ListState<T> extends ViewState {
   bool get hasData => hasDataOverride?.call(this) ?? items.isNotEmpty;
 
   @override
-  bool get isEmpty => items.isEmpty && status == ProcessState.success;
+  bool get isEmpty => items.isEmpty && state == ProcessState.success;
 
   bool get isPaginated => paginationData != null;
 
@@ -57,20 +57,20 @@ class ListState<T> extends ViewState {
 
   bool get canLoadMore => isPaginated && paginationData!.canLoadMore && !isLoading;
 
-  ListState<T> copyWith({
-    List<T>? items,
+  ListState<I> copyWith({
+    List<I>? items,
     PaginationData? paginationData,
-    ProcessState? status,
+    ProcessState? state,
     String? errorMessage,
     bool? isSearching,
     bool? isLoadingMore,
     TextEditingController? searchController,
-    bool Function(ListState<T> state)? hasDataOverride,
+    bool Function(ListState<I> state)? hasDataOverride,
   }) {
     return ListState._(
       items: items ?? this.items,
       paginationData: paginationData ?? this.paginationData,
-      status: status ?? this.status,
+      state: state ?? this.state,
       errorMessage: errorMessage ?? this.errorMessage,
       isSearching: isSearching ?? this.isSearching,
       isLoadingMore: isLoadingMore ?? this.isLoadingMore,
@@ -88,7 +88,7 @@ class ListState<T> extends ViewState {
   List<Object?> get props => [
     items,
     paginationData,
-    status,
+    state,
     errorMessage,
     isSearching,
     isLoadingMore,
