@@ -7,7 +7,7 @@ void _createScreenStructure() {
 
   final isAlreadyExists = _checkExistingRoute();
   if (isAlreadyExists) {
-    print('${ConsoleSymbols.error} Error: Route already exists');
+    ConsoleLogger.error('Route already exists');
     return;
   }
   _moduleName = getModuleName();
@@ -42,5 +42,5 @@ void _createScreenStructure() {
   // Create View file
   createFile('$_viewPath/${_pageName}_$_toBeCreated.dart', _generateScreenContent(_pageName));
 
-  print('${ConsoleSymbols.success}  $_pagePathType structure for "$_pageName" created successfully!');
+  ConsoleLogger.success('$_pagePathType structure for "$_pageName" created successfully!');
 }

@@ -10,7 +10,7 @@ void _createEvent(final String eventName, final String pageName) {
     }
   }
   if (mainFolderPath.isEmpty) {
-    print(' ❌  Error: Page folder not found: for $pageName');
+    ConsoleLogger.error('Page folder not found: for $pageName');
     return;
   }
   final String eventFilePath = '$mainFolderPath/bloc/${pageName}_event.dart';
@@ -19,7 +19,7 @@ void _createEvent(final String eventName, final String pageName) {
   if (!eventFile.existsSync()) {
     eventFile = File(eventFilePath);
     if (!eventFile.existsSync()) {
-      print(' ❌  Error: Event file not found: $eventFilePath');
+      ConsoleLogger.error('Event file not found: $eventFilePath');
       return;
     }
     return;
@@ -37,7 +37,7 @@ void _createEvent(final String eventName, final String pageName) {
   final String updatedContent = content.trim() + newEventClass;
 
   eventFile.writeAsStringSync(updatedContent);
-  print(' ✅  Event "$eventClassName" added to $eventFilePath');
+ConsoleLogger.success("Event "" added to ");
 
   final blocFilePath = '$mainFolderPath/bloc/${pageName}_bloc.dart';
   final blocFile = File(blocFilePath);
@@ -45,7 +45,7 @@ void _createEvent(final String eventName, final String pageName) {
     final blocContent = blocFile.readAsStringSync();
     final startIndex = blocContent.indexOf('eventListeners() {');
     if (startIndex == -1) {
-      print(' ❌  Error: Unable to find "eventListeners() {" in $blocFilePath');
+      ConsoleLogger.error('Unable to find "eventListeners() {" in $blocFilePath');
       return;
     }
 
@@ -56,7 +56,7 @@ void _createEvent(final String eventName, final String pageName) {
 
     int endIndex = blocContentWithListener.indexOf('}', startIndex);
     if (endIndex == -1) {
-      print(' ❌  Error: Unable to find "}" after "eventListeners() {" in $blocFilePath');
+      ConsoleLogger.error('Unable to find "}" after "eventListeners() {" in $blocFilePath');
       return;
     }
     endIndex++;
@@ -66,6 +66,6 @@ void _createEvent(final String eventName, final String pageName) {
 
     blocFile.writeAsStringSync(newBlocContent);
   } else {
-    print(' ❌  Error: Bloc file not found: $blocFilePath');
+    ConsoleLogger.error('Bloc file not found: $blocFilePath');
   }
 }

@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:sg_cli/utils/console_logger.dart';
+
 void createDirectory(String path) {
   final dir = Directory(path);
   if (!dir.existsSync()) {
@@ -12,6 +14,6 @@ void createFile(String filePath, String content) {
   if (!file.existsSync()) {
     file.writeAsStringSync(content);
   } else {
-    print('⚠️ File already exists: $filePath (Skipping)');
+    ConsoleLogger.warning('File already exists: $filePath (Skipping)');
   }
 }

@@ -27,7 +27,7 @@ void _addRouteData({bool isBottomSheet = false, bool isDialog = false}) {
 
   // checking if index of closing bracket is not wrong
   if (closingBracketIndex == -1) {
-    print(' ❌  Error: Could not find closing bracket for screen routes.');
+    ConsoleLogger.error("Could not find parent route: ");
     return;
   }
 
@@ -55,7 +55,7 @@ void _addSubRouteData({required String subPageName, required String parentPageNa
   // 1. Locate AppRoute with name: Routes.<parentPageName>
   int nameIndex = routesLines.indexWhere((line) => line.contains('name: Routes.$parentPageName'));
   if (nameIndex == -1) {
-    print(' ❌ Could not find parent route: $parentPageName');
+ConsoleLogger.error("Could not find parent route: ");
     return;
   }
 
@@ -64,7 +64,7 @@ void _addSubRouteData({required String subPageName, required String parentPageNa
   while (!routesLines[routeStartIndex].contains('AppRoute(')) {
     routeStartIndex--;
     if (routeStartIndex < 0) {
-      print(' ❌ Failed to find AppRoute() start.');
+ConsoleLogger.error("Failed to find AppRoute() start.");
       return;
     }
   }
@@ -83,7 +83,7 @@ void _addSubRouteData({required String subPageName, required String parentPageNa
   }
 
   if (routeEndIndex == -1) {
-    print(' ❌ Could not find end of AppRoute block.');
+    ConsoleLogger.error('Could not find end of AppRoute block.');
     return;
   }
 
@@ -102,7 +102,7 @@ void _addSubRouteData({required String subPageName, required String parentPageNa
     if (closingIndex != -1) {
       routesLines.insert(closingIndex, subRouteEntry);
     } else {
-      print(' ❌ Malformed subRoutes block.');
+      ConsoleLogger.error('Malformed subRoutes block.');
     }
   } else {
     // 5. Find end of blocProvider
@@ -129,7 +129,7 @@ $subRouteEntry
         ],''';
       routesLines.insert(blocEndIndex + 1, subRoutesBlock);
     } else {
-      print(' ❌ Could not find blocProvider block to insert subRoutes.');
+      ConsoleLogger.error('Could not find blocProvider block to insert subRoutes.');
     }
   }
 

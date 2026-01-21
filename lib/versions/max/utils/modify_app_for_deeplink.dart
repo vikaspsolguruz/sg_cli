@@ -5,7 +5,7 @@ void modifyAppForDeepLink(String projectName) {
   final appFile = File('lib/app/app.dart');
   
   if (!appFile.existsSync()) {
-    print('${ConsoleSymbols.error}app.dart not found at lib/app/app.dart');
+    ConsoleLogger.error('app.dart not found at lib/app/app.dart');
     return;
   }
 
@@ -13,7 +13,7 @@ void modifyAppForDeepLink(String projectName) {
 
   // Check if deep link is already added
   if (content.contains('DeepLinkManager.instance.initialize()')) {
-    print('${ConsoleSymbols.info}Deep link already configured in app.dart');
+    ConsoleLogger.info('Deep link already configured in app.dart');
     return;
   }
 
@@ -99,5 +99,5 @@ void modifyAppForDeepLink(String projectName) {
 
   // Write modified content
   appFile.writeAsStringSync(content);
-  print('${ConsoleSymbols.success}Added deep link initialization to app.dart');
+  ConsoleLogger.success('Added deep link initialization to app.dart');
 }

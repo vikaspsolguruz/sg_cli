@@ -27,6 +27,7 @@ class ConsoleSymbols {
   static const String clipboard = ' 📋  ';
   static const String books = ' 📚  ';
   static const String document = ' 📄  ';
+  static const String dialog = ' 🏷️  ';
 
   // Search and Navigation
   static const String search = ' 🔍  ';

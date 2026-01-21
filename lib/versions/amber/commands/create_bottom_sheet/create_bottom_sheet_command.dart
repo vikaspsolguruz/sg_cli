@@ -38,5 +38,5 @@ void _createBottomSheetStructure() {
   // Create View file
   createFile('$_viewPath/${_pageName}_$_toBeCreated.dart', _generateViewContent(_pageName));
 
-  print(' ✅  $_pagePathType structure for "$_pageName" created successfully!');
+  ConsoleLogger.success('$_pagePathType structure for "$_pageName" created successfully!');
 }

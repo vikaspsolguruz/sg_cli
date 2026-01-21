@@ -2,19 +2,19 @@ part of '../max.dart';
 
 /// Runs flutter pub get to install dependencies
 void _runPubGet() {
-  print('${ConsoleSymbols.package}Installing dependencies...');
+  ConsoleLogger.package('Installing dependencies...');
 
   try {
     final result = Process.runSync('flutter', ['pub', 'get']);
 
     if (result.exitCode == 0) {
-      print('${ConsoleSymbols.success}Dependencies installed successfully');
+      ConsoleLogger.success('Dependencies installed successfully');
     } else {
-      print('${ConsoleSymbols.warning}Warning: Failed to install dependencies automatically');
-      print('   Please run: flutter pub get');
+      ConsoleLogger.warning('Failed to install dependencies automatically');
+      ConsoleLogger.info('Please run: flutter pub get');
     }
   } catch (e) {
-    print('${ConsoleSymbols.warning}Warning: Failed to install dependencies automatically');
-    print('   Please run: flutter pub get');
+    ConsoleLogger.warning('Failed to install dependencies automatically');
+    ConsoleLogger.info('Please run: flutter pub get');
   }
 }

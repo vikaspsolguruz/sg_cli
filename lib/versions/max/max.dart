@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:sg_cli/data/global_vars.dart';
+import 'package:sg_cli/utils/console_logger.dart';
 import 'package:sg_cli/utils/file_helper.dart';
 import 'package:sg_cli/utils/name_helper.dart';
 import 'package:sg_cli/utils/pubspec_helper.dart';
@@ -62,7 +63,7 @@ class Max {
   Max._();
 
   static void runCommand() {
-    bool isHelpCommand = arguments.length == 1 && (arguments[0] == 'help' || arguments[0] == '--help' || arguments[0] == '-h');
+    bool isHelpCommand = arguments.isEmpty || (arguments.length == 1 && (arguments[0] == 'help' || arguments[0] == '--help' || arguments[0] == '-h'));
     bool isInitCommand = arguments.length == 1 && arguments[0] == 'init';
     bool isSetupFlavorsCommand = arguments.length == 1 && arguments[0] == 'setup_flavors';
     bool isSetupDeeplinkCommand = arguments.length == 1 && arguments[0] == 'setup_deeplink';
@@ -73,11 +74,6 @@ class Max {
     bool isCreateBottomSheetCommand = arguments.length == 3 && arguments[0] == 'create' && arguments[1] == 'bs';
     bool isCreateDialogCommand = arguments.length == 3 && arguments[0] == 'create' && arguments[1] == 'dialog';
     bool isCreateEventCommand = arguments.length == 5 && arguments[0] == 'create' && arguments[1] == 'event' && arguments[3] == 'in';
-
-    if (arguments.isEmpty) {
-      print('${ConsoleSymbols.error}  Error: No command provided.');
-      return;
-    }
 
     if (arguments.any((element) => isInValidArgument(element))) {
       print(

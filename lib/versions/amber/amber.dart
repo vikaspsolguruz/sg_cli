@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:sg_cli/data/global_vars.dart';
+import 'package:sg_cli/utils/console_logger.dart';
 import 'package:sg_cli/utils/file_helper.dart';
 import 'package:sg_cli/utils/name_helper.dart';
 import 'package:sg_cli/utils/pubspec_helper.dart';
@@ -28,12 +29,12 @@ class Amber {
     bool isCreateEventCommand = arguments.length == 5 && arguments[0] == 'create' && arguments[1] == 'event' && arguments[3] == 'in';
 
     if (arguments.isEmpty) {
-      print(' ❌  Error: No command provided.');
+      ConsoleLogger.error('No command provided.');
       return;
     }
 
     if (arguments.any((element) => isInValidArgument(element))) {
-      print("❌  Error: Invalid command format\n  • Should be in lowercase only\n  • Start with alphabet\n  • No special characters allowed other then underscore (_)");
+      ConsoleLogger.error('Invalid command format\n  • Should be in lowercase only\n  • Start with alphabet\n  • No special characters allowed other then underscore (_)');
       return;
     }
 
@@ -47,7 +48,7 @@ class Amber {
       } else if (basePage == 'common') {
         _role = 'common';
       } else {
-        print("❌  Error: Invalid page category: $basePage");
+        ConsoleLogger.error('Invalid page category: $basePage');
         return;
       }
       _pageName = arguments[2];
@@ -62,7 +63,7 @@ class Amber {
       final String pageName = arguments[4];
       _createEvent(eventName, pageName);
     } else {
-      print(' ❌  Error: Unknown command.');
+      ConsoleLogger.error('Unknown command.');
     }
   }
 }

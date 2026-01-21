@@ -4,20 +4,21 @@ void _initProject() {
   // Get current project name from pubspec.yaml
   _moduleName = getModuleName();
 
-  print('${ConsoleSymbols.warning}  This will replace your current project structure with max architecture.\n');
-  print('   📁  lib/ folder will be regenerated\n${ConsoleSymbols.package}  Dependencies will be updated');
-  print('');
+  ConsoleLogger.warning('This will replace your current project structure with max architecture.');
+  ConsoleLogger.raw(' 📁  lib/ folder will be regenerated');
+  ConsoleLogger.info('Dependencies will be updated');
+  ConsoleLogger.blank();
   stdout.write('${ConsoleSymbols.rocket} Continue with initialization? (yes/no): ');
 
   final String? response = stdin.readLineSync();
 
   if (response?.toLowerCase() != 'yes' && response?.toLowerCase() != 'y') {
-    print('${ConsoleSymbols.error}  Init cancelled.');
+    ConsoleLogger.error('Init cancelled.');
     return;
   }
 
-  print('');
-  print('${ConsoleSymbols.loading}  Initializing max architecture...');
+  ConsoleLogger.blank();
+  ConsoleLogger.loading('Initializing max architecture...');
 
   try {
     // Step 1: Delete existing folders
@@ -50,32 +51,20 @@ void _initProject() {
     // Step 9: Run flutter pub get automatically
     _runPubGet();
 
-    print('');
-    print('************************************************************');
-    print('*                                                          *');
-    print('*                    Max architecture                     *');
-    print('*                  initialized with a BANG!                *');
-    print('*                                                          *');
-    print('************************************************************');
-    print('');
-    print('************************************************************');
-    print('*                                                          *');
-    print('*                      Ready to use:                       *');
-    print('*   Start creating screens with: sg create screen <name>.  *');
-    print('*                                                          *');
-    print('************************************************************');
-    print('');
-    print('************************************************************');
-    print('*                                                          *');
-    print('*                  🔥 🔥 🔥 🔥 🔥 🔥 🔥                   *');
-    print('************************************************************');
+    ConsoleLogger.blank();
+    ConsoleLogger.banner('                    Max architecture                     ', subtitle: '                  initialized with a BANG!                ');
+    ConsoleLogger.blank();
+    ConsoleLogger.banner('                      Ready to use:                       ', subtitle: '   Start creating screens with: sg create screen <name>.  ');
+    ConsoleLogger.blank();
+    ConsoleLogger.banner('                  🔥 🔥 🔥 🔥 🔥 🔥 🔥                   ');
+    ConsoleLogger.blank();
   } catch (e) {
-    print('${ConsoleSymbols.error}  Error during initialization: $e');
+    ConsoleLogger.error('Initialization failed: $e');
   }
 }
 
 void _deleteExistingFiles() {
-  print('🗑️  Cleaning existing files...');
+  ConsoleLogger.raw('🗑️  Cleaning existing files...');
 
   // Delete lib folder
   final libDir = Directory('lib');
@@ -109,7 +98,7 @@ void _deleteExistingFiles() {
 }
 
 void _generateCoreArchitecture() {
-  print('🏗️  Generating core architecture...');
+  ConsoleLogger.raw('🏗️  Generating core architecture...');
 
   final String boilerplatePath = _getBoilerplatePath();
   final sourceLibDir = Directory('$boilerplatePath/lib');
@@ -121,9 +110,9 @@ void _generateCoreArchitecture() {
 
   // Generate the entire lib directory
   _copyDirectory(sourceLibDir, targetLibDir);
-  print('${ConsoleSymbols.success}  Generated presentation layer');
-  print('${ConsoleSymbols.success}  Generated core infrastructure');
-  print('${ConsoleSymbols.success}  Generated app foundation');
+  ConsoleLogger.success('Generated presentation layer');
+  ConsoleLogger.success('Generated core infrastructure');
+  ConsoleLogger.success('Generated app foundation');
 }
 
 void _updatePackageReferences() {
@@ -150,11 +139,11 @@ void _updatePackageReferences() {
     }
   }
 
-  print('${ConsoleSymbols.success}  Updated package references in $filesUpdated files');
+  ConsoleLogger.success('Updated package references in $filesUpdated files');
 }
 
 void _updatePubspecDependencies() {
-  print('${ConsoleSymbols.package}  Updating dependencies...');
+  ConsoleLogger.info('Updating dependencies...');
 
   final String boilerplatePath = _getBoilerplatePath();
   final boilerplatePubspec = File('$boilerplatePath/pubspec.yaml');
@@ -220,8 +209,8 @@ void _updatePubspecDependencies() {
   }
 
   currentPubspec.writeAsStringSync(updatedLines.join('\n'));
-  print('${ConsoleSymbols.success}  Updated pubspec.yaml with dependencies, assets, and flutter config');
-  print('${ConsoleSymbols.success}  Configured Patrol with app: $appLabel, package: $packageId');
+  ConsoleLogger.success('Updated pubspec.yaml with dependencies, assets, and flutter config');
+  ConsoleLogger.success('Configured Patrol with app: $appLabel, package: $packageId');
 }
 
 void _copyAssets() {
@@ -254,13 +243,13 @@ void _copyTests() {
     }
 
     if (filesUpdated > 0) {
-      print('${ConsoleSymbols.success}  Updated package references in $filesUpdated test files');
+      ConsoleLogger.success('Updated package references in $filesUpdated test files');
     }
   }
 }
 
 void _copyIntegrationTests() {
-  print('🧪  Copying integration tests...');
+  ConsoleLogger.raw('🧪  Copying integration tests...');
   
   final integrationTestsSource = Directory('${_getBoilerplatePath()}/integration_test');
   final integrationTestsTarget = Directory('integration_test');
@@ -282,10 +271,10 @@ void _copyIntegrationTests() {
     }
 
     if (filesUpdated > 0) {
-      print('${ConsoleSymbols.success}  Updated package references in $filesUpdated integration test files');
+      ConsoleLogger.success('Updated package references in $filesUpdated integration test files');
     }
   } else {
-    print('${ConsoleSymbols.warning}  Integration test directory not found in boilerplate');
+    ConsoleLogger.warning('Integration test directory not found in boilerplate');
   }
 }
 
@@ -296,25 +285,25 @@ void _generateConfigFiles() {
   final configFile = File('sg_cli.yaml');
   configFile.createSync();
   configFile.writeAsStringSync(boilerplateConfig.readAsStringSync());
-  print('${ConsoleSymbols.success}Generated sg_cli.yaml configuration file');
+  ConsoleLogger.success('Generated sg_cli.yaml configuration file');
 
   final boilerplateAnalysis = File('$boilerplatePath/analysis_options.yaml');
   final analysisFile = File('analysis_options.yaml');
   analysisFile.createSync();
   analysisFile.writeAsStringSync(boilerplateAnalysis.readAsStringSync());
-  print('${ConsoleSymbols.success}Generated lints and rules');
+  ConsoleLogger.success('Generated lints and rules');
 
   final boilerplateEditorConfig = File('$boilerplatePath/.editorconfig');
   final editorFile = File('.editorconfig');
   editorFile.createSync();
   editorFile.writeAsStringSync(boilerplateEditorConfig.readAsStringSync());
-  print('${ConsoleSymbols.success}Generated editor configs');
+  ConsoleLogger.success('Generated editor configs');
 
   final boilerplateDevtools = File('$boilerplatePath/devtools_options.yaml');
   if (boilerplateDevtools.existsSync()) {
     final devtoolsFile = File('devtools_options.yaml');
     devtoolsFile.createSync();
     devtoolsFile.writeAsStringSync(boilerplateDevtools.readAsStringSync());
-    print('${ConsoleSymbols.success}Generated DevTools configuration');
+    ConsoleLogger.success('Generated DevTools configuration');
   }
 }

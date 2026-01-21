@@ -1,7 +1,7 @@
 part of '../max.dart';
 
 void _setupPatrolNative() {
-  print('🔧  Setting up Patrol native configuration...');
+  ConsoleLogger.info('Setting up Patrol native configuration...');
   print('');
   
   _setupPatrolAndroid();
@@ -10,9 +10,9 @@ void _setupPatrolNative() {
   _setupPatrolIOS();
   
   print('');
-  print('${ConsoleSymbols.success}  Patrol native configuration completed');
-  print('${ConsoleSymbols.info}  Android: build.gradle has been automatically configured ✅');
-  print('${ConsoleSymbols.info}  iOS: RunnerUITests.m and Podfile updated ✅');
+  ConsoleLogger.success('Patrol native configuration completed');
+  ConsoleLogger.success('Android: build.gradle has been automatically configured');
+  ConsoleLogger.success('iOS: RunnerUITests.m and Podfile updated');
 }
 
 void _setupPatrolAndroid() {

@@ -7,12 +7,12 @@ bool _prepareRouteData() {
   _routesFile = File(_routesFilePath);
   _routeNamesFile = File(_routeNamesFilePath);
   if (!_routesFile.existsSync()) {
-    print(' ❌  Error: Routes file not found: $_routesFilePath');
+    ConsoleLogger.error('Routes file not found: $_routesFilePath');
     return false;
   }
 
   if (!_routeNamesFile.existsSync()) {
-    print(' ❌  Error: Route names file not found: $_routeNamesFilePath');
+    ConsoleLogger.error('Route names file not found: $_routeNamesFilePath');
     return false;
   }
   return true;
