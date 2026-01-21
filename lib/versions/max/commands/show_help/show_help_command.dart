@@ -17,7 +17,7 @@ void _showHelp() {
   print('${ConsoleSymbols.document}sg create sub_screen <name> in <parent>  Create a sub-screen under parent screen');
   print('${ConsoleSymbols.clipboard}sg create bs <name>                  Create a new bottom sheet');
   print('${ConsoleSymbols.dialog}sg create dialog <name>              Create a new dialog');
-  print(' ⚡  sg create event <name> in <page>     Create a new BLoC event in specific page');
+  print('  ⚡  sg create event <name> in <page>     Create a new BLoC event in specific page');
   print('${ConsoleSymbols.question}sg help                              Show this help message');
   print('');
   print('${ConsoleSymbols.bulb}Examples:');
