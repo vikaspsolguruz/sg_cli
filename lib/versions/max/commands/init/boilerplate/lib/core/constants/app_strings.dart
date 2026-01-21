@@ -12,9 +12,9 @@ class AppStrings {
   static final field = "Field";
   static final isRequired = "is required";
   static final passwordRulesDescription = "Password should be at least 8 characters long and contain at least one letter and one number";
-  static final passwordShouldBeAtLeast8Characters = "Password should be at least 8 characters long";
   static final passwordsDoNotMatch = "Passwords doesn't match";
   static final passwordIsRequired = "Password is required";
+  static final confirmPasswordIsRequired = "Confirm Password is required";
   static final invalidEmail = "Invalid email";
   static final invalidPassword = "Invalid password";
   static final emailIsRequired = "Email is required";
@@ -27,7 +27,7 @@ class AppStrings {
   static final search = "Search";
   static final isInvalid = "is invalid";
   static final phoneNumberCanNotBeEmpty = "Phone number can't be empty";
-  static final phoneNumberShouldBeAtLeast10Digits = "Phone number must be at least 10 digits long";
+  static final phoneNumberShouldBe10Digits = "Phone number must be 10 digits long";
   static final preview = "Preview";
   static final replace = "Replace";
   static final camera = "Camera";

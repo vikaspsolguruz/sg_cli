@@ -22,7 +22,7 @@ class AuthRepository {
   }
 
   static Future<NormalResponse<UserModel>> loginWithEmail({required String email, required String password}) async {
-    final deviceId = await getDeviceId();
+    final deviceId = getDeviceId();
     final osVersion = await getOSVersion();
 
     final payload = {
@@ -39,7 +39,7 @@ class AuthRepository {
   }
 
   static Future<NormalResponse<UserModel>> logInWithGoogle({required String email, required String socialId}) async {
-    final deviceId = await getDeviceId();
+    final deviceId = getDeviceId();
     final osVersion = await getOSVersion();
     final payload = {
       "email": email.toLowerCase(),
@@ -57,7 +57,7 @@ class AuthRepository {
   }
 
   static Future<NormalResponse<UserModel>> logInWithApple({required String? email, required String socialId}) async {
-    final deviceId = await getDeviceId();
+    final deviceId = getDeviceId();
     final osVersion = await getOSVersion();
     final payload = {
       "email": email?.toLowerCase().nullable,
@@ -75,7 +75,7 @@ class AuthRepository {
   }
 
   static Future<NormalResponse<UserModel>> verifyEmailForSignUp({required String? email, required String? code}) async {
-    final deviceId = await getDeviceId();
+    final deviceId = getDeviceId();
     final osVersion = await getOSVersion();
 
     final payload = {

@@ -8,7 +8,7 @@ class MiscellaneousRepository {
 
   static Future<NormalResponse> updateFcmToken() async {
     final payload = {
-      "device_id": await getDeviceId(),
+      "device_id": getDeviceId(),
       // "fcm_token": NativeNotificationService.fcmToken,
     };
     final rawResponse = await ApiClient.instance.patch(ApiLinks.updateFcmToken, body: payload);

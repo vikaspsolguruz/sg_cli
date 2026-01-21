@@ -43,38 +43,30 @@ class Validators {
     if (password?.isEmpty ?? true) {
       return AppStrings.passwordIsRequired.tr;
     } else if (!passwordRegex.hasMatch(password!)) {
-      return AppStrings.invalidPassword.tr;
+      return AppStrings.passwordRulesDescription.tr;
     }
     return null;
   }
 
   static String? password(String? password) {
+    password ??= password;
     if (password?.isEmpty ?? true) {
       return AppStrings.passwordIsRequired.tr;
     }
     return null;
   }
 
-  static String? currentPassword(String? password) {
-    if (password?.isEmpty ?? true) {
-      return AppStrings.passwordIsRequired.tr;
-    }
-    if (!min8CharsRegex.hasMatch(password!)) {
-      return AppStrings.passwordShouldBeAtLeast8Characters.tr;
-    }
-    return null;
-  }
-
-  static String? passwordWithConfirm(String? password, {TextEditingController? confirmPasswordController, bool checkMatch = false}) {
+  static String? newPassword(String? password, {required TextEditingController confirmPasswordController, bool checkMatch = false}) {
     String? validator(String? password) {
-      if (password?.isEmpty ?? true) {
+      password ??= '';
+      if (password.isEmpty) {
         return AppStrings.passwordIsRequired.tr;
       }
-      if (!passwordRegex.hasMatch(password!)) {
+      if (!passwordRegex.hasMatch(password)) {
         return AppStrings.passwordRulesDescription.tr;
       }
-      if (confirmPasswordController?.text != password) {
-        return AppStrings.passwordsDoNotMatch;
+      if (confirmPasswordController.text != password && checkMatch) {
+        return AppStrings.passwordsDoNotMatch.tr;
       }
       return null;
     }
@@ -82,15 +74,16 @@ class Validators {
     return validator(password);
   }
 
-  static String? confirmPassword(String? password, {TextEditingController? passwordController}) {
+  static String? confirmPassword(String? password, {required TextEditingController newPasswordController}) {
     String? validator(String? password) {
-      if (password?.isEmpty ?? true) {
-        return AppStrings.passwordIsRequired.tr;
+      password ??= '';
+      if (password.isEmpty) {
+        return AppStrings.confirmPasswordIsRequired.tr;
       }
       // if (!passwordRegex.hasMatch(password!)) {
       //   return AppStrings.passwordRulesDescription.tr;
       // }
-      if (passwordController?.text != password) {
+      if (newPasswordController.text != password) {
         return AppStrings.passwordsDoNotMatch.tr;
       }
       return null;
@@ -129,7 +122,7 @@ class Validators {
         return AppStrings.phoneNumberCanNotBeEmpty.tr;
       }
       if (!RegExp(r'^[0-9]+$').hasMatch(phone!) || phone.length < minLimit) {
-        return AppStrings.phoneNumberShouldBeAtLeast10Digits.tr;
+        return AppStrings.phoneNumberShouldBe10Digits.tr;
       }
       return null;
     }
