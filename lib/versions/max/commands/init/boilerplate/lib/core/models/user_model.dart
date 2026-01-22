@@ -23,7 +23,6 @@ class UserModel {
 
   UserModel.fromJson(Map<String, dynamic> json) {
     final userJson = json['user'];
-    final subscriptionJson = json['subscription'];
     id = userJson['id'];
     firstName = userJson['first_name'];
     lastName = userJson['last_name'];

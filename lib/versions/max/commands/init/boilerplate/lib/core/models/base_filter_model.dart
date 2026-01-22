@@ -4,23 +4,17 @@ import 'package:equatable/equatable.dart';
 abstract class BaseFilterModel extends Equatable {
   const BaseFilterModel();
 
-  /// Abstract factory method that subclasses must implement
-  /// This ensures every filter has an .initial() constructor
   static T initial<T extends BaseFilterModel>() {
-    throw UnimplementedError('Subclass must implement static initial() method');
+    throw UnimplementedError('Subclass of BaseFilterModel must implement static initial() method');
   }
 
-  /// Abstract method for clearing filters
   BaseFilterModel clear();
 
-  /// Abstract method for checking if filters are applied
   bool get hasFilters;
 
-  /// Abstract method for getting filter count
   int get filterCount;
 }
 
-/// Example implementation for ProjectFilterModel
 class ProjectFilterModel extends BaseFilterModel {
   final String? search;
   final List<String> categories;
@@ -36,7 +30,6 @@ class ProjectFilterModel extends BaseFilterModel {
     this.status,
   });
 
-  /// Required .initial() constructor pattern
   const ProjectFilterModel.initial() : search = null, categories = const [], dateFrom = null, dateTo = null, status = null;
 
   @override
@@ -76,7 +69,6 @@ class ProjectFilterModel extends BaseFilterModel {
   List<Object?> get props => [search, categories, dateFrom, dateTo, status];
 }
 
-/// Example implementation for UserFilterModel
 class UserFilterModel extends BaseFilterModel {
   final String? search;
   final List<String> roles;
@@ -88,7 +80,6 @@ class UserFilterModel extends BaseFilterModel {
     this.isActive,
   });
 
-  /// Required .initial() constructor pattern
   const UserFilterModel.initial() : search = null, roles = const [], isActive = null;
 
   @override

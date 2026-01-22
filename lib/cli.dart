@@ -14,7 +14,7 @@ void runCLI(List<String> args) {
     if (args.length == 1 && args.first == 'init') {
       sgConfig = SgConfig(version: kMax, routePaths: []);
       Max.runCommand();
-    } else if (args.length == 1 && (args.first == 'help' || args.first == '--help' || args.first == '-h')) {
+    } else if (args.length == 1 && (args.first == 'help' || args.first == '--help' || args.first == '-help' || args.first == '-h' || args.first == 'h')) {
       sgConfig = SgConfig(version: kMax, routePaths: []);
       Max.runCommand();
     } else if (args.isEmpty) {
